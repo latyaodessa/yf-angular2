@@ -1,0 +1,11 @@
+.container{
+    max-width: 1200px;
+}
+
+.list-img {
+    height: 260px;
+    width: 260px;
+    margin: 15px;
+    overflow: hidden;
+
+}

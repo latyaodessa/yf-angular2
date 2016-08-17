@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div *ngFor="let post of posts">
+
+        <div class="list-img col-xs-4"  >
+            {{post.id}}
+            <img class="img-responsive" src={{post.postPhoto[0].photo_604}}/>
+            {{post.text}}
+
+        </div>
+
+               </div>
+
+        <button (click)="loadMore()">Click</button>
+
+    </div>
+</div>
