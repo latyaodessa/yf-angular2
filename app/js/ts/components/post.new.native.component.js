@@ -12,26 +12,31 @@ var core_1 = require('@angular/core');
 var post_service_1 = require('./../services/post.service');
 var elastic_client_service_1 = require('./../services/http/elastic.client.service');
 var yf_post_handlers_1 = require('./../services/handlers/yf.post.handlers');
+var router_1 = require('@angular/router');
 var NewNativeComponent = (function () {
     function NewNativeComponent(postService) {
-        var _this = this;
         this.postService = postService;
+        this.showMore = "Покажи мне еще";
+    }
+    NewNativeComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.postService.getYFNativeNew(0, 4).subscribe(function (data) {
             _this.posts = data;
         });
-    }
-    NewNativeComponent.prototype.ngOnInit = function () { };
+    };
     NewNativeComponent.prototype.loadMore = function () {
         var _this = this;
         this.postService.loadMoreNative(this.posts.length).subscribe(function (data) {
             _this.posts = _this.posts.concat(data);
         });
+        this.showMore = "Все новые фотографии";
     };
     NewNativeComponent = __decorate([
         core_1.Component({
             selector: 'native-new',
             templateUrl: 'app/ts/templates/post.new.component.html',
             providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler],
+            directives: [router_1.ROUTER_DIRECTIVES],
             inputs: ['posts']
         }), 
         __metadata('design:paramtypes', [post_service_1.PostService])

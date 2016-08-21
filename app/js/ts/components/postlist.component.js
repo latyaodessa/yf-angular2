@@ -19,11 +19,10 @@ var post_top_sets_component_1 = require('./post.top.sets.component');
 var PostlistComponent = (function () {
     function PostlistComponent() {
     }
-    PostlistComponent.prototype.ngOnInit = function () { };
     PostlistComponent = __decorate([
         core_1.Component({
             selector: 'postlist',
-            templateUrl: 'app/ts/templates/postlist.component.html',
+            templateUrl: '/app/ts/templates/postlist.component.html',
             directives: [post_new_native_component_1.NewNativeComponent, post_new_sets_component_1.NewSetsComponent, post_top_native_component_1.NewTopNativeComponent, post_top_sets_component_1.NewTopSetsComponent],
             providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler]
         }), 

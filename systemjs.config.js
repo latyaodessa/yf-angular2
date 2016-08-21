@@ -9,8 +9,8 @@
         '@angular':                   'node_modules/@angular',
         'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
         'rxjs':                       'node_modules/rxjs',
-        'minigrid':                   'node_modules/minigrid/dist/minigrid.min.js',
-        'moment':                      'node_modules/moment/moment.js'
+        'moment':                      'node_modules/moment/moment.js',
+        'lory.js':                      'node_modules/lory.js/dist/lory.min.js'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -28,7 +28,7 @@
         'platform-browser-dynamic',
         'router',
         'router-deprecated',
-        'upgrade',
+        'upgrade'
     ];
     // Individual files (~300 requests):
     function packIndex(pkgName) {

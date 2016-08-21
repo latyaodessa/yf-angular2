@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="row">
+    <div *ngFor="let post of posts">
+    <div class="thumbnail col-xs-4 ">
+        <a [routerLink]="['/yf-post', post.id]"><img class="img-responsive shadow" src={{post.postPhoto[0].photo_604}}/></a>
+    </div>
+</div>
+    </div>
+</div>
+<div class="container under-button">
+    <button  type="button" class="btn btn-default" (click)="loadMore()">{{showMore}}</button>
+</div>

@@ -18,6 +18,11 @@ var PostService = (function () {
         this.elasticClient = elasticClient;
         this.yfPostHandler = yfPostHandler;
     }
+    PostService.prototype.findYFPostById = function (id) {
+        return this.http.get(this.elasticClient.findNativeById(id))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+    };
     PostService.prototype.getYFNativeNew = function (from, size) {
         return this.http.get(this.elasticClient.getNewYFNative(from, size))
             .map(this.yfPostHandler.extractData)

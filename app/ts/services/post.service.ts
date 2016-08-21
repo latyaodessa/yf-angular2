@@ -10,6 +10,14 @@ import {Observable} from 'rxjs/Observable';
 export class PostService {
     constructor(private http:Http, private elasticClient:ElasticClient, private yfPostHandler:YFPostHandler){}
 
+
+    findYFPostById(id:string):Observable<Post[]> {
+        return this.http.get(this.elasticClient.findNativeById(id))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+
+    }
+
     getYFNativeNew(from:number, size:number):Observable<Post[]> {
         return this.http.get(this.elasticClient.getNewYFNative(from, size))
             .map(this.yfPostHandler.extractData)

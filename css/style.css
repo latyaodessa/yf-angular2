@@ -1,0 +1,101 @@
+@font-face { font-family: DidactGothic; src: url('../fonts/DidactGothic.ttf'); }
+
+body{
+    font-family: DidactGothic, "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #fff;
+}
+
+.header{
+    /*position: absolute;*/
+    text-decoration: overline;
+    text-align: right;
+    /*z-index: 10;*/
+}
+h1 {
+    color: #595959;
+    font-size: 25px;
+
+}
+
+.container{
+    max-width: 1200px;
+}
+
+.row {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+/*button*/
+.under-button{
+ text-align: center;
+}
+.thumbnail {
+    height:260px;
+    width:290px;
+     /*margin-bottom:0;*/
+     background-color: transparent;
+     border:0;
+     border-radius:0;
+
+}
+.thumbnail a img, .thumbnail img {
+    width:290px;
+    height:260px;
+    /*border-radius:5%;*/
+    object-fit: cover;
+
+}
+.shadow
+{
+    position:relative;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.shadow:before, .shadow:after
+{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:0;
+    bottom:0;
+    left:10px;
+    right:10px;
+    -moz-border-radius:100px / 10px;
+    border-radius:100px / 10px;
+}
+.shadow:after
+{
+    right:10px;
+    left:auto;
+    -webkit-transform:skew(8deg) rotate(3deg);
+    -moz-transform:skew(8deg) rotate(3deg);
+    -ms-transform:skew(8deg) rotate(3deg);
+    -o-transform:skew(8deg) rotate(3deg);
+    transform:skew(8deg) rotate(3deg);
+}
+
+
+
+/*Carusel*/
+.carousel-indicators li { visibility: hidden; }
+.carousel-control {
+    background-image: none;
+    width: 54px;
+    height: 54px;
+    top: 50%;
+    margin-top: -27px;
+    line-height: 54px;
+    z-index: 5;
+}
+.carousel-control.left, .carousel-control.right {
+    background-image: none
+}
+.active{
+    height:400px;
+    object-fit: cover;
+}

@@ -10,16 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 require('./rxjs-operators');
+var router_1 = require('@angular/router');
 var postlist_component_1 = require('./ts/components/postlist.component');
+var native_list_component_1 = require('./ts/components/lists/native-list.component');
+var sets_list_component_1 = require('./ts/components/lists/sets-list.component');
+var post_details_component_1 = require('./ts/components/post.details.component');
 var AppComponent = (function () {
     function AppComponent() {
     }
-    AppComponent.prototype.ngOnInit = function () { };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
             templateUrl: 'app/ts/templates/app.component.html',
-            directives: [postlist_component_1.PostlistComponent]
+            directives: [router_1.ROUTER_DIRECTIVES],
+            precompile: [postlist_component_1.PostlistComponent, sets_list_component_1.SetsListComponent, native_list_component_1.NativeListComponent, post_details_component_1.PostDetailsComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

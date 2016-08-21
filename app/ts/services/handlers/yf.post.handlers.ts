@@ -6,6 +6,7 @@ import {Post} from './../../objects/post';
 
 export class YFPostHandler implements HandlerInterface{
     private posts:Post[]
+    private post:Post;
 
     extractData(res:Response) {
         this.posts = [];
@@ -16,6 +17,7 @@ export class YFPostHandler implements HandlerInterface{
 
         return this.posts || {};
     }
+
     handleError (error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
