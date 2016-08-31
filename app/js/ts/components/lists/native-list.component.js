@@ -14,35 +14,41 @@ var elastic_client_service_1 = require('./../../services/http/elastic.client.ser
 var yf_post_handlers_1 = require('./../../services/handlers/yf.post.handlers');
 var router_1 = require('@angular/router');
 var NativeListComponent = (function () {
-    function NativeListComponent(postService) {
+    function NativeListComponent(postService, route) {
         this.postService = postService;
-        this.showMore = "Покажи мне еще";
+        this.route = route;
+        this.tag = 'native';
     }
     NativeListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.sub = this.postService.getYFNativeNew(0, 20).subscribe(function (data) {
-            _this.posts = data;
+        this.subParams = this.route.params.subscribe(function (params) {
+            if (params['page']) {
+                _this.page = parseInt(params['page']);
+            }
+            else {
+                _this.page = 1;
+            }
+            var from = (_this.page - 1) * 20;
+            console.log(from);
+            _this.subNewPosts = _this.postService.getYFNativeNew(from, 20).subscribe(function (data) {
+                console.log(data);
+                _this.postListDTO = _this.postService.postToPostListDTO(data);
+                _this.postsLength = _this.postListDTO.length;
+            });
         });
-    };
-    NativeListComponent.prototype.loadMore = function () {
-        var _this = this;
-        this.postService.loadMoreNative(this.posts.length).subscribe(function (data) {
-            _this.posts = _this.posts.concat(data);
-        });
-        this.showMore = "Все новые фотографии";
     };
     NativeListComponent.prototype.ngOnDestroy = function () {
-        this.sub.unsubscribe();
+        this.subParams.unsubscribe();
+        this.subNewPosts.unsubscribe();
     };
     NativeListComponent = __decorate([
         core_1.Component({
             selector: 'native-list',
             templateUrl: 'app/ts/templates/lists/lists.component.html',
             providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler],
-            directives: [router_1.ROUTER_DIRECTIVES],
-            inputs: ['posts']
+            directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [post_service_1.PostService])
+        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute])
     ], NativeListComponent);
     return NativeListComponent;
 }());

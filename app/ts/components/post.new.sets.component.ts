@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Post} from './../objects/post';
+import {PostListDTO} from './../objects/dtos/postListDTO';
 import {PostService} from './../services/post.service';
 import {ElasticClient} from './../services/http/elastic.client.service';
 import {YFPostHandler} from './../services/handlers/yf.post.handlers';
@@ -17,17 +17,23 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 })
 
 export class NewSetsComponent implements OnInit {
-    private posts: Post[];
     private showMore: string;
+    private showAll: string;
+    private route: string;
     private sub:any;
+    private postListDTO:PostListDTO[];
 
 
     constructor(private postService: PostService){
-        this.showMore = "Покажи мне еще";
+        this.showMore = "Ещё";
+        this.route = 'sets';
     }
+
     ngOnInit() {
         this.sub = this.postService.getYFSetsNew(0, 4).subscribe(data => {
-            this.posts = data;
+            this.postListDTO = this.postService.postToPostListDTO(data);
+
+
         });
     }
     ngOnDestroy() {
@@ -35,9 +41,11 @@ export class NewSetsComponent implements OnInit {
     }
 
     loadMore(){
-        this.postService.loadMoreSets(this.posts.length).subscribe(data => {
-            this.posts = this.posts.concat(data);
+        this.postService.loadMoreSets(this.postListDTO.length).subscribe(data => {
+            this.postListDTO = this.postListDTO.concat(this.postService.postToPostListDTO(data));
         });
+        this.showMore = null;
+        this.showAll = "Все зарубежные модели";
     }
 
 

@@ -23,7 +23,7 @@ var NewTopSetsComponent = (function () {
     NewTopSetsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.postService.getYFSetsTop(0, 5).subscribe(function (data) {
-            _this.posts = data;
+            _this.postListDTO = _this.postService.postToPostListDTO(data);
         });
     };
     NewTopSetsComponent.prototype.ngOnDestroy = function () {

@@ -16,9 +16,11 @@ var ElasticClient = (function () {
         this.getFrom = function (from) { return '&from=' + from; };
         this.getNewYFNative = function (from, size) { return ElasticClient.NATIVE_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
         this.getNewYFSets = function (from, size) { return ElasticClient.SETS_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
+        this.getYFSetsNativeNew = function (from, size) { return ElasticClient.NATIVE_SETS_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
         this.getYFNativeTop = function (from, size) { return ElasticClient.NATIVE_TOP_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_LIKES; };
         this.getYFSetsTop = function (from, size) { return ElasticClient.SETS_TOP_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_LIKES; };
         this.findNativeById = function (id) { return ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_ID + id; };
+        this.findByText = function (from, size, textQuery) { return ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_TEXT + textQuery; };
     }
     ElasticClient.HOST = 'http://10.0.0.37:9200/';
     ElasticClient.NATIVE_INDEX = ElasticClient.HOST + 'yf-photo-native/_search?';
@@ -27,6 +29,7 @@ var ElasticClient = (function () {
     ElasticClient.SETS_TOP_INDEX = ElasticClient.HOST + 'yf-sets-top/_search?';
     ElasticClient.NATIVE_SETS_INDEX = ElasticClient.HOST + 'yf-photo-native,yf-photo-sets/_search?';
     ElasticClient.SEARCH_BY_ID = 'q=_id:';
+    ElasticClient.SEARCH_BY_TEXT = '&q=text:';
     ElasticClient.DESC_BY_ID = '&sort=id:desc';
     ElasticClient.DESC_BY_LIKES = '&sort=likes:desc';
     ElasticClient = __decorate([

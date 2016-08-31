@@ -1,9 +1,30 @@
-<div class="container">
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" [routerLink]="['/']">Home</a>
-                <a class="mdl-navigation__link" [routerLink]="['/native']">Native</a>
-                <a class="mdl-navigation__link" [routerLink]="['/sets']">Sets</a>
-            </nav>
+<div class="container navtop">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--<a class="navbar-brand" href="#">Project name</a>-->
+                <div id="logo"><a class="mdl-navigation__link" [routerLink]="['/']">YF</a></div>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a class="mdl-navigation__link" [routerLink]="['/native']">Native</a></li>
+                    <li><a class="mdl-navigation__link" [routerLink]="['/sets']">Sets</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <form class="light">
+                        <input type="text" #searchQuery placeholder="Малышка">
+                        <input type="submit" (click)="search(searchQuery.value)" value="Поиск">
+                    </form>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
 
 <router-outlet></router-outlet>

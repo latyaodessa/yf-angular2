@@ -10,20 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var post_service_1 = require('./../services/post.service');
+var sugessted_posts_component_1 = require('./../components/sugessted.posts.component');
 var elastic_client_service_1 = require('./../services/http/elastic.client.service');
 var yf_post_handlers_1 = require('./../services/handlers/yf.post.handlers');
 var router_1 = require('@angular/router');
+var postDetailsDTO_1 = require('./../objects/dtos/postDetailsDTO');
 var PostDetailsComponent = (function () {
     function PostDetailsComponent(postService, route) {
         this.postService = postService;
         this.route = route;
-        console.log("HALLO");
+        this.postDetailsDTO = new postDetailsDTO_1.PostDetailsDTO();
     }
     PostDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
-            var id = params['id'];
-            _this.postService.findYFPostById(id).subscribe(function (post) { return _this.post = post[0]; });
+            _this.postService.findYFPostById(params['id']).subscribe(function (post) {
+                _this.postDetailsDTO = _this.postService.regexPostText(post[0]);
+                _this.postDetailsDTO.photos = _this.postService.findPhotosForPostDetails(post[0]);
+                _this.phForSuggested = _this.postDetailsDTO.ph;
+                _this.mdForSuggested = _this.postDetailsDTO.md;
+            });
         });
     };
     PostDetailsComponent.prototype.ngOnDestroy = function () {
@@ -31,9 +37,10 @@ var PostDetailsComponent = (function () {
     };
     PostDetailsComponent = __decorate([
         core_1.Component({
-            template: "\n    <div *ngIf=\"post\">\n        <h2>{{post.id}}</h2>\n         <img class=\"img-responsive shadow\" src={{post.postPhoto[1].photo_604}}/>\n\n    </div>\n    ",
+            selector: 'post-details',
+            templateUrl: 'app/ts/templates/post.details.component.html',
             providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler],
-            directives: [router_1.ROUTER_DIRECTIVES]
+            directives: [router_1.ROUTER_DIRECTIVES, sugessted_posts_component_1.SuggestedPostsComponent]
         }), 
         __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute])
     ], PostDetailsComponent);

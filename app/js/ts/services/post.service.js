@@ -10,16 +10,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var elastic_client_service_1 = require('./http/elastic.client.service');
 var yf_post_handlers_1 = require('./handlers/yf.post.handlers');
+var post_workflow_1 = require('./workflow/post.workflow');
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var PostService = (function () {
-    function PostService(http, elasticClient, yfPostHandler) {
+    function PostService(http, elasticClient, yfPostHandler, postWorkflow) {
         this.http = http;
         this.elasticClient = elasticClient;
         this.yfPostHandler = yfPostHandler;
+        this.postWorkflow = postWorkflow;
     }
     PostService.prototype.findYFPostById = function (id) {
         return this.http.get(this.elasticClient.findNativeById(id))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+    };
+    PostService.prototype.findByText = function (from, size, textQuery) {
+        return this.http.get(this.elasticClient.findByText(from, size, textQuery))
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };
@@ -43,6 +50,11 @@ var PostService = (function () {
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };
+    PostService.prototype.getYFSetsNativeNew = function (from, size) {
+        return this.http.get(this.elasticClient.getYFSetsNativeNew(from, size))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+    };
     PostService.prototype.getYFSetsTop = function (from, size) {
         return this.http.get(this.elasticClient.getYFSetsTop(from, size))
             .map(this.yfPostHandler.extractData)
@@ -53,9 +65,18 @@ var PostService = (function () {
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };
+    PostService.prototype.findPhotosForPostDetails = function (post) {
+        return this.postWorkflow.findPhotosForPostDetails(post);
+    };
+    PostService.prototype.regexPostText = function (post) {
+        return this.postWorkflow.regexPostText(post);
+    };
+    PostService.prototype.postToPostListDTO = function (posts) {
+        return this.postWorkflow.postToPostListDTO(posts);
+    };
     PostService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler])
+        __metadata('design:paramtypes', [http_1.Http, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler, post_workflow_1.PostWorkflow])
     ], PostService);
     return PostService;
 }());

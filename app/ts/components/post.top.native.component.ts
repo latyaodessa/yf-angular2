@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import {Post} from './../objects/post';
+import {PostListDTO} from './../objects/dtos/postListDTO';
 import {PostService} from './../services/post.service';
 import {ElasticClient} from './../services/http/elastic.client.service';
 import {YFPostHandler} from './../services/handlers/yf.post.handlers';
@@ -18,15 +18,16 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 })
 
 export class NewTopNativeComponent implements OnInit{
-    private posts: Post[];
     private sub:any;
-
+    private postListDTO:PostListDTO[];
 
     constructor(private postService: PostService){}
 
     ngOnInit(){
+
         this.sub = this.postService.getYFNativeTop(0, 5).subscribe(data => {
-            this.posts = data;
+            this.postListDTO = this.postService.postToPostListDTO(data);
+
         });
     }
     ngOnDestroy() {

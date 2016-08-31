@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row margin-bottom-top-10">
+        <div *ngIf="postDetailsDTO">
+            <ul class="ph"  *ngIf="postDetailsDTO.ph">
+                <li>{{postDetailsDTO.ph}}</li>
+            </ul>
+            <ul class="md" *ngIf="postDetailsDTO.md">
+                <li>{{postDetailsDTO.md}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row details-list">
+       <img class="img-responsive shadow" *ngFor="let photo of postDetailsDTO.photos" src={{photo}}/>
+    </div>
+</div>
+<div class="container">
+    <div class="row margin-bottom-top-10">
+        <h1 class="header ">Похожие работы</h1>
+<suggested-posts></suggested-posts>
+    </div>
+</div>

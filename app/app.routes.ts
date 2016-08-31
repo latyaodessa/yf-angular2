@@ -3,6 +3,8 @@ import { NativeListComponent } from './ts/components/lists/native-list.component
 import { SetsListComponent } from './ts/components/lists/sets-list.component';
 import { PostlistComponent } from './ts/components/postlist.component';
 import { PostDetailsComponent } from './ts/components/post.details.component';
+import { SearchComponent } from './ts/components/search.component';
+
 
 // Route Configuration
 export const routes: RouterConfig = [
@@ -12,8 +14,12 @@ export const routes: RouterConfig = [
     },
     { path: '', component: PostlistComponent },
     { path: 'native', component: NativeListComponent },
+    { path: 'native/:page', component: NativeListComponent },
     { path: 'sets', component: SetsListComponent },
-    {path: 'yf-post/:id', component: PostDetailsComponent }
+    { path: 'sets/:page', component: SetsListComponent },
+    {path: 'yf/:id', component: PostDetailsComponent },
+    {path: 'search/:query', component: SearchComponent }
+
 ];
 // Export routes
 export const APP_ROUTER_PROVIDERS = [

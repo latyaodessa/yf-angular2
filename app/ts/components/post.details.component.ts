@@ -1,41 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import {PostService} from './../services/post.service';
+import {SuggestedPostsComponent} from './../components/sugessted.posts.component';
 import {ElasticClient} from './../services/http/elastic.client.service';
 import {YFPostHandler} from './../services/handlers/yf.post.handlers'
 import { Observable } from 'rxjs/Observable';
 import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
-import {Post} from './../objects/post';
+import {PostDetailsDTO} from './../objects/dtos/postDetailsDTO';
 
 
 @Component({
-    template: `
-    <div *ngIf="post">
-        <h2>{{post.id}}</h2>
-         <img class="img-responsive shadow" src={{post.postPhoto[1].photo_604}}/>
-
-    </div>
-    `,
+    selector: 'post-details',
+    templateUrl: 'app/ts/templates/post.details.component.html',
     providers: [PostService, ElasticClient, YFPostHandler],
-    directives: [ROUTER_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES, SuggestedPostsComponent]
 })
 
 export class PostDetailsComponent implements OnInit {
     private sub:any;
-    private post:Post;
+    private postDetailsDTO:PostDetailsDTO;
+    private phForSuggested:string;
+    private mdForSuggested:string;
+
 
     constructor(private postService: PostService, private route: ActivatedRoute) {
-        console.log("HALLO");
-
+        this.postDetailsDTO = new PostDetailsDTO();
     }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-
-            let id = params['id'];
-
-            this.postService.findYFPostById(id).subscribe(post =>  this.post = post[0]);
-
+            this.postService.findYFPostById(params['id']).subscribe(post => {
+                this.postDetailsDTO = this.postService.regexPostText(post[0]);
+                this.postDetailsDTO.photos = this.postService.findPhotosForPostDetails(post[0]);
+                this.phForSuggested = this.postDetailsDTO.ph;
+                this.mdForSuggested = this.postDetailsDTO.md;
+            });
         });
+
     }
 
     ngOnDestroy() {

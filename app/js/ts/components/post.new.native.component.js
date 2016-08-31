@@ -16,20 +16,25 @@ var router_1 = require('@angular/router');
 var NewNativeComponent = (function () {
     function NewNativeComponent(postService) {
         this.postService = postService;
-        this.showMore = "Покажи мне еще";
+        this.showMore = "Ещё";
+        this.route = 'native';
     }
     NewNativeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.postService.getYFNativeNew(0, 4).subscribe(function (data) {
-            _this.posts = data;
+        this.sub = this.postService.getYFNativeNew(0, 4).subscribe(function (data) {
+            _this.postListDTO = _this.postService.postToPostListDTO(data);
         });
     };
     NewNativeComponent.prototype.loadMore = function () {
         var _this = this;
-        this.postService.loadMoreNative(this.posts.length).subscribe(function (data) {
-            _this.posts = _this.posts.concat(data);
+        this.postService.loadMoreNative(this.postListDTO.length).subscribe(function (data) {
+            _this.postListDTO = _this.postListDTO.concat(_this.postService.postToPostListDTO(data));
         });
-        this.showMore = "Все новые фотографии";
+        this.showMore = null;
+        this.showAll = "Все наши модели";
+    };
+    NewNativeComponent.prototype.ngOnDestroy = function () {
+        this.sub.unsubscribe();
     };
     NewNativeComponent = __decorate([
         core_1.Component({

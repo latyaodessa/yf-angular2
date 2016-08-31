@@ -23,7 +23,7 @@ var NewTopNativeComponent = (function () {
     NewTopNativeComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.postService.getYFNativeTop(0, 5).subscribe(function (data) {
-            _this.posts = data;
+            _this.postListDTO = _this.postService.postToPostListDTO(data);
         });
     };
     NewTopNativeComponent.prototype.ngOnDestroy = function () {

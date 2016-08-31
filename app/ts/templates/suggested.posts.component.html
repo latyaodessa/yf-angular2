@@ -1,0 +1,18 @@
+<div *ngFor="let dto of postListDTO">
+    <div class="thumbnail col-xs-4 hovereffect">
+        <a [routerLink]="['/yf', dto.id]"><img class="img-responsive shadow" src={{dto.thumbnail}}/></a>
+        <div class="overlay">
+            <div class="ul-main-list">
+                <ul class="ph-white"  *ngIf="dto.ph">
+                    <li>{{dto.ph}}</li>
+                </ul>
+                <ul class="md-white" *ngIf="dto.md">
+                    <li>{{dto.md}}</li>
+                </ul>
+            </div>
+            <p>
+                <a [routerLink]="['/yf', dto.id]">Все фотографии</a>
+            </p>
+        </div>
+    </div>
+</div>

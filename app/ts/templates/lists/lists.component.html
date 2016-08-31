@@ -1,12 +1,43 @@
 <div class="container">
     <div class="row">
-    <div *ngFor="let post of posts">
-    <div class="thumbnail col-xs-4 ">
-        <a [routerLink]="['/yf-post', post.id]"><img class="img-responsive shadow" src={{post.postPhoto[0].photo_604}}/></a>
+        <div *ngFor="let dto of postListDTO">
+            <div class="thumbnail col-xs-4 hovereffect">
+                <a [routerLink]="['/yf', dto.id]"><img class="img-responsive shadow" src={{dto.thumbnail}}/></a>
+                <div class="overlay">
+                    <div class="ul-main-list">
+                        <ul class="ph-white"  *ngIf="dto.ph">
+                            <li>{{dto.ph}}</li>
+                        </ul>
+                        <ul class="md-white" *ngIf="dto.md">
+                            <li>{{dto.md}}</li>
+                        </ul>
+                    </div>
+                    <p>
+                        <a [routerLink]="['/yf', dto.id]">Все фотографии</a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<div class="container">
+    <div class="row pagination-row">
+        <nav>
+            <ul class="pagination">
+
+
+
+                <li>
+                    <a *ngIf="page > 1" routerLink="/{{tag}}/{{page-1}}" class="page-link" href="#">
+                        <span><img src="/icons/32/left.png"></span>
+                    </a>
+                </li>
+                <li>
+                    <a  *ngIf="postsLength >=20" routerLink="/{{tag}}/{{page+1}}" class="page-link">
+                        <span aria-hidden="true"><img src="/icons/32/right.png"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
-</div>
-<div class="container under-button">
-    <button  type="button" class="btn btn-default" (click)="loadMore()">{{showMore}}</button>
 </div>

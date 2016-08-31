@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Post} from './../../objects/post';
+import {PostListDTO} from './../../objects/dtos/postListDTO';
 import {PostService} from './../../services/post.service';
 import {ElasticClient} from './../../services/http/elastic.client.service';
 import {YFPostHandler} from './../../services/handlers/yf.post.handlers';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
 
 
 
@@ -11,33 +11,43 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
     selector: 'native-list',
     templateUrl: 'app/ts/templates/lists/lists.component.html',
     providers: [PostService, ElasticClient, YFPostHandler],
-    directives: [ ROUTER_DIRECTIVES],
-    inputs: ['posts']
+    directives: [ ROUTER_DIRECTIVES]
 })
 
 export class NativeListComponent implements OnInit {
-    private posts: Post[];
-    private showMore: string;
-    private sub:any;
+    private postListDTO:PostListDTO[];
+    private postsLength: number;
+    private subParams:any;
+    private subNewPosts:any;
+    private page:number;
+    private tag: string;
 
-    constructor(private postService: PostService){
-        this.showMore = "Покажи мне еще";
+    constructor(private postService: PostService, private route: ActivatedRoute){
+        this.tag = 'native';
     }
+
     ngOnInit() {
-        this.sub =  this.postService.getYFNativeNew(0,20).subscribe(data => {
-            this.posts = data;
-        });
-    }
+        this.subParams = this.route.params.subscribe(params => {
+            if(params['page']){
+                this.page = parseInt(params['page']);
+            } else {
+                this.page = 1;
+            }
+            let from = ( this.page-1) * 20;
+            console.log(from);
+                this.subNewPosts = this.postService.getYFNativeNew(from, 20).subscribe(data => {
+                    console.log(data);
+                    this.postListDTO = this.postService.postToPostListDTO(data);
+                    this.postsLength = this.postListDTO.length;
+                });
 
-    loadMore(){
-        this.postService.loadMoreNative(this.posts.length).subscribe(data => {
-            this.posts = this.posts.concat(data);
         });
-        this.showMore = "Все новые фотографии";
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        this.subParams.unsubscribe();
+        this.subNewPosts.unsubscribe();
+
     }
 
 

@@ -16,6 +16,7 @@ export class ElasticClient implements ElasticInterface{
     public static NATIVE_SETS_INDEX:string =  ElasticClient.HOST + 'yf-photo-native,yf-photo-sets/_search?';
 
     public static SEARCH_BY_ID = 'q=_id:';
+    public static SEARCH_BY_TEXT= '&q=text:';
 
 
     public static DESC_BY_ID:string = '&sort=id:desc';
@@ -29,10 +30,15 @@ export class ElasticClient implements ElasticInterface{
     getNewYFNative = (from:number, size:number) => ElasticClient.NATIVE_INDEX + this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_ID;
     getNewYFSets = (from:number, size:number) => ElasticClient.SETS_INDEX + this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_ID;
 
+    getYFSetsNativeNew = (from:number, size:number) => ElasticClient.NATIVE_SETS_INDEX + this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_ID;
+
     getYFNativeTop = (from:number, size:number) => ElasticClient.NATIVE_TOP_INDEX + this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_LIKES;
     getYFSetsTop = (from:number, size:number) => ElasticClient.SETS_TOP_INDEX + this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_LIKES;
 
     findNativeById = (id:string) =>  ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_ID + id;
+
+    findByText = (from:number, size:number, textQuery:string) => ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_TEXT + textQuery;
+
 
 
 }

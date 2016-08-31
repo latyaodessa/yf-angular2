@@ -16,12 +16,13 @@ var router_1 = require('@angular/router');
 var NewSetsComponent = (function () {
     function NewSetsComponent(postService) {
         this.postService = postService;
-        this.showMore = "Покажи мне еще";
+        this.showMore = "Ещё";
+        this.route = 'sets';
     }
     NewSetsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.postService.getYFSetsNew(0, 4).subscribe(function (data) {
-            _this.posts = data;
+            _this.postListDTO = _this.postService.postToPostListDTO(data);
         });
     };
     NewSetsComponent.prototype.ngOnDestroy = function () {
@@ -29,9 +30,11 @@ var NewSetsComponent = (function () {
     };
     NewSetsComponent.prototype.loadMore = function () {
         var _this = this;
-        this.postService.loadMoreSets(this.posts.length).subscribe(function (data) {
-            _this.posts = _this.posts.concat(data);
+        this.postService.loadMoreSets(this.postListDTO.length).subscribe(function (data) {
+            _this.postListDTO = _this.postListDTO.concat(_this.postService.postToPostListDTO(data));
         });
+        this.showMore = null;
+        this.showAll = "Все зарубежные модели";
     };
     NewSetsComponent = __decorate([
         core_1.Component({
