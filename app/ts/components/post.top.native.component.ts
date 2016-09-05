@@ -7,7 +7,7 @@ import {CORE_DIRECTIVES} from '@angular/common';
 import {FORM_DIRECTIVES} from '@angular/forms';
 import { CAROUSEL_DIRECTIVES } from 'ng2-bootstrap/components/carousel';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-
+declare var Masonry: any;
 
 @Component({
     selector: 'native-top',
@@ -20,11 +20,13 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 export class NewTopNativeComponent implements OnInit{
     private sub:any;
     private postListDTO:PostListDTO[];
+    public title:string = "Топ недели наших моделей";
 
-    constructor(private postService: PostService){}
+    constructor(private postService: PostService){
+
+    }
 
     ngOnInit(){
-
         this.sub = this.postService.getYFNativeTop(0, 5).subscribe(data => {
             this.postListDTO = this.postService.postToPostListDTO(data);
 
@@ -35,7 +37,11 @@ export class NewTopNativeComponent implements OnInit{
     }
 
 
-    ngAfterViewInit() {}
+    ngAfterViewInit() {
+    }
+
+
+
 
 
     }

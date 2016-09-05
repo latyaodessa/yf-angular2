@@ -28,7 +28,6 @@ var SearchComponent = (function () {
             _this.queryTitle = params['query'];
             _this.sub = _this.postService.findByText(0, 20, _this.queryTitle).subscribe(function (data) {
                 _this.postListDTO = _this.postWorkflow.postToPostListDTO(data);
-                console.log(_this.postListDTO);
             });
         });
     };

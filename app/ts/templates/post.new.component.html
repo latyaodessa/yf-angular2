@@ -1,6 +1,8 @@
-        <div *ngFor="let dto of postListDTO">
-            <div class="thumbnail col-xs-4 hovereffect">
-                <a [routerLink]="['/yf', dto.id]"><img class="img-responsive shadow" src={{dto.thumbnail}}/></a>
+<div class="container">
+    <h1 class="header">{{title}}</h1>
+    <div class="row">
+            <div class="thumbnail col-xs-6 col-sm-4 col-md-3 hovereffect" *ngFor="let dto of postListDTO">
+                <img class="img-responsive shadow" src={{dto.thumbnail}}/>
                 <div class="overlay">
                         <div class="ul-main-list">
                         <ul class="ph-white"  *ngIf="dto.ph">
@@ -15,9 +17,11 @@
                     </p>
                 </div>
             </div>
-        </div>
-        <div class="container under-button">
 
-            <a  *ngIf="showMore" (click)="loadMore()"> <img src="/icons/64/load-more.png"></a>
-            <a  *ngIf="showAll" [routerLink]="[route]"><img src="/icons/64/load-more.png"></a>
-        </div>
+    </div>
+</div>
+<div class="container under-button">
+
+<a  *ngIf="isMoreOrShowAll" (click)="loadMore()"> <img src="/icons/64/load-more.png"></a>
+<a  *ngIf="isMoreOrShowAll == false" [routerLink]="[route]"><img src="/icons/64/load-more.png"></a>
+</div>

@@ -19,6 +19,7 @@ var router_1 = require('@angular/router');
 var NewTopSetsComponent = (function () {
     function NewTopSetsComponent(postService) {
         this.postService = postService;
+        this.title = "Топ недели зарубежных моделей";
     }
     NewTopSetsComponent.prototype.ngOnInit = function () {
         var _this = this;

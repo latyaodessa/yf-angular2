@@ -13,13 +13,32 @@ var post_service_1 = require('./../../services/post.service');
 var elastic_client_service_1 = require('./../../services/http/elastic.client.service');
 var yf_post_handlers_1 = require('./../../services/handlers/yf.post.handlers');
 var router_1 = require('@angular/router');
+var window_size_1 = require('./../../services/core/window.size');
 var SetsListComponent = (function () {
-    function SetsListComponent(postService, route) {
+    function SetsListComponent(postService, route, windowSize) {
         this.postService = postService;
         this.route = route;
+        this.windowSize = windowSize;
         this.tag = 'sets';
     }
     SetsListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.windowSize.width$.subscribe(function (width) {
+            if (width < 768) {
+                _this.size = 20;
+                _this.getPosts(_this.size);
+            }
+            else if (width < 992) {
+                _this.size = 15;
+                _this.getPosts(_this.size);
+            }
+            else {
+                _this.size = 20;
+                _this.getPosts(_this.size);
+            }
+        });
+    };
+    SetsListComponent.prototype.getPosts = function (size) {
         var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
             if (params['page']) {
@@ -28,8 +47,8 @@ var SetsListComponent = (function () {
             else {
                 _this.page = 1;
             }
-            var from = (_this.page - 1) * 20;
-            _this.sub = _this.postService.getYFSetsNew(from, 20).subscribe(function (data) {
+            var from = (_this.page - 1) * size;
+            _this.sub = _this.postService.getYFSetsNew(from, size).subscribe(function (data) {
                 _this.postListDTO = _this.postService.postToPostListDTO(data);
                 _this.postsLength = _this.postListDTO.length;
             });
@@ -42,10 +61,10 @@ var SetsListComponent = (function () {
         core_1.Component({
             selector: 'native-list',
             templateUrl: 'app/ts/templates/lists/lists.component.html',
-            providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler],
+            providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler, window_size_1.WindowSize],
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute])
+        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, window_size_1.WindowSize])
     ], SetsListComponent);
     return SetsListComponent;
 }());

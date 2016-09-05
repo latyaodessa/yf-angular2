@@ -1,8 +1,21 @@
 <div class="row">
     <carousel>
-        <slide *ngFor="let dto of postListDTO; let index=index">
-            <a [routerLink]="['/yf', dto.id]"><img src={{dto.thumbnail}} style="margin:auto;"></a>
-
+        <slide class="hovereffect" *ngFor="let dto of postListDTO; let index=index">
+            <img src={{dto.thumbnail}}/>
+            <h2 class="text-over"><span>{{title}}</span></h2>
+            <div class="overlay">
+                <div class="ul-main-list">
+                    <ul class="ph-white"  *ngIf="dto.ph">
+                        <li>{{dto.ph}}</li>
+                    </ul>
+                    <ul class="md-white" *ngIf="dto.md">
+                        <li>{{dto.md}}</li>
+                    </ul>
+                </div>
+                <p>
+                    <a [routerLink]="['/yf', dto.id]">Все фотографии</a>
+                </p>
+            </div>
         </slide>
     </carousel>
 </div>

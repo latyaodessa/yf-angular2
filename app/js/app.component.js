@@ -21,11 +21,18 @@ var collapse_1 = require('ng2-bootstrap/components/collapse');
 var AppComponent = (function () {
     function AppComponent(router) {
         this.router = router;
+        this.isCollapsed = true;
     }
     AppComponent.prototype.search = function (query) {
         if (query) {
             this.router.navigate(['search', query.split(' ').join('+')]);
         }
+    };
+    AppComponent.prototype.collapsed = function (event) {
+        console.log(event);
+    };
+    AppComponent.prototype.expanded = function (event) {
+        console.log(event);
     };
     AppComponent = __decorate([
         core_1.Component({

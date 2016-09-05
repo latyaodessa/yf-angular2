@@ -40,8 +40,8 @@ var PostService = (function () {
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };
-    PostService.prototype.loadMoreNative = function (from) {
-        return this.http.get(this.elasticClient.getNewYFNative(from, 8))
+    PostService.prototype.loadMoreNative = function (from, to) {
+        return this.http.get(this.elasticClient.getNewYFNative(from, to))
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };
@@ -60,8 +60,8 @@ var PostService = (function () {
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };
-    PostService.prototype.loadMoreSets = function (from) {
-        return this.http.get(this.elasticClient.getNewYFSets(from, 8))
+    PostService.prototype.loadMoreSets = function (from, to) {
+        return this.http.get(this.elasticClient.getNewYFSets(from, to))
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };

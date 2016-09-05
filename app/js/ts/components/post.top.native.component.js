@@ -19,6 +19,7 @@ var router_1 = require('@angular/router');
 var NewTopNativeComponent = (function () {
     function NewTopNativeComponent(postService) {
         this.postService = postService;
+        this.title = "Топ недели наших моделей";
     }
     NewTopNativeComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -29,7 +30,8 @@ var NewTopNativeComponent = (function () {
     NewTopNativeComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
     };
-    NewTopNativeComponent.prototype.ngAfterViewInit = function () { };
+    NewTopNativeComponent.prototype.ngAfterViewInit = function () {
+    };
     NewTopNativeComponent = __decorate([
         core_1.Component({
             selector: 'native-top',

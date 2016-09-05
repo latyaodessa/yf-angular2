@@ -11,6 +11,7 @@ import {PostWorkflow} from './../services/workflow/post.workflow'
 
 
 
+
 @Component({
     selector: 'search',
     templateUrl: 'app/ts/templates/search.component.html',
@@ -35,9 +36,6 @@ export class SearchComponent implements OnInit {
             this.queryTitle = params['query'];
             this.sub = this.postService.findByText(0,20,this.queryTitle).subscribe(data => {
                 this.postListDTO =  this.postWorkflow.postToPostListDTO(data);
-
-                console.log(this.postListDTO);
-
         });
 
     });

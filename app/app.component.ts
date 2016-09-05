@@ -10,6 +10,7 @@ import { MenuComponent } from './ts/components/core/menu.component';
 import {PostWorkflow} from './ts/services/workflow/post.workflow';
 import { CollapseDirective } from 'ng2-bootstrap/components/collapse';
 import {FormBuilder,FormGroup,Validators, FormControl} from '@angular/forms';
+declare var Swiper: any;
 
 
 
@@ -31,6 +32,17 @@ export class AppComponent  {
         if(query) {
             this.router.navigate(['search', query.split(' ').join('+')]);
         }
-
     }
+
+    public isCollapsed:boolean = true;
+
+    public collapsed(event:any):void {
+        console.log(event);
+    }
+
+    public expanded(event:any):void {
+        console.log(event);
+    }
+
+
 }

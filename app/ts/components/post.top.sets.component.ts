@@ -19,6 +19,8 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 export class NewTopSetsComponent implements OnInit {
     private sub:any;
     private postListDTO:PostListDTO[];
+    public title:string = "Топ недели зарубежных моделей";
+
 
 
     constructor(private postService: PostService){}

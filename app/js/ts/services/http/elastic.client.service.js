@@ -22,7 +22,7 @@ var ElasticClient = (function () {
         this.findNativeById = function (id) { return ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_ID + id; };
         this.findByText = function (from, size, textQuery) { return ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_TEXT + textQuery; };
     }
-    ElasticClient.HOST = 'http://10.0.0.37:9200/';
+    ElasticClient.HOST = 'http://raspberrypi.local:9200/';
     ElasticClient.NATIVE_INDEX = ElasticClient.HOST + 'yf-photo-native/_search?';
     ElasticClient.SETS_INDEX = ElasticClient.HOST + 'yf-photo-sets/_search?';
     ElasticClient.NATIVE_TOP_INDEX = ElasticClient.HOST + 'yf-native-top/_search?';

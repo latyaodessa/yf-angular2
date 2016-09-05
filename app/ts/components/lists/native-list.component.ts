@@ -4,13 +4,15 @@ import {PostService} from './../../services/post.service';
 import {ElasticClient} from './../../services/http/elastic.client.service';
 import {YFPostHandler} from './../../services/handlers/yf.post.handlers';
 import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
+import {WindowSize} from './../../services/core/window.size';
+
 
 
 
 @Component({
     selector: 'native-list',
     templateUrl: 'app/ts/templates/lists/lists.component.html',
-    providers: [PostService, ElasticClient, YFPostHandler],
+    providers: [PostService, ElasticClient, YFPostHandler, WindowSize],
     directives: [ ROUTER_DIRECTIVES]
 })
 
@@ -20,31 +22,42 @@ export class NativeListComponent implements OnInit {
     private subParams:any;
     private subNewPosts:any;
     private page:number;
-    private tag: string;
-
-    constructor(private postService: PostService, private route: ActivatedRoute){
-        this.tag = 'native';
-    }
+    public size:number;
+    public tag: string = 'native';
+    constructor(private postService: PostService, private route: ActivatedRoute, private windowSize:WindowSize){}
 
     ngOnInit() {
+        this.windowSize.width$.subscribe(width => {
+            if(width < 768){
+                this.size = 20;
+                this.getPosts(this.size);
+            } else if(width < 992){
+                this.size = 15;
+                this.getPosts(this.size);
+            } else {
+                this.size = 20;
+                this.getPosts(this.size);
+            }
+        });
+    }
+
+    private getPosts(size:number) {
         this.subParams = this.route.params.subscribe(params => {
             if(params['page']){
                 this.page = parseInt(params['page']);
             } else {
                 this.page = 1;
             }
-            let from = ( this.page-1) * 20;
-            console.log(from);
-                this.subNewPosts = this.postService.getYFNativeNew(from, 20).subscribe(data => {
-                    console.log(data);
-                    this.postListDTO = this.postService.postToPostListDTO(data);
-                    this.postsLength = this.postListDTO.length;
-                });
+            let from = ( this.page-1) * size;
+            this.subNewPosts = this.postService.getYFNativeNew(from, size).subscribe(data => {
+                this.postListDTO = this.postService.postToPostListDTO(data);
+                this.postsLength = this.postListDTO.length;
+            });
 
         });
     }
 
-    ngOnDestroy() {
+        ngOnDestroy() {
         this.subParams.unsubscribe();
         this.subNewPosts.unsubscribe();
 

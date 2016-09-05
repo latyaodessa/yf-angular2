@@ -1,8 +1,7 @@
 <div class="container">
     <div class="row">
-        <div *ngFor="let dto of postListDTO">
-            <div class="thumbnail col-xs-4 hovereffect">
-                <a [routerLink]="['/yf', dto.id]"><img class="img-responsive shadow" src={{dto.thumbnail}}/></a>
+            <div class="thumbnail col-xs-6 col-sm-4 col-md-3 hovereffect" *ngFor="let dto of postListDTO">
+              <img class="img-responsive shadow" src={{dto.thumbnail}}/>
                 <div class="overlay">
                     <div class="ul-main-list">
                         <ul class="ph-white"  *ngIf="dto.ph">
@@ -17,7 +16,6 @@
                     </p>
                 </div>
             </div>
-        </div>
     </div>
 </div>
 <div class="container">
@@ -33,7 +31,7 @@
                     </a>
                 </li>
                 <li>
-                    <a  *ngIf="postsLength >=20" routerLink="/{{tag}}/{{page+1}}" class="page-link">
+                    <a  *ngIf="postsLength >=size" routerLink="/{{tag}}/{{page+1}}" class="page-link">
                         <span aria-hidden="true"><img src="/icons/32/right.png"></span>
                     </a>
                 </li>

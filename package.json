@@ -40,7 +40,7 @@
     "ng2-bootstrap": "^1.0.24",
     "moment": "^2.14.1",
     "jquery": "^3.1.0",
-    "lory.js": "^2.1.0"
+    "swiper": "^3.3.1"
 
   },
   "devDependencies": {

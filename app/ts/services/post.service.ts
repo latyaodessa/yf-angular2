@@ -38,8 +38,8 @@ export class PostService {
             .catch(this.yfPostHandler.handleError);
 
     }
-    loadMoreNative(from:number):Observable<Post[]> {
-        return this.http.get(this.elasticClient.getNewYFNative(from, 8))
+    loadMoreNative(from:number, to:number):Observable<Post[]> {
+        return this.http.get(this.elasticClient.getNewYFNative(from, to))
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     }
@@ -63,8 +63,8 @@ export class PostService {
             .catch(this.yfPostHandler.handleError);
 
     }
-    loadMoreSets(from:number):Observable<Post[]> {
-        return this.http.get(this.elasticClient.getNewYFSets(from, 8))
+    loadMoreSets(from:number, to:number):Observable<Post[]> {
+        return this.http.get(this.elasticClient.getNewYFSets(from, to))
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     }

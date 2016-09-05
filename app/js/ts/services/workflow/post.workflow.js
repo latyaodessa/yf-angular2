@@ -83,11 +83,11 @@ var PostWorkflow = (function () {
         }
         return postListDto;
     };
-    PostWorkflow.prototype.findSuggestedPosts = function (posts, currentPostId) {
+    PostWorkflow.prototype.findSuggestedPosts = function (posts, currentPostId, size) {
         var postListDTO = [];
         for (var _i = 0, posts_2 = posts; _i < posts_2.length; _i++) {
             var post = posts_2[_i];
-            if (post.id != currentPostId && postListDTO.length < 4) {
+            if (post.id != currentPostId && postListDTO.length < size) {
                 var cleanText = this.getCleanText(post.text);
                 postListDTO.push(new postListDTO_1.PostListDTO(post.id, this.getMd(cleanText), this.getPh(cleanText), this.findThumbnail(post)));
             }

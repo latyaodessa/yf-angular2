@@ -4,7 +4,7 @@ import { Injectable }     from '@angular/core';
 
 @Injectable()
 export class ElasticClient implements ElasticInterface{
-    public static HOST:string = 'http://10.0.0.37:9200/';
+    public static HOST:string = 'http://raspberrypi.local:9200/';
 
 
     public static NATIVE_INDEX:string = ElasticClient.HOST + 'yf-photo-native/_search?';

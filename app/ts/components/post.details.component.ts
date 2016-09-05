@@ -8,6 +8,7 @@ import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
 import {PostDetailsDTO} from './../objects/dtos/postDetailsDTO';
 
 
+
 @Component({
     selector: 'post-details',
     templateUrl: 'app/ts/templates/post.details.component.html',
