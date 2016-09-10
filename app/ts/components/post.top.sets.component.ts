@@ -7,6 +7,9 @@ import {CORE_DIRECTIVES} from '@angular/common';
 import {FORM_DIRECTIVES} from '@angular/forms';
 import { CAROUSEL_DIRECTIVES } from 'ng2-bootstrap/components/carousel';
 import { ROUTER_DIRECTIVES } from '@angular/router';
+import {MessageConfig} from './../config/message.properties';
+import {SetupConfig} from './../config/setup.config';
+
 
 @Component({
     selector: 'sets-top',
@@ -19,7 +22,9 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 export class NewTopSetsComponent implements OnInit {
     private sub:any;
     private postListDTO:PostListDTO[];
-    public title:string = "Топ недели зарубежных моделей";
+    public title:string = MessageConfig.WEEKLY_TOP_SETS;
+    public show_all_pics = MessageConfig.SHOW_ALL_PICS;
+    public single_route = SetupConfig.SINGLE_POST_ROUTE;
 
 
 

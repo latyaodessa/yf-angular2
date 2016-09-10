@@ -5,14 +5,16 @@ import {ElasticClient} from './../../services/http/elastic.client.service';
 import {YFPostHandler} from './../../services/handlers/yf.post.handlers';
 import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
 import {WindowSize} from './../../services/core/window.size';
-
+import { Title }     from '@angular/platform-browser';
+import {MessageConfig} from './../../config/message.properties';
+import {SetupConfig} from './../../config/setup.config';
 
 
 
 @Component({
     selector: 'native-list',
     templateUrl: 'app/ts/templates/lists/lists.component.html',
-    providers: [PostService, ElasticClient, YFPostHandler, WindowSize],
+    providers: [PostService, ElasticClient, YFPostHandler, WindowSize, Title],
     directives: [ ROUTER_DIRECTIVES]
 })
 
@@ -23,8 +25,13 @@ export class NativeListComponent implements OnInit {
     private subNewPosts:any;
     private page:number;
     public size:number;
-    public tag: string = 'native';
-    constructor(private postService: PostService, private route: ActivatedRoute, private windowSize:WindowSize){}
+    public tag: string = SetupConfig.NATIVE_LIST_ROUTE;
+    public show_all_pics = MessageConfig.SHOW_ALL_PICS;
+    public single_route = SetupConfig.SINGLE_POST_ROUTE;
+
+    constructor(private postService: PostService, private route: ActivatedRoute, private windowSize:WindowSize, private titleService: Title){
+        this.setTitle(MessageConfig.NATIVE_LIST_TITLE)
+    }
 
     ngOnInit() {
         this.windowSize.width$.subscribe(width => {
@@ -61,6 +68,10 @@ export class NativeListComponent implements OnInit {
         this.subParams.unsubscribe();
         this.subNewPosts.unsubscribe();
 
+    }
+
+    public setTitle(title:string) {
+        this.titleService.setTitle(title);
     }
 
 

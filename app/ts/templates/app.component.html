@@ -25,15 +25,22 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a class="mdl-navigation__link" [routerLink]="['/native']">Native</a></li>
-                    <li><a class="mdl-navigation__link" [routerLink]="['/sets']">Sets</a></li>
+                    <li><a class="mdl-navigation__link" [routerLink]="[native_route]">{{NATIVE}}</a></li>
+                    <li><a class="mdl-navigation__link" [routerLink]="[sets_route]">{{SETS}}</a></li>
+                    <li><a class="mdl-navigation__link" [routerLink]="[silhouettes_route]">{{SILHOUETTES}}</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <form class="light">
-                        <input type="text" #searchQuery placeholder="Малышка">
-                        <input type="submit" (click)="search(searchQuery.value)" value="Поиск">
+                    <li>
+                    <form id="1" class="light">
+                        <input type="text" #searchQuery placeholder={{SEARCH_INQUERY}}>
+                        <input type="submit" (click)="search(searchQuery.value)" value={{SEARCH}}>
                     </form>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-default login-button" [routerLink]="[login_route]">{{ENTER}}</button>
+                    </li>
                 </ul>
+
             </div>
         </div>
     </nav>
@@ -52,15 +59,16 @@
     <div id="openModal" class="modalDialog">
         <a class="close-button" (click)="isCollapsed = !isCollapsed"><img src="./../icons/64/close.png"></a>
         <ul class="nav navbar-nav">
-            <li><a class="mdl-navigation__link" [routerLink]="['/']" (click)="isCollapsed = !isCollapsed">Главная</a></li>
-            <li><a class="mdl-navigation__link" [routerLink]="['/native']" (click)="isCollapsed = !isCollapsed">Native</a></li>
-            <li><a class="mdl-navigation__link" [routerLink]="['/sets']" (click)="isCollapsed = !isCollapsed">Sets</a></li>
+            <li><a class="mdl-navigation__link" [routerLink]="['/']" (click)="isCollapsed = !isCollapsed">{{MAIN_PAGE}}</a></li>
+            <li><a class="mdl-navigation__link" [routerLink]="[native_route]" (click)="isCollapsed = !isCollapsed">{{NATIVE}}</a></li>
+            <li><a class="mdl-navigation__link" [routerLink]="[sets_route]" (click)="isCollapsed = !isCollapsed">{{SETS}}</a></li>
+            <li><a class="mdl-navigation__link" [routerLink]="[silhouettes_route]" (click)="isCollapsed = !isCollapsed">{{SILHOUETTES}}</a></li>
         </ul>
 
-        <form class="light">
-            <input type="text" #searchQuery placeholder="Малышка">
-            <input type="submit" (click)="search(searchQuery.value)" (click)="isCollapsed = !isCollapsed" value="Поиск">
-        </form>
+        <!--<form id="2" class="light">-->
+            <!--<input type="text" #searchQuery placeholder={{SEARCH_INQUERY}}>-->
+            <!--<input type="submit" (click)="search(searchQuery.value)" (click)="isCollapsed = !isCollapsed" value={{SEARCH}}>-->
+        <!--</form>-->
         </div>
 </div>
 
@@ -72,7 +80,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-4 column">
-                <div id="slogan">Folks, be social</div>
+                <div id="slogan">{{YF_SLOGAN}}</div>
                 <div id="social-buttons">
                     <a class="social vk-social-button" href="https://vk.com/youngfolks" alt="YoungFolks VK" title="YoungFolks VK" target="_blank"></a>
                     <a class="social icon-social-facebook" href="https://www.facebook.com/WeAreYoungFolks/" alt="YoungFolks Facebook" title="YoungFolks Facebook" target="_blank"></a>

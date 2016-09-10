@@ -5,6 +5,10 @@ import {ElasticClient} from './../services/http/elastic.client.service';
 import {YFPostHandler} from './../services/handlers/yf.post.handlers';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import {WindowSize} from './../services/core/window.size';
+import {MessageConfig} from './../config/message.properties';
+import {SetupConfig} from './../config/setup.config';
+
+
 
 
 
@@ -18,8 +22,10 @@ import {WindowSize} from './../services/core/window.size';
 
 export class NewSetsComponent implements OnInit {
     private isMoreOrShowAll:boolean = true;
-    public route: string = 'sets';
-    public title:string = 'Новые фотографии зарубежных моделей';
+    public title:string = MessageConfig.NEW_SETS_TITLE;
+    public show_all_pics = MessageConfig.SHOW_ALL_PICS;
+    public route: string = SetupConfig.SETS_LIST_ROUTE;
+    public single_route = SetupConfig.SINGLE_POST_ROUTE;
     private sub:any;
     private loadMoreTo:number;
     private postListDTO:PostListDTO[];

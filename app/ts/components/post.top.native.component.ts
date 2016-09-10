@@ -7,7 +7,10 @@ import {CORE_DIRECTIVES} from '@angular/common';
 import {FORM_DIRECTIVES} from '@angular/forms';
 import { CAROUSEL_DIRECTIVES } from 'ng2-bootstrap/components/carousel';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-declare var Masonry: any;
+import {MessageConfig} from './../config/message.properties';
+import {SetupConfig} from './../config/setup.config';
+
+
 
 @Component({
     selector: 'native-top',
@@ -20,7 +23,9 @@ declare var Masonry: any;
 export class NewTopNativeComponent implements OnInit{
     private sub:any;
     private postListDTO:PostListDTO[];
-    public title:string = "Топ недели наших моделей";
+    public title:string = MessageConfig.WEEKLY_TOP_NATIVE;
+    public show_all_pics = MessageConfig.SHOW_ALL_PICS;
+    public single_route = SetupConfig.SINGLE_POST_ROUTE;
 
     constructor(private postService: PostService){
 

@@ -15,13 +15,35 @@ var postlist_component_1 = require('./ts/components/postlist.component');
 var native_list_component_1 = require('./ts/components/lists/native-list.component');
 var search_component_1 = require('./ts/components/search.component');
 var sets_list_component_1 = require('./ts/components/lists/sets-list.component');
+var soical_authorization_component_1 = require('./ts/components/core/soical.authorization.component');
+var login_component_1 = require('./ts/components/core/login.component');
+var silhouettes_list_component_1 = require('./ts/components/lists/silhouettes-list.component');
 var post_details_component_1 = require('./ts/components/post.details.component');
 var post_workflow_1 = require('./ts/services/workflow/post.workflow');
 var collapse_1 = require('ng2-bootstrap/components/collapse');
+var forms_1 = require('@angular/forms');
+var message_properties_1 = require('./ts/config/message.properties');
+var setup_config_1 = require('./ts/config/setup.config');
 var AppComponent = (function () {
     function AppComponent(router) {
         this.router = router;
+        this.MAIN_PAGE = message_properties_1.MessageConfig.MAIN_PAGE;
+        this.SEARCH_INQUERY = message_properties_1.MessageConfig.SEARCH_INQUERY;
+        this.SEARCH = message_properties_1.MessageConfig.SEARCH;
+        this.ENTER = message_properties_1.MessageConfig.ENTER;
+        this.NATIVE = message_properties_1.MessageConfig.NATIVE;
+        this.SETS = message_properties_1.MessageConfig.SETS;
+        this.SILHOUETTES = message_properties_1.MessageConfig.SILHOUETTES;
+        this.YF_SLOGAN = message_properties_1.MessageConfig.YF_SLOGAN;
+        this.sets_route = setup_config_1.SetupConfig.SETS_LIST_ROUTE;
+        this.native_route = setup_config_1.SetupConfig.NATIVE_LIST_ROUTE;
+        this.silhouettes_route = setup_config_1.SetupConfig.SILHOUETTES_LIST_ROUTE;
+        this.login_route = setup_config_1.SetupConfig.LOGIN_ROUTE;
+        this.searchControl = new forms_1.FormControl();
         this.isCollapsed = true;
+        this.searchControl.valueChanges.subscribe(function (value) {
+            // do something with value here
+        });
     }
     AppComponent.prototype.search = function (query) {
         if (query) {
@@ -40,7 +62,7 @@ var AppComponent = (function () {
             templateUrl: 'app/ts/templates/app.component.html',
             directives: [router_1.ROUTER_DIRECTIVES, collapse_1.CollapseDirective],
             providers: [post_workflow_1.PostWorkflow],
-            precompile: [postlist_component_1.PostlistComponent, sets_list_component_1.SetsListComponent, native_list_component_1.NativeListComponent, post_details_component_1.PostDetailsComponent, search_component_1.SearchComponent]
+            precompile: [postlist_component_1.PostlistComponent, sets_list_component_1.SetsListComponent, native_list_component_1.NativeListComponent, post_details_component_1.PostDetailsComponent, search_component_1.SearchComponent, silhouettes_list_component_1.SilhouettesListComponent, soical_authorization_component_1.SocialAuthorizationComponent, login_component_1.LoginComponent]
         }), 
         __metadata('design:paramtypes', [router_1.Router])
     ], AppComponent);

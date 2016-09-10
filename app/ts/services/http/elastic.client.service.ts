@@ -1,14 +1,17 @@
 import {ElasticInterface} from  './elastic.client.interface';
 import { Injectable }     from '@angular/core';
-
+import {SetupConfig} from './../../config/setup.config'
 
 @Injectable()
 export class ElasticClient implements ElasticInterface{
-    public static HOST:string = 'http://raspberrypi.local:9200/';
+    //public static HOST:string = 'http://raspberrypi.local:9200/';
+    public static HOST:string = SetupConfig.ELASTIC_HOST;
 
 
     public static NATIVE_INDEX:string = ElasticClient.HOST + 'yf-photo-native/_search?';
     public static SETS_INDEX:string = ElasticClient.HOST + 'yf-photo-sets/_search?';
+    public static SILHOUETTES_INDEX:string = ElasticClient.HOST + 'yf-photo-silhouettes/_search?';
+
 
     public static NATIVE_TOP_INDEX:string = ElasticClient.HOST + 'yf-native-top/_search?';
     public static SETS_TOP_INDEX:string = ElasticClient.HOST + 'yf-sets-top/_search?';
@@ -29,6 +32,8 @@ export class ElasticClient implements ElasticInterface{
 
     getNewYFNative = (from:number, size:number) => ElasticClient.NATIVE_INDEX + this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_ID;
     getNewYFSets = (from:number, size:number) => ElasticClient.SETS_INDEX + this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_ID;
+
+    getYFSilhouettesNew = (from:number, size:number) => ElasticClient.SILHOUETTES_INDEX + this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_ID;
 
     getYFSetsNativeNew = (from:number, size:number) => ElasticClient.NATIVE_SETS_INDEX + this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_ID;
 

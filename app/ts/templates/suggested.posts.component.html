@@ -1,4 +1,7 @@
-    <div class="thumbnail col-xs-6 col-sm-4 col-md-3 hovereffect" *ngFor="let dto of postListDTO">
+<div class="container">
+    <div class="row margin-bottom-top-10">
+        <h1 class="header ">{{SUGGESTED_POSTS_TITLE}}</h1>
+        <div class="thumbnail col-xs-6 col-sm-4 col-md-3 hovereffect" *ngFor="let dto of postListDTO">
       <img class="img-responsive shadow" src={{dto.thumbnail}}/>
         <div class="overlay">
             <div class="ul-main-list">
@@ -10,7 +13,9 @@
                 </ul>
             </div>
             <p>
-                <a [routerLink]="['/yf', dto.id]">Все фотографии</a>
+                <a [routerLink]="['/' + single_route, dto.id]">{{show_all_pics}}</a>
             </p>
         </div>
+</div>
+    </div>
 </div>

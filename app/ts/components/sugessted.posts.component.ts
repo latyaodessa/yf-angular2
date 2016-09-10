@@ -7,7 +7,8 @@ import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
 import {PostDetailsDTO} from './../objects/dtos/postDetailsDTO';
 import {PostWorkflow} from './../services/workflow/post.workflow'
 import {WindowSize} from './../services/core/window.size';
-
+import {MessageConfig} from './../config/message.properties';
+import {SetupConfig} from './../config/setup.config';
 
 
 
@@ -25,9 +26,12 @@ export class SuggestedPostsComponent implements OnInit {
     private subFindById: any;
     private subSuggestedPost: any;
     private subNewPosts:any;
-
     private postDetailsDTO:PostDetailsDTO;
     private postListDTO:PostListDTO[];
+
+    public SUGGESTED_POSTS_TITLE = MessageConfig.SUGGESTED_POSTS_TITLE;
+    public show_all_pics = MessageConfig.SHOW_ALL_PICS;
+    public single_route = SetupConfig.SINGLE_POST_ROUTE;
 
     constructor(private postService: PostService, private route: ActivatedRoute, private postWorkflow:PostWorkflow, private windowSize:WindowSize){}
 
@@ -46,17 +50,18 @@ export class SuggestedPostsComponent implements OnInit {
     getPosts(size:number){
         this.subParams = this.route.params.subscribe(params => {
             this.subFindById =  this.postService.findYFPostById(params['id']).subscribe(post => {
-                this.postDetailsDTO = this.postService.regexPostText(post[0]);
-                let query = (this.postDetailsDTO.md + " " +  this.postDetailsDTO.ph).split(" ").toString();
+                    this.postDetailsDTO = this.postService.regexPostText(post[0]);
+                    let query = (this.postDetailsDTO.md + " " + this.postDetailsDTO.ph).split(" ").toString();
 
-                this.subSuggestedPost = this.postService.findByText(0,20,query).subscribe(data => {
-                    this.postListDTO =  this.postWorkflow.findSuggestedPosts(data, this.postDetailsDTO.id, size);
-                    if(this.postListDTO.length < size){
-                        this.subNewPosts = this.postService.getYFSetsNativeNew(0,size-this.postListDTO.length).subscribe(data => {
-                            this.postListDTO = this.postListDTO.concat(this.postService.postToPostListDTO(data));
-                        });
-                    }
-                });
+                    this.subSuggestedPost = this.postService.findByText(0, 20, query).subscribe(data => {
+                        this.postListDTO = this.postWorkflow.findSuggestedPosts(data, this.postDetailsDTO.id, size);
+                        if (this.postListDTO.length < size) {
+                            this.subNewPosts = this.postService.getYFSetsNativeNew(0, size - this.postListDTO.length).subscribe(data => {
+                                this.postListDTO = this.postListDTO.concat(this.postService.postToPostListDTO(data));
+                            });
+                        }
+                    });
+
             });
         });
     }

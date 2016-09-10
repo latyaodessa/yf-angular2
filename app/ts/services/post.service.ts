@@ -44,6 +44,12 @@ export class PostService {
             .catch(this.yfPostHandler.handleError);
     }
 
+//Categories LISTS
+    getYFSilhouettesNew(from:number, size:number):Observable<Post[]> {
+        return this.http.get(this.elasticClient.getYFSilhouettesNew(from, size))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+    }
 
     getYFSetsNew(from:number, size:number):Observable<Post[]> {
         return this.http.get(this.elasticClient.getNewYFSets(from, size))

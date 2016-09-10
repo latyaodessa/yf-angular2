@@ -13,7 +13,7 @@
                         </ul>
                         </div>
                     <p>
-                        <a [routerLink]="['/yf', dto.id]">Все фотографии</a>
+                        <a [routerLink]="['/' + single_route, dto.id]">{{show_all_pics}}</a>
                     </p>
                 </div>
             </div>
@@ -23,5 +23,5 @@
 <div class="container under-button">
 
 <a  *ngIf="isMoreOrShowAll" (click)="loadMore()"> <img src="/icons/64/load-more.png"></a>
-<a  *ngIf="isMoreOrShowAll == false" [routerLink]="[route]"><img src="/icons/64/load-more.png"></a>
+<a  *ngIf="isMoreOrShowAll == false" [routerLink]="['/' + route]"><img src="/icons/64/load-more.png"></a>
 </div>
