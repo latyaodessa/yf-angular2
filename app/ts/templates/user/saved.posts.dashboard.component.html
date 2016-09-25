@@ -1,0 +1,27 @@
+<div class="container no-content-dashboard"  *ngIf="postListDTO.length == 0">
+    <h1>{{NO_SAVED_POSTS}}</h1>
+</div>
+<div class="container dashboard-right-container" *ngIf="postListDTO.length > 0">
+    <h1 class="header">{{title}}</h1>
+    <div class="row">
+        <div class="thumbnail col-xs-6 col-sm-4 col-md-4 hovereffect" *ngFor="let dto of postListDTO">
+            <img class="img-responsive shadow" src={{dto.thumbnail}}/>
+            <div class="overlay"  [routerLink]="['/' + single_route, dto.id]">
+                <div class="ul-main-list">
+                    <img class="delete-saved-post" (click) = "deleteSavedPost(dto.id)" src="/icons/32/delete.png">
+                    <ul class="ph-white"  *ngIf="dto.ph">
+                        <li>{{dto.ph}}</li>
+                    </ul>
+                    <ul class="md-white" *ngIf="dto.md">
+                        <li>{{dto.md}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="container under-button"  *ngIf="postListDTO.length > 0">
+
+    <a *ngIf="loadMorePostPossible" (click)="loadMore()"> <img src="/icons/64/load-more.png"></a>
+</div>

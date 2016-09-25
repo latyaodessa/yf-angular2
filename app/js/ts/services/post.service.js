@@ -19,6 +19,8 @@ var PostService = (function () {
         this.elasticClient = elasticClient;
         this.yfPostHandler = yfPostHandler;
         this.postWorkflow = postWorkflow;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.options = new http_1.RequestOptions({ headers: this.headers });
     }
     PostService.prototype.findYFPostById = function (id) {
         return this.http.get(this.elasticClient.findNativeById(id))
@@ -79,6 +81,27 @@ var PostService = (function () {
     };
     PostService.prototype.postToPostListDTO = function (posts) {
         return this.postWorkflow.postToPostListDTO(posts);
+    };
+    PostService.prototype.loadMoreSavedPost = function (from, to) {
+        return this.http.get(this.elasticClient.getNewYFNative(from, to))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+    };
+    PostService.prototype.getAllPostIdsFromSavedPost = function (savedPosts) {
+        var post_ids = [];
+        for (var _i = 0, savedPosts_1 = savedPosts; _i < savedPosts_1.length; _i++) {
+            var saved = savedPosts_1[_i];
+            post_ids.push(saved.post_id);
+        }
+        return post_ids;
+    };
+    PostService.prototype.getPostsByMultipleIds = function (savedPosts) {
+        var body;
+        var ids = this.getAllPostIdsFromSavedPost(savedPosts);
+        body = JSON.stringify({ query: { constant_score: { filter: { terms: { id: ids } } } } }, null, ' ');
+        return this.http.post(elastic_client_service_1.ElasticClient.NATIVE_SETS_INDEX, body, this.options)
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
     };
     PostService = __decorate([
         core_1.Injectable(), 

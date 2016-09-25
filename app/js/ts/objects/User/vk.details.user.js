@@ -1,6 +1,7 @@
 "use strict";
 var VKUserDetails = (function () {
-    function VKUserDetails(first_name, last_name, sex, nickname, maiden_name, bdate, photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, site, verified, followers_count, interests, music, activities, movies, books, games, about, quotes, city, country) {
+    function VKUserDetails(id, first_name, last_name, sex, nickname, maiden_name, bdate, photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, site, verified, followers_count, interests, music, activities, movies, books, games, about, quotes, city, country) {
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.sex = sex;

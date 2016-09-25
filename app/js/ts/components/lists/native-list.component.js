@@ -68,6 +68,9 @@ var NativeListComponent = (function () {
     NativeListComponent.prototype.setTitle = function (title) {
         this.titleService.setTitle(title);
     };
+    NativeListComponent.prototype.scrollToTop = function () {
+        window.scrollTo(0, 0);
+    };
     NativeListComponent = __decorate([
         core_1.Component({
             selector: 'native-list',

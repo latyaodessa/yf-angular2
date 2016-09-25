@@ -1,5 +1,6 @@
 import {VKUserCityCountry} from './vk.user.city.country';
 export class VKUserDetails {
+    id:number;
     first_name:string;
     last_name:string;
     sex:number;
@@ -27,11 +28,12 @@ export class VKUserDetails {
 
 
 
-    constructor(first_name:string, last_name:string, sex:number, nickname:string, maiden_name:string,
+    constructor(id:number,first_name:string, last_name:string, sex:number, nickname:string, maiden_name:string,
                 bdate:string, photo_50:string, photo_100:string, photo_200_orig:string, photo_200:string, photo_400_orig:string,
                 site:string, verified:number, followers_count:number, interests:string, music:string, activities:string,
                 movies:string, books:string, games:string, about:string, quotes:string, city:VKUserCityCountry, country:VKUserCityCountry){
 
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.sex = sex;

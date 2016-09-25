@@ -8,13 +8,17 @@ import {Observable} from 'rxjs/Observable';
 import {ElasticUserClient} from './http/elastic.user.client.service';
 import {VKUserDetails} from './../objects/user/vk.details.user'
 import {GeneralUser} from './../objects/user/general.user'
+import {UserWorkflow} from './workflow/user.workflow';
+import {StorageService} from './authorization/storage.service'
+
 
 
 @Injectable()
 export class AuthorizationService {
     private params:string;
     private generalUser:GeneralUser;
-    constructor(private http:Http, private elasticClient:ElasticClient, private yFUserHandler:YFUserHandler, private vkRestClient:VKRestClient, private elasticUserClient:ElasticUserClient){}
+    private vKUserDetails:VKUserDetails;
+    constructor(private http:Http, private yFUserHandler:YFUserHandler, private vkRestClient:VKRestClient, private elasticUserClient:ElasticUserClient, private userWorkflow:UserWorkflow,private storageService:StorageService){}
 
     getToken(){
         return this.params.match(/^(.*?)&/)[1].replace('#access_token=', '');
@@ -31,44 +35,59 @@ export class AuthorizationService {
         this.getGeneralUserDataById(this.getUserId()).subscribe( user  => {
             if(user){
                 this.generalUser = user;
-                this.setLocalStorageGeneralUser();
-                this.defineUserType(from);
+                this.getVKUserDetailsByIdELASTIC(this.generalUser.id).subscribe( vkUser => {
+                    this.vKUserDetails = vkUser
+
+                    this.setSessionLocalStorageGeneralUser();
+                    this.defineUserType(from);
+                    this.storeUserDataInStorage();
+                });
+
             } else {
                 this.createNewVKUser(this.getUserId()).subscribe( vkUser  => {
-                    this.generalUser = vkUser;
-                    this.setLocalStorageGeneralUser();
+                    this.vKUserDetails = vkUser;
+                    this.generalUser = this.userWorkflow.vkUserToGeneralUser(this.vKUserDetails.id);
+                    this.setSessionLocalStorageGeneralUser();
                     this.defineUserType(from);
+                    this.storeUserDataInStorage();
+
                 });
             }
         })
     }
 
+    storeUserDataInStorage(){
+        this.storageService.checkIsUserLoggedIn();
+        this.storageService.getVkUserDTO();
+    }
+
     defineUserType(from:string){
         if(from == 'vk'){
-            console.log(from);
             this.setLocalStorageVKUser();
         }
     }
 
-    setLocalStorageGeneralUser(){
+    setSessionLocalStorageGeneralUser(){
         localStorage.clear();
-        localStorage.setItem(SetupConfig.TOKEN_KEY_NAME, this.getToken());
-        localStorage.setItem(SetupConfig.EXPIRES_IN_NAME, this.getExpiresTime());
+        sessionStorage.clear();
+        sessionStorage.setItem(SetupConfig.TOKEN_KEY_NAME, this.getToken());
+        sessionStorage.setItem(SetupConfig.EXPIRES_IN_NAME, this.getExpiresTime());
+
         localStorage.setItem(SetupConfig.USER_ID_NAME,this.getUserId());
         localStorage.setItem(SetupConfig.USER_TYPE_NAME, this.generalUser.type);
     }
     setLocalStorageVKUser(){
-      this.getVKUserDetailsByIdELASTIC(this.getUserId()).subscribe( vkUser  => {
-          let vKUserDetails:VKUserDetails = vkUser[0];
-          localStorage.setItem(SetupConfig.FIRST_NAME_KEY_NAME, vKUserDetails.first_name);
-          localStorage.setItem(SetupConfig.LAST_NAME_KEY_NAME, vKUserDetails.last_name);
-          localStorage.setItem(SetupConfig.PHOTO_50_KEY_NAME, vKUserDetails.photo_50);
+          localStorage.setItem(SetupConfig.FIRST_NAME_KEY_NAME, this.vKUserDetails.first_name);
+          localStorage.setItem(SetupConfig.LAST_NAME_KEY_NAME, this.vKUserDetails.last_name);
+          localStorage.setItem(SetupConfig.THUMBNAIL, this.vKUserDetails.photo_200);
 
-      })
+        window.location.href='/dashboard';
+
+
     }
 
 
-    getGeneralUserDataById(userId:number){
+    getGeneralUserDataById(userId:string){
         return this.http.get(this.vkRestClient.getGeneralUserById(userId))
             .map(this.yFUserHandler.extractData)
             .catch(this.yFUserHandler.handleError);
@@ -80,9 +99,9 @@ export class AuthorizationService {
             .catch(this.yFUserHandler.handleError);
     }
 
-    createNewVKUser(userId:number){
+    createNewVKUser(userId:string){
 
-        return this.http.post(this.vkRestClient.createNewVKUser(userId))
+        return this.http.post(this.vkRestClient.createNewVKUser(userId),"")
             .map(this.yFUserHandler.extractData)
             .catch(this.yFUserHandler.handleError);
 

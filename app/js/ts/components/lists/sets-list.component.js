@@ -67,6 +67,9 @@ var SetsListComponent = (function () {
     SetsListComponent.prototype.setTitle = function (title) {
         this.titleService.setTitle(title);
     };
+    SetsListComponent.prototype.scrollToTop = function () {
+        window.scrollTo(0, 0);
+    };
     SetsListComponent = __decorate([
         core_1.Component({
             selector: 'native-list',

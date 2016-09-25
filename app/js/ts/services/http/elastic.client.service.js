@@ -23,19 +23,27 @@ var ElasticClient = (function () {
         this.getYFSetsTop = function (from, size) { return ElasticClient.SETS_TOP_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_LIKES; };
         this.findNativeById = function (id) { return ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_ID + id; };
         this.findByText = function (from, size, textQuery) { return ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_TEXT + textQuery; };
+        //User Dashboard
+        this.getSavedUserPosts = function (from, size, userId) { return ElasticClient.USER_SAVED_POSTS_INDEX + ElasticClient.SEARCH_BY_USER_ID + userId + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_DATE; };
+        this.getSavedUserPhotos = function (from, size, userId) { return ElasticClient.USER_SAVED_PHOTOS_INDEX + ElasticClient.SEARCH_BY_USER_ID + userId + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_DATE; };
     }
     //public static HOST:string = 'http://raspberrypi.local:9200/';
     ElasticClient.HOST = setup_config_1.SetupConfig.ELASTIC_HOST;
     ElasticClient.NATIVE_INDEX = ElasticClient.HOST + 'yf-photo-native/_search?';
     ElasticClient.SETS_INDEX = ElasticClient.HOST + 'yf-photo-sets/_search?';
     ElasticClient.SILHOUETTES_INDEX = ElasticClient.HOST + 'yf-photo-silhouettes/_search?';
+    //Dashboard
+    ElasticClient.USER_SAVED_POSTS_INDEX = ElasticClient.HOST + 'user-saved-post/_search?';
+    ElasticClient.USER_SAVED_PHOTOS_INDEX = ElasticClient.HOST + 'user-saved-photo/_search?';
     ElasticClient.NATIVE_TOP_INDEX = ElasticClient.HOST + 'yf-native-top/_search?';
     ElasticClient.SETS_TOP_INDEX = ElasticClient.HOST + 'yf-sets-top/_search?';
     ElasticClient.NATIVE_SETS_INDEX = ElasticClient.HOST + 'yf-photo-native,yf-photo-sets/_search?';
     ElasticClient.SEARCH_BY_ID = 'q=_id:';
     ElasticClient.SEARCH_BY_TEXT = '&q=text:';
+    ElasticClient.SEARCH_BY_USER_ID = '&q=user_id:';
     ElasticClient.DESC_BY_ID = '&sort=id:desc';
     ElasticClient.DESC_BY_LIKES = '&sort=likes:desc';
+    ElasticClient.DESC_BY_DATE = '&sort=date:desc';
     ElasticClient = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

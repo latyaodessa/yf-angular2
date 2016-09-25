@@ -11,6 +11,14 @@ var YFPostHandler = (function () {
         });
         return this.posts || {};
     };
+    YFPostHandler.prototype.extractSinglePhotosData = function (res) {
+        var _this = this;
+        this.singlePhotoListDTO = [];
+        res.json().hits.hits.forEach(function (entry) {
+            _this.singlePhotoListDTO.push(entry._source);
+        });
+        return this.singlePhotoListDTO;
+    };
     YFPostHandler.prototype.handleError = function (error) {
         var errMsg = (error.message) ? error.message :
             error.status ? error.status + " - " + error.statusText : 'Server error';

@@ -4,10 +4,11 @@ import {SuggestedPostsComponent} from './../components/sugessted.posts.component
 import {ElasticClient} from './../services/http/elastic.client.service';
 import {YFPostHandler} from './../services/handlers/yf.post.handlers'
 import { Observable } from 'rxjs/Observable';
-import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
+import { ROUTER_DIRECTIVES, ActivatedRoute, Router } from '@angular/router';
 import {PostDetailsDTO} from './../objects/dtos/postDetailsDTO';
 import {PostListDTO} from './../objects/dtos/postListDTO';
 import {PostWorkflow} from './../services/workflow/post.workflow'
+import {MessageConfig} from './../config/message.properties'
 
 
 
@@ -20,30 +21,39 @@ import {PostWorkflow} from './../services/workflow/post.workflow'
 })
 
 export class SearchComponent implements OnInit {
-    private sub:any;
-    private subParams:any;
     private postListDTO:PostListDTO[];
     private queryTitle:string;
+    private SEARCH_INQUERY = MessageConfig.SEARCH_INQUERY;
+    private SEARCH = MessageConfig.SEARCH;
+    private NOTING_FOUND = MessageConfig.NOTING_FOUND;
 
 
 
-    constructor(private postService: PostService, private route: ActivatedRoute, private postWorkflow:PostWorkflow){}
+
+    constructor(private router: Router, private postService: PostService, private route: ActivatedRoute, private postWorkflow:PostWorkflow){}
 
 
     ngOnInit() {
         this.postListDTO = [];
-        this.subParams = this.route.params.subscribe(params => {
+        this.route.params.subscribe(params => {
             this.queryTitle = params['query'];
-            this.sub = this.postService.findByText(0,20,this.queryTitle).subscribe(data => {
-                this.postListDTO =  this.postWorkflow.postToPostListDTO(data);
-        });
+            if(this.queryTitle) {
+               this.postService.findByText(0, 20, this.queryTitle).subscribe(data => {
+                    this.postListDTO = this.postWorkflow.postToPostListDTO(data);
+                });
+            }else {
+                console.log(this.queryTitle);
+            }
 
     });
-    }
 
-    ngOnDestroy() {
-        this.sub.unsubscribe();
-        this.subParams.unsubscribe();
 
     }
+
+    search(query:string) {
+        if(query) {
+            this.router.navigate(['search', query.split(' ').join('+')]);
+        }
+    }
+
 }

@@ -10,15 +10,12 @@ import {PostDetailsDTO} from './../../objects/dtos/postDetailsDTO';
 import {PostListDTO} from './../../objects/dtos/postListDTO';
 import {AuthorizationService} from './../../services/authorization.service'
 import {VKRestClient} from './../../services/http/vk.rest.client'
-
-
-
-
+import {UserWorkflow} from './../../services/workflow/user.workflow';
 
 @Component({
     selector: 'authorization',
-    templateUrl: 'app/ts/templates/core/social.authorization.component.html',
-    providers: [PostService, ElasticClient, ElasticUserClient, YFUserHandler, YFPostHandler, AuthorizationService,VKRestClient],
+    template: '',
+    providers: [PostService, ElasticClient, ElasticUserClient, YFUserHandler, YFPostHandler, AuthorizationService,VKRestClient, UserWorkflow],
     directives: [ROUTER_DIRECTIVES]
 })
 
@@ -36,13 +33,13 @@ export class SocialAuthorizationComponent implements OnInit {
         fragment.subscribe(params => {
             authorizationService.authorizeUser(window.location.hash, from);
         });
+
+
     }
 
 
     ngOnInit() {
-        //this.route.params.subscribe(params => {
-        //    console.log(params['access']);
-        //})
+
     }
 
     ngOnDestroy() {

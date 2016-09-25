@@ -3,6 +3,7 @@
         <slide class="hovereffect" *ngFor="let dto of postListDTO; let index=index">
             <img src={{dto.thumbnail}}/>
             <h2 class="text-over"><span>{{title}}</span></h2>
+            <a [routerLink]="['/' + single_route, dto.id]">
             <div class="overlay">
                 <div class="ul-main-list">
                     <ul class="ph-white"  *ngIf="dto.ph">
@@ -12,10 +13,8 @@
                         <li>{{dto.md}}</li>
                     </ul>
                 </div>
-                <p>
-                    <a [routerLink]="['/' + single_route, dto.id]">{{show_all_pics}}</a>
-                </p>
             </div>
+            </a>
         </slide>
     </carousel>
 </div>

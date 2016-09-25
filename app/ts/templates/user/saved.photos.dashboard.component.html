@@ -1,0 +1,38 @@
+<div class="container no-content-dashboard"  *ngIf="singlePhotoListDTO.length == 0">
+    <h1>{{NO_SAVED_PHOTOS}}</h1>
+</div>
+
+<div class="container dashboard-right-container"  *ngIf="singlePhotoListDTO.length > 0">
+    <h1 class="header">{{title}}</h1>
+    <div class="row">
+        <div class="thumbnail col-xs-6 col-sm-4 col-md-4 hovereffect" *ngFor="let dto of singlePhotoListDTO">
+
+            <img class="img-responsive shadow" src={{dto.photo_url}}/>
+                <div class="overlay" (click) = "openLargeImage(dto.photo_url, dto.post_id)">
+                    <div class="ul-main-list">
+                        <img class="delete-saved-post" (click) = "deleteSavedPhoto(dto.id)" src="/icons/32/delete.png">
+                        <ul class="ph-white"  *ngIf="dto.ph">
+                            <li>{{dto.ph}}</li>
+                        </ul>
+                        <ul class="md-white" *ngIf="dto.md">
+                            <li>{{dto.md}}</li>
+                        </ul>
+                    </div>
+                    <!--<p>-->
+                        <!--<a (click) = "openLargeImage(dto.photo_url, dto.post_id)">{{OPEN_SINGLE_POST}}</a>-->
+                    <!--</p>-->
+            </div>
+    </div>
+</div>
+</div>
+<div id="open-modal" class="modal-window"
+     [collapse]="isCollapsedModal" (click)="isCollapsedModal = !isCollapsedModal"
+     *ngIf="singlePhotoListDTO.length > 0">
+    <img class="large-img shadow" src={{POPUP_PHOTO}}>
+    <h2 class="text-over large-img-text-over" [routerLink]="['/' + single_route, POPPUP_POST_ID]"><span>{{SHOW_ALL_PICS_FULL}}</span></h2>
+ </div>
+
+
+<div class="container under-button"  *ngIf="singlePhotoListDTO.length > 0">
+    <a *ngIf="loadMorePostPossible" (click)="loadMore()"> <img src="/icons/64/load-more.png"></a>
+</div>

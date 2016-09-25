@@ -12,7 +12,6 @@ var core_1 = require('@angular/core');
 var setup_config_1 = require('./../../config/setup.config');
 var VKRestClient = (function () {
     function VKRestClient() {
-        this.USER_REST_PATH = [setup_config_1.SetupConfig.YF_HOST, setup_config_1.SetupConfig.YF_MODULE, setup_config_1.SetupConfig.REST_BASIS, setup_config_1.SetupConfig.REST_PATH_USER];
         this.getGeneralUserById = function (id) { return [setup_config_1.SetupConfig.YF_HOST, setup_config_1.SetupConfig.YF_MODULE, setup_config_1.SetupConfig.REST_BASIS,
             setup_config_1.SetupConfig.REST_PATH_USER, setup_config_1.SetupConfig.REST_METHOD_GET, id].join("/"); };
         this.createNewVKUser = function (id) { return [setup_config_1.SetupConfig.YF_HOST, setup_config_1.SetupConfig.YF_MODULE, setup_config_1.SetupConfig.REST_BASIS,

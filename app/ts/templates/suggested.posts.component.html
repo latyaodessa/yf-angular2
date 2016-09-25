@@ -3,6 +3,7 @@
         <h1 class="header ">{{SUGGESTED_POSTS_TITLE}}</h1>
         <div class="thumbnail col-xs-6 col-sm-4 col-md-3 hovereffect" *ngFor="let dto of postListDTO">
       <img class="img-responsive shadow" src={{dto.thumbnail}}/>
+            <a [routerLink]="['/' + single_route, dto.id]">
         <div class="overlay">
             <div class="ul-main-list">
                 <ul class="ph-white"  *ngIf="dto.ph">
@@ -12,10 +13,8 @@
                     <li>{{dto.md}}</li>
                 </ul>
             </div>
-            <p>
-                <a [routerLink]="['/' + single_route, dto.id]">{{show_all_pics}}</a>
-            </p>
         </div>
+            </a>
 </div>
     </div>
 </div>

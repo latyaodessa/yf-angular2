@@ -3,6 +3,7 @@ var Observable_1 = require('rxjs/Observable');
 var setup_config_1 = require('./../../config/setup.config');
 var YFUserHandler = (function () {
     function YFUserHandler() {
+        this.extractDataFromElastic = function (res) { return res.json().hits.hits[0]._source; };
     }
     YFUserHandler.prototype.extractData = function (res) {
         if (res.status == setup_config_1.SetupConfig.RES_NO_CONTENT_204) {
@@ -10,13 +11,11 @@ var YFUserHandler = (function () {
         }
         return res.json() || {};
     };
-    YFUserHandler.prototype.extractDataFromElastic = function (res) {
-        var _this = this;
-        this.vKUserDetails = [];
-        res.json().hits.hits.forEach(function (entry) {
-            _this.vKUserDetails.push(entry._source);
-        });
-        return this.vKUserDetails || {};
+    YFUserHandler.prototype.extractBoolean = function (res) {
+        if (res.status == setup_config_1.SetupConfig.RES_NO_CONTENT_204) {
+            return null;
+        }
+        return Boolean(res.json());
     };
     YFUserHandler.prototype.handleError = function (error) {
         var errMsg = (error.message) ? error.message :

@@ -3,17 +3,6 @@
 <div class="container navtop">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <!--<div class="navbar-header">-->
-                <!--<button type="button" class="navbar-toggle collapsed"  (click)="isCollapsed = !isCollapsed">-->
-                    <!--<span class="sr-only">Toggle navigation</span>-->
-                    <!--<span class="icon-bar"></span>-->
-                    <!--<span class="icon-bar"></span>-->
-                    <!--<span class="icon-bar"></span>-->
-                <!--</button>-->
-                <!--&lt;!&ndash;<a class="navbar-brand" href="#">Project name</a>&ndash;&gt;-->
-
-                <!--<div id="logo"><a class="mdl-navigation__link" [routerLink]="['/']">YF</a></div>-->
-            <!--</div>-->
             <div class="navbar-header">
                 <div id="logo"><a class="mdl-navigation__link" [routerLink]="['/']">YF</a></div>
                 <button type="button" class="navbar-toggle collapsed"  (click)="isCollapsed = !isCollapsed">
@@ -21,23 +10,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <!--<img class="mobile-open-botton" src="./../icons/35/open-eye.png" (click)="isCollapsed = !isCollapsed">-->
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a class="mdl-navigation__link" [routerLink]="[native_route]">{{NATIVE}}</a></li>
                     <li><a class="mdl-navigation__link" [routerLink]="[sets_route]">{{SETS}}</a></li>
-                    <li><a class="mdl-navigation__link" [routerLink]="[silhouettes_route]">{{SILHOUETTES}}</a></li>
+                    <!--<li><a class="mdl-navigation__link" [routerLink]="[silhouettes_route]">{{SILHOUETTES}}</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                    <form id="1" class="light">
-                        <input type="text" #searchQuery placeholder={{SEARCH_INQUERY}}>
-                        <input type="submit" (click)="search(searchQuery.value)" value={{SEARCH}}>
-                    </form>
+                    <li class="search-box">
+                        <img src="./../icons/32/search.png" class="img-responsive search-icon" [routerLink]="[search_route]">
                     </li>
-                    <li>
-                        <button type="button" class="btn btn-default login-button" [routerLink]="[login_route]">{{ENTER}}</button>
+                    <li *ngIf="!isLoggedIn">
+                        <a class="mdl-navigation__link" [routerLink]="[login_route]">{{ENTER}}</a>
+                    </li>
+                    <li *ngIf="isLoggedIn">
+                        <div id="top-bar-img-container">
+                        <img [routerLink]="[dashboard_route]" id="avatar-bar" src={{vkStorageUserDTO.photo_50}}>
+                        </div>
                     </li>
                 </ul>
 
@@ -58,17 +48,19 @@
 
     <div id="openModal" class="modalDialog">
         <a class="close-button" (click)="isCollapsed = !isCollapsed"><img src="./../icons/64/close.png"></a>
+        <div id="search-login-mobile">
+            <img src="./../icons/64/search_white.png" class="img-responsive search-icon-mobile" [routerLink]="[search_route]" (click)="isCollapsed = !isCollapsed">
+            <a class="login-mobile" *ngIf="!isLoggedIn" [routerLink]="[login_route]" (click)="isCollapsed = !isCollapsed">{{ENTER}}</a>
+            <a class="login-mobile" *ngIf="isLoggedIn" (click)="logout()" (click)="isCollapsed = !isCollapsed">{{EXIT}}</a>
+            <img class="thumbnail-mobile" *ngIf="isLoggedIn"  [routerLink]="[dashboard_route]" src={{vkStorageUserDTO.photo_50}} (click)="isCollapsed = !isCollapsed">
+        </div>
+
         <ul class="nav navbar-nav">
             <li><a class="mdl-navigation__link" [routerLink]="['/']" (click)="isCollapsed = !isCollapsed">{{MAIN_PAGE}}</a></li>
             <li><a class="mdl-navigation__link" [routerLink]="[native_route]" (click)="isCollapsed = !isCollapsed">{{NATIVE}}</a></li>
             <li><a class="mdl-navigation__link" [routerLink]="[sets_route]" (click)="isCollapsed = !isCollapsed">{{SETS}}</a></li>
-            <li><a class="mdl-navigation__link" [routerLink]="[silhouettes_route]" (click)="isCollapsed = !isCollapsed">{{SILHOUETTES}}</a></li>
+            <!--<li><a class="mdl-navigation__link" [routerLink]="[silhouettes_route]" (click)="isCollapsed = !isCollapsed">{{SILHOUETTES}}</a></li>-->
         </ul>
-
-        <!--<form id="2" class="light">-->
-            <!--<input type="text" #searchQuery placeholder={{SEARCH_INQUERY}}>-->
-            <!--<input type="submit" (click)="search(searchQuery.value)" (click)="isCollapsed = !isCollapsed" value={{SEARCH}}>-->
-        <!--</form>-->
         </div>
 </div>
 

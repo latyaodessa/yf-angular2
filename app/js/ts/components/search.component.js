@@ -15,25 +15,36 @@ var elastic_client_service_1 = require('./../services/http/elastic.client.servic
 var yf_post_handlers_1 = require('./../services/handlers/yf.post.handlers');
 var router_1 = require('@angular/router');
 var post_workflow_1 = require('./../services/workflow/post.workflow');
+var message_properties_1 = require('./../config/message.properties');
 var SearchComponent = (function () {
-    function SearchComponent(postService, route, postWorkflow) {
+    function SearchComponent(router, postService, route, postWorkflow) {
+        this.router = router;
         this.postService = postService;
         this.route = route;
         this.postWorkflow = postWorkflow;
+        this.SEARCH_INQUERY = message_properties_1.MessageConfig.SEARCH_INQUERY;
+        this.SEARCH = message_properties_1.MessageConfig.SEARCH;
+        this.NOTING_FOUND = message_properties_1.MessageConfig.NOTING_FOUND;
     }
     SearchComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.postListDTO = [];
-        this.subParams = this.route.params.subscribe(function (params) {
+        this.route.params.subscribe(function (params) {
             _this.queryTitle = params['query'];
-            _this.sub = _this.postService.findByText(0, 20, _this.queryTitle).subscribe(function (data) {
-                _this.postListDTO = _this.postWorkflow.postToPostListDTO(data);
-            });
+            if (_this.queryTitle) {
+                _this.postService.findByText(0, 20, _this.queryTitle).subscribe(function (data) {
+                    _this.postListDTO = _this.postWorkflow.postToPostListDTO(data);
+                });
+            }
+            else {
+                console.log(_this.queryTitle);
+            }
         });
     };
-    SearchComponent.prototype.ngOnDestroy = function () {
-        this.sub.unsubscribe();
-        this.subParams.unsubscribe();
+    SearchComponent.prototype.search = function (query) {
+        if (query) {
+            this.router.navigate(['search', query.split(' ').join('+')]);
+        }
     };
     SearchComponent = __decorate([
         core_1.Component({
@@ -42,7 +53,7 @@ var SearchComponent = (function () {
             providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler],
             directives: [router_1.ROUTER_DIRECTIVES, sugessted_posts_component_1.SuggestedPostsComponent]
         }), 
-        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, post_workflow_1.PostWorkflow])
+        __metadata('design:paramtypes', [router_1.Router, post_service_1.PostService, router_1.ActivatedRoute, post_workflow_1.PostWorkflow])
     ], SearchComponent);
     return SearchComponent;
 }());

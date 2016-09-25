@@ -70,4 +70,9 @@ export class SetsListComponent implements OnInit {
         this.titleService.setTitle(title);
     }
 
+
+    public scrollToTop(){
+        window.scrollTo(0, 0);
+    }
+
 }

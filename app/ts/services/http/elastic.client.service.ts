@@ -11,6 +11,10 @@ export class ElasticClient implements ElasticInterface{
     public static NATIVE_INDEX:string = ElasticClient.HOST + 'yf-photo-native/_search?';
     public static SETS_INDEX:string = ElasticClient.HOST + 'yf-photo-sets/_search?';
     public static SILHOUETTES_INDEX:string = ElasticClient.HOST + 'yf-photo-silhouettes/_search?';
+    //Dashboard
+    public static USER_SAVED_POSTS_INDEX:string = ElasticClient.HOST + 'user-saved-post/_search?';
+    public static USER_SAVED_PHOTOS_INDEX:string = ElasticClient.HOST + 'user-saved-photo/_search?';
+
 
 
     public static NATIVE_TOP_INDEX:string = ElasticClient.HOST + 'yf-native-top/_search?';
@@ -20,10 +24,13 @@ export class ElasticClient implements ElasticInterface{
 
     public static SEARCH_BY_ID = 'q=_id:';
     public static SEARCH_BY_TEXT= '&q=text:';
+    public static SEARCH_BY_USER_ID = '&q=user_id:';
+
 
 
     public static DESC_BY_ID:string = '&sort=id:desc';
     public static DESC_BY_LIKES:string = '&sort=likes:desc';
+    public static DESC_BY_DATE:string = '&sort=date:desc';
 
 
     getSize = (size:number) => '&size='+size;
@@ -45,5 +52,8 @@ export class ElasticClient implements ElasticInterface{
     findByText = (from:number, size:number, textQuery:string) => ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_TEXT + textQuery;
 
 
+    //User Dashboard
+    getSavedUserPosts = (from:number, size:number, userId:number) => ElasticClient.USER_SAVED_POSTS_INDEX + ElasticClient.SEARCH_BY_USER_ID  + userId+ this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_DATE;
 
+    getSavedUserPhotos = (from:number, size:number, userId:number) => ElasticClient.USER_SAVED_PHOTOS_INDEX + ElasticClient.SEARCH_BY_USER_ID  + userId+ this.getFrom(from) + this.getSize(size) + ElasticClient.DESC_BY_DATE;
 }

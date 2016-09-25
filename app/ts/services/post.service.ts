@@ -2,17 +2,24 @@ import {Post} from './../objects/post';
 import {ElasticClient} from './http/elastic.client.service';
 import {YFPostHandler} from './handlers/yf.post.handlers';
 import {PostWorkflow} from './workflow/post.workflow';
+import {PostForSave} from './../objects/user/dtos/post.for.save.dto'
+import {PostListDTO} from './../objects/dtos/postListDTO';
+
 
 import { Injectable }     from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class PostService {
+
+    private headers = new Headers({ 'Content-Type': 'application/json' });
+    private options = new RequestOptions({ headers: this.headers });
+
     constructor(private http:Http, private elasticClient:ElasticClient, private yfPostHandler:YFPostHandler, private postWorkflow:PostWorkflow){}
 
 
-    findYFPostById(id:string):Observable<Post[]> {
+    findYFPostById(id:any):Observable<Post[]> {
         return this.http.get(this.elasticClient.findNativeById(id))
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
@@ -85,6 +92,33 @@ export class PostService {
     postToPostListDTO(posts:Post[]){
         return this.postWorkflow.postToPostListDTO(posts);
     }
+
+    loadMoreSavedPost(from:number, to:number):Observable<Post[]> {
+        return this.http.get(this.elasticClient.getNewYFNative(from, to))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+    }
+
+    getAllPostIdsFromSavedPost(savedPosts:PostForSave[]){
+        let post_ids:number[] = [];
+        for(let saved of savedPosts) {
+            post_ids.push(saved.post_id);
+        }
+        return post_ids;
+    }
+
+    getPostsByMultipleIds(savedPosts:any[]){
+        let body:any;
+        let ids= this.getAllPostIdsFromSavedPost(savedPosts);
+
+        body = JSON.stringify({ query: {constant_score : {filter : {terms :{id : ids} }}} }, null, ' ');
+
+
+        return this.http.post(ElasticClient.NATIVE_SETS_INDEX, body, this.options)
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+        }
+
 
 
 }

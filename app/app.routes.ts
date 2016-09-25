@@ -7,6 +7,7 @@ import { PostDetailsComponent } from './ts/components/post.details.component';
 import { SearchComponent } from './ts/components/search.component';
 import { SocialAuthorizationComponent } from './ts/components/core/soical.authorization.component';
 import { LoginComponent } from './ts/components/core/login.component';
+import {UserDashboardComponent} from './ts/components/user/user.dashboard.component'
 
 
 
@@ -25,8 +26,11 @@ export const routes: RouterConfig = [
     { path: 'silhouettes/:page', component: SilhouettesListComponent },
     {path: 'post/:id', component: PostDetailsComponent},
     {path: 'search/:query', component: SearchComponent },
+    {path: 'search', component: SearchComponent },
     {path: 'auth/:from/', component: SocialAuthorizationComponent },
-    {path: 'login', component: LoginComponent }
+    {path: 'login', component: LoginComponent },
+    {path: 'dashboard', component: UserDashboardComponent }
+
 ];
 // Export routes
 export const APP_ROUTER_PROVIDERS = [

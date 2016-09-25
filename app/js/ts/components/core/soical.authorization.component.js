@@ -17,6 +17,7 @@ var yf_post_handlers_1 = require('./../../services/handlers/yf.post.handlers');
 var router_1 = require('@angular/router');
 var authorization_service_1 = require('./../../services/authorization.service');
 var vk_rest_client_1 = require('./../../services/http/vk.rest.client');
+var user_workflow_1 = require('./../../services/workflow/user.workflow');
 var SocialAuthorizationComponent = (function () {
     function SocialAuthorizationComponent(router, postService, route, authorizationService) {
         this.router = router;
@@ -31,17 +32,14 @@ var SocialAuthorizationComponent = (function () {
         });
     }
     SocialAuthorizationComponent.prototype.ngOnInit = function () {
-        //this.route.params.subscribe(params => {
-        //    console.log(params['access']);
-        //})
     };
     SocialAuthorizationComponent.prototype.ngOnDestroy = function () {
     };
     SocialAuthorizationComponent = __decorate([
         core_1.Component({
             selector: 'authorization',
-            templateUrl: 'app/ts/templates/core/social.authorization.component.html',
-            providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, elastic_user_client_service_1.ElasticUserClient, yf_user_handlers_1.YFUserHandler, yf_post_handlers_1.YFPostHandler, authorization_service_1.AuthorizationService, vk_rest_client_1.VKRestClient],
+            template: '',
+            providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, elastic_user_client_service_1.ElasticUserClient, yf_user_handlers_1.YFUserHandler, yf_post_handlers_1.YFPostHandler, authorization_service_1.AuthorizationService, vk_rest_client_1.VKRestClient, user_workflow_1.UserWorkflow],
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [router_1.Router, post_service_1.PostService, router_1.ActivatedRoute, authorization_service_1.AuthorizationService])

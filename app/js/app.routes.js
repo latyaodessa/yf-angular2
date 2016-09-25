@@ -8,6 +8,7 @@ var post_details_component_1 = require('./ts/components/post.details.component')
 var search_component_1 = require('./ts/components/search.component');
 var soical_authorization_component_1 = require('./ts/components/core/soical.authorization.component');
 var login_component_1 = require('./ts/components/core/login.component');
+var user_dashboard_component_1 = require('./ts/components/user/user.dashboard.component');
 // Route Configuration
 exports.routes = [
     {
@@ -23,8 +24,10 @@ exports.routes = [
     { path: 'silhouettes/:page', component: silhouettes_list_component_1.SilhouettesListComponent },
     { path: 'post/:id', component: post_details_component_1.PostDetailsComponent },
     { path: 'search/:query', component: search_component_1.SearchComponent },
+    { path: 'search', component: search_component_1.SearchComponent },
     { path: 'auth/:from/', component: soical_authorization_component_1.SocialAuthorizationComponent },
-    { path: 'login', component: login_component_1.LoginComponent }
+    { path: 'login', component: login_component_1.LoginComponent },
+    { path: 'dashboard', component: user_dashboard_component_1.UserDashboardComponent }
 ];
 // Export routes
 exports.APP_ROUTER_PROVIDERS = [

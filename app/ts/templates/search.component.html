@@ -1,8 +1,19 @@
 <div class="container">
     <div class="row">
-        <h1 *ngIf="postListDTO.length > 0" id="search-title">{{queryTitle}}</h1>
-        <div class="center-block" *ngIf="postListDTO.length == 0">
-        <h1 id="search-title">Ничего не найдено по запросу: {{queryTitle}}</h1>
+        <form id="search-component" style="text-align: center">
+            <input type="text" #searchQuery placeholder={{SEARCH_INQUERY}} autofocus>
+            <input type="submit" (click)="search(searchQuery.value)" value={{SEARCH}}>
+        </form>
+
+        <!--<div class="center-block" *ngIf="!queryTitle">-->
+
+            <!--<img class="img-responsive center-block" src="/icons/512/photo-camera-with-heart.png">-->
+        <!--</div>-->
+
+
+        <h1 *ngIf="queryTitle && postListDTO.length > 0" class="search-title">{{queryTitle}}</h1>
+        <div class="center-block" *ngIf="queryTitle && postListDTO.length == 0">
+        <h1 class="search-title">{{NOTING_FOUND}}: {{queryTitle}}</h1>
             <img class="img-responsive center-block" src="/icons/512/sad-girl.png">
         </div>
 

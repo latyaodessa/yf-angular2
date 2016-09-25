@@ -1,4 +1,26 @@
+<div class="signal" *ngIf="isExist == false"></div>
+
+
 <div class="container" *ngIf="isExist">
+    <div id="open-modal" class="modal-window"
+         [collapse]="isCollapsedModal">
+        <div>
+            <a title={{CLOSE_MODAL}} class="modal-close" (click)="isCollapsedModal = !isCollapsedModal">{{CLOSE_MODAL}} ×</a>
+            <h1>{{MODAL_TITLE}}</h1>
+            <div>{{MODAL_TEXT}}</div>
+            <div><login *ngIf="loginNeeded"></login></div>
+        </div>
+    </div>
+
+
+    <div class="right-details-block" (click) = "savePostToDashboard()" *ngIf="!isPostAlreadySaved">
+        <div>{{DETAILS_SAVE_POST_IN_DASHBOARD}}</div>
+         <img src="../icons/32/photoset.png" onmouseover="this.src='../icons/32/photoset_color.png'" onmouseout="this.src='../icons/32/photoset.png'">
+    </div>
+    <div class="right-details-block" [routerLink]="['/', user_dashboard_route]" *ngIf="isPostAlreadySaved">
+        <div>{{SAVED_POST}}</div>
+        <img src="../icons/32/photoset_color.png">
+    </div>
     <div class="row margin-bottom-top-10">
         <div *ngIf="postDetailsDTO">
             <ul class="ph"  *ngIf="postDetailsDTO.ph">
@@ -11,26 +33,20 @@
     </div>
 </div>
 <div class="container" *ngIf="isExist">
-    <div class="row details-list">
-       <img class="img-responsive shadow" *ngFor="let photo of postDetailsDTO.photos" src={{photo}}/>
-    </div>
-</div>
-
-<div class="container" *ngIf="isExist == false">
     <div class="row">
-
-    <div class="center-block">
-        <h1 id="search-title">{{WAIT_UNTIL_POST_LOADS}}</h1>
-        <img class="img-responsive center-block" src="/icons/512/woman_drink.png">
-        <h1 id="search-title">{{WAIT_UNTIL_POST_LOADS_SECOND_ROW}}</h1>
-
+        <div class="align-center-block">
+        <div class="details-list" *ngFor="let photo of postDetailsDTO.photos" >
+            <div class="save-photo-box-text" *ngIf="single_post_text && photo == single_photo_text_img_url">
+                <h2 class="text-over large-img-text-over"><span>{{single_post_text}}</span></h2>
+            </div>
+            <div class="save-photo-box" (click) = "saveSinglePhoto(photo)">
+                <img src="./../icons/64/add_photo.png"/>
+            </div>
+            <img class="main-photo img-responsive shadow" src={{photo}}/>
+        </div>
+        </div>
     </div>
 </div>
-</div>
-
-<sets-new *ngIf="isExist == false"></sets-new>
-<native-new *ngIf="isExist == false"></native-new>
 
 <suggested-posts *ngIf="isExist"></suggested-posts>
-
 

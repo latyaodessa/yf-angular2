@@ -19,15 +19,32 @@ var post_new_sets_component_1 = require('./post.new.sets.component');
 var postDetailsDTO_1 = require('./../objects/dtos/postDetailsDTO');
 var platform_browser_1 = require('@angular/platform-browser');
 var message_properties_1 = require('./../config/message.properties');
+var setup_config_1 = require('./../config/setup.config');
+var user_dashboard_service_1 = require('./../services/dashboard/user.dashboard.service');
+var storage_service_1 = require('./../services/authorization/storage.service');
+var date_time_service_1 = require('./../services/core/date.time.service');
+var user_dashboard_rest_client_1 = require('./../services/http/user.dashboard.rest.client');
+var yf_user_handlers_1 = require('./../services/handlers/yf.user.handlers');
+var collapse_1 = require('ng2-bootstrap/components/collapse');
+var login_component_1 = require('./../components/core/login.component');
 var PostDetailsComponent = (function () {
-    function PostDetailsComponent(postService, route, titleService) {
+    function PostDetailsComponent(postService, route, titleService, userDashboardService, storageService, userDashboardRestClient) {
         this.postService = postService;
         this.route = route;
         this.titleService = titleService;
+        this.userDashboardService = userDashboardService;
+        this.storageService = storageService;
+        this.userDashboardRestClient = userDashboardRestClient;
+        this.user_dashboard_route = setup_config_1.SetupConfig.DASHBOARD_ROUTE;
         this.isExist = false;
-        this.WAIT_UNTIL_POST_LOADS = message_properties_1.MessageConfig.WAIT_UNTIL_POST_LOADS;
-        this.WAIT_UNTIL_POST_LOADS_SECOND_ROW = message_properties_1.MessageConfig.WAIT_UNTIL_POST_LOADS_SECOND_ROW;
+        this.isCollapsedModal = true;
+        this.DETAILS_SAVE_POST_IN_DASHBOARD = message_properties_1.MessageConfig.DETAILS_SAVE_POST_IN_DASHBOARD;
+        this.SAVED_POST = message_properties_1.MessageConfig.DETAILS_POST_ALREADY_SAVED;
+        this.loginNeeded = false;
+        this.isPostAlreadySaved = false;
+        this.CLOSE_MODAL = message_properties_1.MessageConfig.CLOSE_MODAL;
         this.postDetailsDTO = new postDetailsDTO_1.PostDetailsDTO();
+        this.isCollapsedModal = true;
     }
     PostDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -40,9 +57,19 @@ var PostDetailsComponent = (function () {
                     _this.phForSuggested = _this.postDetailsDTO.ph;
                     _this.mdForSuggested = _this.postDetailsDTO.md;
                     _this.setTitle(_this.phForSuggested, _this.mdForSuggested);
+                    _this.isPostAlreadySavedToUser();
                 }
             });
         });
+    };
+    PostDetailsComponent.prototype.isPostAlreadySavedToUser = function () {
+        var _this = this;
+        if (this.storageService.getUserId()) {
+            this.userDashboardRestClient.isPostAlreadySavedToUser(this.storageService.getUserId(), this.postDetailsDTO.id)
+                .subscribe(function (result) {
+                _this.isPostAlreadySaved = result;
+            });
+        }
     };
     PostDetailsComponent.prototype.setTitle = function (ph, md) {
         if (ph && md) {
@@ -55,6 +82,41 @@ var PostDetailsComponent = (function () {
             this.titleService.setTitle(message_properties_1.MessageConfig.PH_DETAILS_TITLE + " " + ph);
         }
     };
+    PostDetailsComponent.prototype.savePostToDashboard = function () {
+        if (!this.storageService.getUserId()) {
+            this.isCollapsedModal = false;
+            this.MODAL_TITLE = message_properties_1.MessageConfig.MODAL_TITLE_PHOTOSET;
+            this.MODAL_TEXT = message_properties_1.MessageConfig.MODAL_TEXT_NOT_LOGGED_IN;
+            this.loginNeeded = true;
+            return;
+        }
+        if (!this.isPostAlreadySaved) {
+            this.isCollapsedModal = true;
+            this.userDashboardService.savePostTODashboard(this.postDetailsDTO.id, this.storageService.getUserId());
+            this.isPostAlreadySaved = true;
+            this.SAVED_POST = message_properties_1.MessageConfig.DETAILS_POST_SUCCESSFULLY_SAVED;
+        }
+    };
+    PostDetailsComponent.prototype.saveSinglePhoto = function (photo) {
+        var _this = this;
+        if (!this.storageService.getUserId()) {
+            this.isCollapsedModal = false;
+            this.MODAL_TITLE = message_properties_1.MessageConfig.MODAL_TITLE_SINGLE_PHOTO;
+            this.MODAL_TEXT = message_properties_1.MessageConfig.MODAL_TEXT_NOT_LOGGED_IN;
+            this.loginNeeded = true;
+            return;
+        }
+        this.userDashboardRestClient.savePhotoToUserDashboard(this.userDashboardService.generatePhotoSaveDTOForUser(this.storageService.getUserId(), photo, this.postDetailsDTO.ph, this.postDetailsDTO.md, this.postDetailsDTO.id))
+            .subscribe(function (result) {
+            _this.single_photo_text_img_url = photo;
+            if (result) {
+                _this.single_post_text = "Фотография успешно добавлена";
+            }
+            else {
+                _this.single_post_text = "Фотография уже есть в вашем профайле";
+            }
+        });
+    };
     PostDetailsComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
     };
@@ -62,10 +124,11 @@ var PostDetailsComponent = (function () {
         core_1.Component({
             selector: 'post-details',
             templateUrl: 'app/ts/templates/post.details.component.html',
-            providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler, platform_browser_1.Title],
-            directives: [router_1.ROUTER_DIRECTIVES, sugessted_posts_component_1.SuggestedPostsComponent, post_new_native_component_1.NewNativeComponent, post_new_sets_component_1.NewSetsComponent]
+            providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler, platform_browser_1.Title, user_dashboard_service_1.UserDashboardService,
+                storage_service_1.StorageService, date_time_service_1.DateTimeService, user_dashboard_rest_client_1.UserDashboardRestClient, yf_user_handlers_1.YFUserHandler],
+            directives: [router_1.ROUTER_DIRECTIVES, sugessted_posts_component_1.SuggestedPostsComponent, login_component_1.LoginComponent, post_new_native_component_1.NewNativeComponent, post_new_sets_component_1.NewSetsComponent, collapse_1.CollapseDirective]
         }), 
-        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, platform_browser_1.Title])
+        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, platform_browser_1.Title, user_dashboard_service_1.UserDashboardService, storage_service_1.StorageService, user_dashboard_rest_client_1.UserDashboardRestClient])
     ], PostDetailsComponent);
     return PostDetailsComponent;
 }());

@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="hidden-xs col-md-0 dashboard-sidebar-outer">
+            <div class="dashboard-sidebar">
+                <img  id="dashboard-thumbnail" class="img-responsive" src={{thumbnail}}>
+                <h1>{{first_name}} {{last_name}}</h1>
+                <a (click)="logout()">{{EXIT}}</a>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-12">
+        <saved-posts-dashboard></saved-posts-dashboard>
+            <saved-photos-dashboard></saved-photos-dashboard>
+
+        </div>
+    </div>
+</div>

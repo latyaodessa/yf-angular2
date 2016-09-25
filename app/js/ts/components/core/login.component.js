@@ -9,37 +9,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var post_service_1 = require('./../../services/post.service');
-var elastic_client_service_1 = require('./../../services/http/elastic.client.service');
-var yf_post_handlers_1 = require('./../../services/handlers/yf.post.handlers');
-var yf_user_handlers_1 = require('./../../services/handlers/yf.user.handlers');
 var router_1 = require('@angular/router');
 var authorization_service_1 = require('./../../services/authorization.service');
-var vk_rest_client_1 = require('./../../services/http/vk.rest.client');
 var message_properties_1 = require('./../../config/message.properties');
 var setup_config_1 = require('./../../config/setup.config');
-var elastic_user_client_service_1 = require('./../../services/http/elastic.user.client.service');
+var fb_rest_client_1 = require('./../../services/http/fb.rest.client');
+var yf_user_handlers_1 = require('./../../services/handlers/yf.user.handlers');
+var fb_social_authorization_service_1 = require('./../../services/authorization/fb.social.authorization.service');
+var storage_service_1 = require('./../../services/authorization/storage.service');
 var LoginComponent = (function () {
-    function LoginComponent(router, postService, route, authorizationService) {
+    function LoginComponent(fBSocialAuthorizationService, storageService, router) {
+        this.fBSocialAuthorizationService = fBSocialAuthorizationService;
+        this.storageService = storageService;
         this.router = router;
-        this.postService = postService;
-        this.route = route;
-        this.authorizationService = authorizationService;
         this.VK_BUTTON_TEXT = message_properties_1.MessageConfig.VK_BUTTON_TEXT;
+        this.FB_BUTTON_TEXT = message_properties_1.MessageConfig.FB_BUTTON_TEXT;
     }
-    LoginComponent.prototype.authorize = function () {
+    LoginComponent.prototype.authorizeWithVK = function () {
         window.location.href = setup_config_1.SetupConfig.VK_AUTHORIZATION_LINK;
     };
-    LoginComponent.prototype.ngOnInit = function () {
+    LoginComponent.prototype.authorizeWithFB = function () {
+        this.fBSocialAuthorizationService.authorizeWithFB();
     };
     LoginComponent = __decorate([
         core_1.Component({
             selector: 'login',
             templateUrl: 'app/ts/templates/core/login.component.html',
-            providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, elastic_user_client_service_1.ElasticUserClient, yf_post_handlers_1.YFPostHandler, yf_user_handlers_1.YFUserHandler, authorization_service_1.AuthorizationService, vk_rest_client_1.VKRestClient],
+            providers: [fb_social_authorization_service_1.FBSocialAuthorizationService, authorization_service_1.AuthorizationService, fb_rest_client_1.FBRestClient, yf_user_handlers_1.YFUserHandler, storage_service_1.StorageService],
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, post_service_1.PostService, router_1.ActivatedRoute, authorization_service_1.AuthorizationService])
+        __metadata('design:paramtypes', [fb_social_authorization_service_1.FBSocialAuthorizationService, storage_service_1.StorageService, router_1.Router])
     ], LoginComponent);
     return LoginComponent;
 }());

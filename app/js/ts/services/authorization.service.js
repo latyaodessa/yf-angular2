@@ -8,20 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var elastic_client_service_1 = require('./http/elastic.client.service');
 var yf_user_handlers_1 = require('./handlers/yf.user.handlers');
 var vk_rest_client_1 = require('./http/vk.rest.client');
 var setup_config_1 = require('./../config/setup.config');
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var elastic_user_client_service_1 = require('./http/elastic.user.client.service');
+var user_workflow_1 = require('./workflow/user.workflow');
+var storage_service_1 = require('./authorization/storage.service');
 var AuthorizationService = (function () {
-    function AuthorizationService(http, elasticClient, yFUserHandler, vkRestClient, elasticUserClient) {
+    function AuthorizationService(http, yFUserHandler, vkRestClient, elasticUserClient, userWorkflow, storageService) {
         this.http = http;
-        this.elasticClient = elasticClient;
         this.yFUserHandler = yFUserHandler;
         this.vkRestClient = vkRestClient;
         this.elasticUserClient = elasticUserClient;
+        this.userWorkflow = userWorkflow;
+        this.storageService = storageService;
     }
     AuthorizationService.prototype.getToken = function () {
         return this.params.match(/^(.*?)&/)[1].replace('#access_token=', '');
@@ -38,38 +40,46 @@ var AuthorizationService = (function () {
         this.getGeneralUserDataById(this.getUserId()).subscribe(function (user) {
             if (user) {
                 _this.generalUser = user;
-                _this.setLocalStorageGeneralUser();
-                _this.defineUserType(from);
+                _this.getVKUserDetailsByIdELASTIC(_this.generalUser.id).subscribe(function (vkUser) {
+                    _this.vKUserDetails = vkUser;
+                    _this.setSessionLocalStorageGeneralUser();
+                    _this.defineUserType(from);
+                    _this.storeUserDataInStorage();
+                });
             }
             else {
                 _this.createNewVKUser(_this.getUserId()).subscribe(function (vkUser) {
-                    _this.generalUser = vkUser;
-                    _this.setLocalStorageGeneralUser();
+                    _this.vKUserDetails = vkUser;
+                    _this.generalUser = _this.userWorkflow.vkUserToGeneralUser(_this.vKUserDetails.id);
+                    _this.setSessionLocalStorageGeneralUser();
                     _this.defineUserType(from);
+                    _this.storeUserDataInStorage();
                 });
             }
         });
     };
+    AuthorizationService.prototype.storeUserDataInStorage = function () {
+        this.storageService.checkIsUserLoggedIn();
+        this.storageService.getVkUserDTO();
+    };
     AuthorizationService.prototype.defineUserType = function (from) {
         if (from == 'vk') {
-            console.log(from);
             this.setLocalStorageVKUser();
         }
     };
-    AuthorizationService.prototype.setLocalStorageGeneralUser = function () {
+    AuthorizationService.prototype.setSessionLocalStorageGeneralUser = function () {
         localStorage.clear();
-        localStorage.setItem(setup_config_1.SetupConfig.TOKEN_KEY_NAME, this.getToken());
-        localStorage.setItem(setup_config_1.SetupConfig.EXPIRES_IN_NAME, this.getExpiresTime());
+        sessionStorage.clear();
+        sessionStorage.setItem(setup_config_1.SetupConfig.TOKEN_KEY_NAME, this.getToken());
+        sessionStorage.setItem(setup_config_1.SetupConfig.EXPIRES_IN_NAME, this.getExpiresTime());
         localStorage.setItem(setup_config_1.SetupConfig.USER_ID_NAME, this.getUserId());
         localStorage.setItem(setup_config_1.SetupConfig.USER_TYPE_NAME, this.generalUser.type);
     };
     AuthorizationService.prototype.setLocalStorageVKUser = function () {
-        this.getVKUserDetailsByIdELASTIC(this.getUserId()).subscribe(function (vkUser) {
-            var vKUserDetails = vkUser[0];
-            localStorage.setItem(setup_config_1.SetupConfig.FIRST_NAME_KEY_NAME, vKUserDetails.first_name);
-            localStorage.setItem(setup_config_1.SetupConfig.LAST_NAME_KEY_NAME, vKUserDetails.last_name);
-            localStorage.setItem(setup_config_1.SetupConfig.PHOTO_50_KEY_NAME, vKUserDetails.photo_50);
-        });
+        localStorage.setItem(setup_config_1.SetupConfig.FIRST_NAME_KEY_NAME, this.vKUserDetails.first_name);
+        localStorage.setItem(setup_config_1.SetupConfig.LAST_NAME_KEY_NAME, this.vKUserDetails.last_name);
+        localStorage.setItem(setup_config_1.SetupConfig.THUMBNAIL, this.vKUserDetails.photo_200);
+        window.location.href = '/dashboard';
     };
     AuthorizationService.prototype.getGeneralUserDataById = function (userId) {
         return this.http.get(this.vkRestClient.getGeneralUserById(userId))
@@ -82,13 +92,13 @@ var AuthorizationService = (function () {
             .catch(this.yFUserHandler.handleError);
     };
     AuthorizationService.prototype.createNewVKUser = function (userId) {
-        return this.http.post(this.vkRestClient.createNewVKUser(userId))
+        return this.http.post(this.vkRestClient.createNewVKUser(userId), "")
             .map(this.yFUserHandler.extractData)
             .catch(this.yFUserHandler.handleError);
     };
     AuthorizationService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, elastic_client_service_1.ElasticClient, yf_user_handlers_1.YFUserHandler, vk_rest_client_1.VKRestClient, elastic_user_client_service_1.ElasticUserClient])
+        __metadata('design:paramtypes', [http_1.Http, yf_user_handlers_1.YFUserHandler, vk_rest_client_1.VKRestClient, elastic_user_client_service_1.ElasticUserClient, user_workflow_1.UserWorkflow, storage_service_1.StorageService])
     ], AuthorizationService);
     return AuthorizationService;
 }());
