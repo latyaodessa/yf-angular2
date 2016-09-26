@@ -27,14 +27,16 @@ var user_dashboard_rest_client_1 = require('./../services/http/user.dashboard.re
 var yf_user_handlers_1 = require('./../services/handlers/yf.user.handlers');
 var collapse_1 = require('ng2-bootstrap/components/collapse');
 var login_component_1 = require('./../components/core/login.component');
+var social_servcie_1 = require('./../services/core/social.servcie');
 var PostDetailsComponent = (function () {
-    function PostDetailsComponent(postService, route, titleService, userDashboardService, storageService, userDashboardRestClient) {
+    function PostDetailsComponent(postService, route, titleService, userDashboardService, storageService, userDashboardRestClient, socialService) {
         this.postService = postService;
         this.route = route;
         this.titleService = titleService;
         this.userDashboardService = userDashboardService;
         this.storageService = storageService;
         this.userDashboardRestClient = userDashboardRestClient;
+        this.socialService = socialService;
         this.user_dashboard_route = setup_config_1.SetupConfig.DASHBOARD_ROUTE;
         this.isExist = false;
         this.isCollapsedModal = true;
@@ -43,6 +45,8 @@ var PostDetailsComponent = (function () {
         this.loginNeeded = false;
         this.isPostAlreadySaved = false;
         this.CLOSE_MODAL = message_properties_1.MessageConfig.CLOSE_MODAL;
+        this.SHARE_BUTTON_TEXT = message_properties_1.MessageConfig.SHARE_BUTTON_TEXT;
+        this.OPEN_POST_IN_VK = message_properties_1.MessageConfig.OPEN_POST_IN_VK;
         this.postDetailsDTO = new postDetailsDTO_1.PostDetailsDTO();
         this.isCollapsedModal = true;
     }
@@ -61,6 +65,17 @@ var PostDetailsComponent = (function () {
                 }
             });
         });
+    };
+    PostDetailsComponent.prototype.shareButton = function (social) {
+        if (social == 'vk') {
+            window.open(this.socialService.getVkShareLink(this.postDetailsDTO.photos[0]), "");
+        }
+        else if (social == 'fb') {
+            this.socialService.getFbShareLink(this.postDetailsDTO.photos[0]);
+        }
+        else if (social == 'tumblr') {
+            window.open(this.socialService.getTumblrLink(), "_blank");
+        }
     };
     PostDetailsComponent.prototype.isPostAlreadySavedToUser = function () {
         var _this = this;
@@ -125,10 +140,10 @@ var PostDetailsComponent = (function () {
             selector: 'post-details',
             templateUrl: 'app/ts/templates/post.details.component.html',
             providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler, platform_browser_1.Title, user_dashboard_service_1.UserDashboardService,
-                storage_service_1.StorageService, date_time_service_1.DateTimeService, user_dashboard_rest_client_1.UserDashboardRestClient, yf_user_handlers_1.YFUserHandler],
+                storage_service_1.StorageService, date_time_service_1.DateTimeService, user_dashboard_rest_client_1.UserDashboardRestClient, yf_user_handlers_1.YFUserHandler, social_servcie_1.SocialService],
             directives: [router_1.ROUTER_DIRECTIVES, sugessted_posts_component_1.SuggestedPostsComponent, login_component_1.LoginComponent, post_new_native_component_1.NewNativeComponent, post_new_sets_component_1.NewSetsComponent, collapse_1.CollapseDirective]
         }), 
-        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, platform_browser_1.Title, user_dashboard_service_1.UserDashboardService, storage_service_1.StorageService, user_dashboard_rest_client_1.UserDashboardRestClient])
+        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, platform_browser_1.Title, user_dashboard_service_1.UserDashboardService, storage_service_1.StorageService, user_dashboard_rest_client_1.UserDashboardRestClient, social_servcie_1.SocialService])
     ], PostDetailsComponent);
     return PostDetailsComponent;
 }());

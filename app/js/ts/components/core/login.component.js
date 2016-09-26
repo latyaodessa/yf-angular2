@@ -26,7 +26,7 @@ var LoginComponent = (function () {
         this.FB_BUTTON_TEXT = message_properties_1.MessageConfig.FB_BUTTON_TEXT;
     }
     LoginComponent.prototype.authorizeWithVK = function () {
-        window.location.href = setup_config_1.SetupConfig.VK_AUTHORIZATION_LINK;
+        window.open(setup_config_1.SetupConfig.VK_AUTHORIZATION_LINK, "_self");
     };
     LoginComponent.prototype.authorizeWithFB = function () {
         this.fBSocialAuthorizationService.authorizeWithFB();

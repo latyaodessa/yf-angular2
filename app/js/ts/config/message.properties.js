@@ -48,6 +48,10 @@ var MessageConfig = (function () {
     MessageConfig.DETAILS_SAVE_POST_IN_DASHBOARD = "Сохранить фотосет";
     MessageConfig.DETAILS_POST_ALREADY_SAVED = "Фотосет уже сохранен";
     MessageConfig.DETAILS_POST_SUCCESSFULLY_SAVED = "Фотосет сохранен";
+    MessageConfig.OPEN_POST_IN_VK = "Открыть фотосет в VK";
+    //Social
+    MessageConfig.DESCRIPTION_ADDITON = "Young Folks Модели и фотографы со всего мира";
+    MessageConfig.SHARE_BUTTON_TEXT = "Поделиться";
     return MessageConfig;
 }());
 exports.MessageConfig = MessageConfig;

@@ -56,7 +56,11 @@ export class MessageConfig {
     public static DETAILS_SAVE_POST_IN_DASHBOARD = "Сохранить фотосет";
     public static DETAILS_POST_ALREADY_SAVED = "Фотосет уже сохранен";
     public static DETAILS_POST_SUCCESSFULLY_SAVED = "Фотосет сохранен";
+    public static OPEN_POST_IN_VK = "Открыть фотосет в VK"
 
+    //Social
+    public static DESCRIPTION_ADDITON = "Young Folks Модели и фотографы со всего мира";
+    public static SHARE_BUTTON_TEXT = "Поделиться";
 
 }
 

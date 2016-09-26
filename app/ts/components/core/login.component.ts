@@ -24,7 +24,7 @@ export class LoginComponent {
     constructor(private fBSocialAuthorizationService:FBSocialAuthorizationService, private storageService:StorageService, private router: Router){}
 
     authorizeWithVK(){
-        window.location.href= SetupConfig.VK_AUTHORIZATION_LINK;
+        window.open(SetupConfig.VK_AUTHORIZATION_LINK, "_self");
     }
     authorizeWithFB() {
         this.fBSocialAuthorizationService.authorizeWithFB();

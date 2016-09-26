@@ -14,14 +14,14 @@
 
 
     <div class="right-details-block" (click) = "savePostToDashboard()" *ngIf="!isPostAlreadySaved">
-        <div>{{DETAILS_SAVE_POST_IN_DASHBOARD}}</div>
-         <img src="../icons/32/photoset.png" onmouseover="this.src='../icons/32/photoset_color.png'" onmouseout="this.src='../icons/32/photoset.png'">
+        <!--<div>{{DETAILS_SAVE_POST_IN_DASHBOARD}}</div>-->
+        <span data-tootik="Сохранить фотосет" data-tootik-conf="left shadow multiline"><img src="../icons/32/photoset.png" onmouseover="this.src='../icons/32/photoset_color.png'" onmouseout="this.src='../icons/32/photoset.png'"></span>
     </div>
     <div class="right-details-block" [routerLink]="['/', user_dashboard_route]" *ngIf="isPostAlreadySaved">
         <div>{{SAVED_POST}}</div>
         <img src="../icons/32/photoset_color.png">
     </div>
-    <div class="row margin-bottom-top-10">
+    <div class="row margin-top-10">
         <div *ngIf="postDetailsDTO">
             <ul class="ph"  *ngIf="postDetailsDTO.ph">
                 <li>{{postDetailsDTO.ph}}</li>
@@ -31,6 +31,13 @@
             </ul>
         </div>
     </div>
+    <a class="vk-post-open" href="https://vk.com/wall-26020797_{{postDetailsDTO.id}}" target="_blank"><span data-tootik="Открыть фотосет в VK" data-tootik-conf="left shadow"><img src="./../icons/32/vk-black.png"></span></a>
+    <ul class="share-buttons">
+        <li (click) ="shareButton('vk')"><span data-tootik="Поделиться фотосетом в VK" data-tootik-conf="shadow"><img src="./../icons/social/vk.png"></span></li>
+        <li (click) ="shareButton('fb')"><span data-tootik="Поделиться фотосетом в Facebook" data-tootik-conf="shadow"><img src="./../icons/social/Facebook.png"></span></li>
+        <li (click) ="shareButton('tumblr')"><span data-tootik="Поделиться фотосетом в Tumblr" data-tootik-conf="shadow"><a target="_blank" ><img src="./../icons/social/Tumblr.png"></a></span></li>
+        <!--<li><a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fyoungfolks.ru&description=" target="_blank" title="Pin it"><img alt="Pin it" src="images/flat_web_icon_set/color/Pinterest.png"></a></li>-->
+    </ul>
 </div>
 <div class="container" *ngIf="isExist">
     <div class="row">
@@ -40,13 +47,19 @@
                 <h2 class="text-over large-img-text-over"><span>{{single_post_text}}</span></h2>
             </div>
             <div class="save-photo-box" (click) = "saveSinglePhoto(photo)">
-                <img src="./../icons/64/add_photo.png"/>
+                <span data-tootik="Сохранить фотографию" data-tootik-conf="right shadow"><img src="./../icons/64/add_photo.png"/></span>
             </div>
             <img class="main-photo img-responsive shadow" src={{photo}}/>
         </div>
         </div>
     </div>
+    <a class="vk-post-open" href="https://vk.com/youngfolks?w=wall-26020797_{{postDetailsDTO.id}}" target="_blank"><img src="./../icons/32/vk-black.png"></a>
+    <ul class="share-buttons">
+        <li (click) ="shareButton('vk')"><span data-tootik="Поделиться фотосетом в VK" data-tootik-conf="bottom shadow"><img src="./../icons/social/vk.png"></span></li>
+        <li (click) ="shareButton('fb')"><span data-tootik="Поделиться фотосетом в Facebook" data-tootik-conf="bottom shadow"><img src="./../icons/social/Facebook.png"></span></li>
+        <li (click) ="shareButton('tumblr')"><span data-tootik="Поделиться фотосетом в Tumblr" data-tootik-conf="bottom shadow"><a target="_blank" ><img src="./../icons/social/Tumblr.png"></a></span></li>
+        <!--<li><a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fyoungfolks.ru&description=" target="_blank" title="Pin it"><img alt="Pin it" src="images/flat_web_icon_set/color/Pinterest.png"></a></li>-->
+    </ul>
 </div>
-
 <suggested-posts *ngIf="isExist"></suggested-posts>
 

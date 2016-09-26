@@ -18,7 +18,7 @@ import {UserDashboardRestClient} from './../services/http/user.dashboard.rest.cl
 import {YFUserHandler} from './../services/handlers/yf.user.handlers'
 import { CollapseDirective } from 'ng2-bootstrap/components/collapse';
 import {LoginComponent} from './../components/core/login.component';
-
+import {SocialService} from './../services/core/social.servcie'
 
 
 
@@ -29,7 +29,7 @@ import {LoginComponent} from './../components/core/login.component';
     selector: 'post-details',
     templateUrl: 'app/ts/templates/post.details.component.html',
     providers: [PostService, ElasticClient, YFPostHandler, Title, UserDashboardService,
-                StorageService, DateTimeService,UserDashboardRestClient, YFUserHandler],
+                StorageService, DateTimeService,UserDashboardRestClient, YFUserHandler, SocialService],
     directives: [ROUTER_DIRECTIVES, SuggestedPostsComponent,LoginComponent, NewNativeComponent, NewSetsComponent, CollapseDirective]
 })
 
@@ -55,13 +55,15 @@ export class PostDetailsComponent implements OnInit {
     public single_post_text:string;
     public single_photo_text_img_url:string;
 
-
+    public SHARE_BUTTON_TEXT = MessageConfig.SHARE_BUTTON_TEXT;
+    public OPEN_POST_IN_VK = MessageConfig.OPEN_POST_IN_VK;
 
 
 
 
     constructor(private postService: PostService, private route: ActivatedRoute, private titleService: Title,
-                private userDashboardService:UserDashboardService, private storageService:StorageService, private userDashboardRestClient:UserDashboardRestClient) {
+                private userDashboardService:UserDashboardService, private storageService:StorageService,
+                private userDashboardRestClient:UserDashboardRestClient, private socialService:SocialService) {
         this.postDetailsDTO = new PostDetailsDTO();
         this.isCollapsedModal = true;
     }
@@ -85,6 +87,16 @@ export class PostDetailsComponent implements OnInit {
 
         });
 
+    }
+
+    private shareButton(social:string){
+        if(social == 'vk'){
+            window.open(this.socialService.getVkShareLink(this.postDetailsDTO.photos[0]),"");
+        } else if(social == 'fb'){
+            this.socialService.getFbShareLink(this.postDetailsDTO.photos[0]);
+        }else if(social == 'tumblr'){
+            window.open(this.socialService.getTumblrLink(),"_blank");
+        }
     }
 
     private isPostAlreadySavedToUser(){
@@ -148,6 +160,7 @@ export class PostDetailsComponent implements OnInit {
             );
 
     }
+
 
     ngOnDestroy() {
         this.sub.unsubscribe();

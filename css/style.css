@@ -32,11 +32,10 @@ body {
     padding-bottom:300px; /* Height of the footer element */
 }
 
-.margin-bottom-top-10{
+.margin-top-10 {
     margin-top: 10px;
-    margin-bottom: 10px;
 }
-.margin-bottom-top-10 h1 {
+.margin-top-10 h1 {
     padding-top: 10px;
     padding-bottom: 20px;
 
@@ -140,6 +139,12 @@ h1 {
     top: 10px;
     position: relative;
     text-align: center;
+}
+
+.vk-post-open{
+    float: right;
+    position: relative;
+    padding: 10px 10px 0 0;
 }
 
 /*icon list*/
@@ -390,8 +395,8 @@ position: absolute;
     height: 3px;
 }
 .navtop{
-    max-width: 900px;
-    margin-bottom: 20px;
+    /*max-width: 900px;*/
+    margin-bottom: 5px;
 }
 .navbar-nav li {
     padding-left: 12px;
@@ -722,4 +727,28 @@ position: absolute;
 }
 .large-img-text-over span{
     font-size: 20px;
+}
+
+/*Soical share buttons*/
+ul.share-buttons{
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 15px 0;
+}
+
+ul.share-buttons li{
+    display: inline;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+ul.share-buttons .sr-only {
+    position: absolute;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
 }
