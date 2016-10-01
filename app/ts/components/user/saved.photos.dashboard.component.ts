@@ -36,6 +36,10 @@ export class SavedPhotosDashboardComponent implements OnInit {
     public isCollapsedModal:boolean = true;
     public static loadInitAmount:number = 6;
     public static loadMoreAmount:number = 12;
+    public static loadOneAmount:number = 1;
+
+
+    private contentExistence=true;
 
     constructor(private userDashboardService:UserDashboardService, private storageService:StorageService, private postService:PostService, private userDashboardRestClient:UserDashboardRestClient){}
 
@@ -46,9 +50,15 @@ export class SavedPhotosDashboardComponent implements OnInit {
     private getSavedPhotos(size:number){
         this.userDashboardService.getSavedPhotos(0, size, this.storageService.getUserId()).subscribe(savedPhotos => {
             this.singlePhotoListDTO = savedPhotos;
-            if(savedPhotos.length < SavedPhotosDashboardComponent.loadInitAmount) {this.loadMorePostPossible = false;}
+            this.contentExistence = this.isContentExist(savedPhotos.length);
+
+            this.isLoadMorePossible(savedPhotos.length ,SavedPhotosDashboardComponent.loadInitAmount );
 
         });
+    }
+
+    private isContentExist = (count:number) => {
+        return count > 0? true : false;
     }
 
     deleteSavedPhoto(savedPhoto_id:number){
@@ -56,7 +66,10 @@ export class SavedPhotosDashboardComponent implements OnInit {
             return savedPhoto.id == savedPhoto_id;
         }),1)
 
-        this.userDashboardRestClient.deletePhotoById(this.storageService.getUserId(), savedPhoto_id).subscribe( res => console.log(res));
+        this.userDashboardRestClient.deletePhotoById(this.storageService.getUserId(), savedPhoto_id).subscribe( res => {
+            this.loadOne();
+            this.contentExistence = this.isContentExist(this.singlePhotoListDTO.length);
+        });
 
     }
 
@@ -66,13 +79,20 @@ export class SavedPhotosDashboardComponent implements OnInit {
         this.isCollapsedModal = false;
     }
 
+    loadOne(){
+        this.userDashboardService.getSavedPhotos(this.singlePhotoListDTO.length+1, SavedPhotosDashboardComponent.loadOneAmount, this.storageService.getUserId()).subscribe(savedPhotos => {
+            this.singlePhotoListDTO = this.singlePhotoListDTO.concat(savedPhotos);
+        });
+    }
+
     loadMore(){
         this.userDashboardService.getSavedPhotos(this.singlePhotoListDTO.length, SavedPhotosDashboardComponent.loadMoreAmount, this.storageService.getUserId()).subscribe(savedPhotos => {
-            this.singlePhotoListDTO = savedPhotos.concat(this.singlePhotoListDTO);
-            if(savedPhotos.length <SavedPhotosDashboardComponent.loadMoreAmount) {this.loadMorePostPossible = false;}
-
-
+            this.singlePhotoListDTO = this.singlePhotoListDTO.concat(savedPhotos);
+            this.isLoadMorePossible(savedPhotos.length ,SavedPhotosDashboardComponent.loadMoreAmount );
         });
+    }
+    private isLoadMorePossible(length:number,amount:number){
+        if(length < amount) {this.loadMorePostPossible = false;}
     }
 
 }

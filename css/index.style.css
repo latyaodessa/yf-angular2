@@ -13,6 +13,13 @@
     animation-iteration-count: infinite;
 }
 
+.block-signal{
+    height: 200px;
+}
+.block-signal .signal{
+    position: relative;
+}
+
 @keyframes pulsate {
     0% {
         transform: scale(.1);

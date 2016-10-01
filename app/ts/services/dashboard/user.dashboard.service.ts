@@ -8,7 +8,7 @@ import {Post} from './../../objects/post';
 import {ElasticClient} from './../http/elastic.client.service';
 import {YFPostHandler} from './../handlers/yf.post.handlers';
 import { Http, Response } from '@angular/http';
-
+import {SinglePhotoListDTO} from './../../objects/dtos/single.photo.list.dto'
 
 
 
@@ -40,7 +40,7 @@ export class UserDashboardService{
 
     }
 
-    getSavedPhotos(from:number, size:number, userId:number):Observable<Post[]> {
+    getSavedPhotos(from:number, size:number, userId:number):Observable<SinglePhotoListDTO[]> {
         return this.http.get(this.elasticClient.getSavedUserPhotos(from, size, userId))
             .map(this.yfPostHandler.extractSinglePhotosData)
             .catch(this.yfPostHandler.handleError);

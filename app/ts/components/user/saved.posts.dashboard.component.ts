@@ -33,7 +33,10 @@ export class SavedPostDashboardComponent implements OnInit {
 
     public static loadInitAmount:number = 6;
     public static loadMoreAmount:number = 12;
+    public static loadOneAmount:number = 1;
 
+
+    private contentExistence=true;
 
     constructor(private postService: PostService, private windowSize:WindowSize, private userDashboardService:UserDashboardService, private storageService:StorageService, private userDashboardRestClient:UserDashboardRestClient){}
 
@@ -45,6 +48,8 @@ export class SavedPostDashboardComponent implements OnInit {
 
     private getPosts(size:number){
       this.userDashboardService.getSavedPosts(0, size, this.storageService.getUserId()).subscribe(savedPosts => {
+
+          this.contentExistence = this.isContentExist(savedPosts.length);
 
           this.postService.getPostsByMultipleIds(savedPosts).subscribe(posts=> {
               if(posts.length < SavedPostDashboardComponent.loadInitAmount) {this.loadMorePostPossible = false;}
@@ -67,14 +72,22 @@ export class SavedPostDashboardComponent implements OnInit {
         })
     }
 
+    loadOne(){
+        this.userDashboardService.getSavedPosts(this.postListDTO.length+1, SavedPostDashboardComponent.loadOneAmount, this.storageService.getUserId()).subscribe(savedPosts => {
 
+            this.postService.getPostsByMultipleIds(savedPosts).subscribe(posts=> {
+                //this.postListDTO = this.postService.postToPostListDTO(posts);
+                this.sortPostsByDate(savedPosts,this.postService.postToPostListDTO(posts));
+            });
+
+        });
+    }
 
     loadMore(){
         this.userDashboardService.getSavedPosts(this.postListDTO.length, SavedPostDashboardComponent.loadMoreAmount, this.storageService.getUserId()).subscribe(savedPosts => {
 
             this.postService.getPostsByMultipleIds(savedPosts).subscribe(posts=> {
-                if(posts.length <SavedPostDashboardComponent.loadMoreAmount) {this.loadMorePostPossible = false;}
-                //this.postListDTO = this.postService.postToPostListDTO(posts);
+                this.isLoadMorePossible(posts.length, SavedPostDashboardComponent.loadMoreAmount);
                this.sortPostsByDate(savedPosts,this.postService.postToPostListDTO(posts));
             });
 
@@ -86,8 +99,20 @@ export class SavedPostDashboardComponent implements OnInit {
             return post.id == postid;
         }),1)
 
-        this.userDashboardRestClient.deletePostById(this.storageService.getUserId(), postid).subscribe( res => console.log(res));
+        this.userDashboardRestClient.deletePostById(this.storageService.getUserId(), postid).subscribe( res => {
+            this.loadOne();
+            this.contentExistence = this.isContentExist(this.postListDTO.length);
 
+        });
+
+    }
+
+    private isLoadMorePossible(length:number,amount:number){
+        if(length < amount) {this.loadMorePostPossible = false;}
+    }
+
+    private isContentExist = (count:number) => {
+        return count > 0? true : false;
     }
 
 }

@@ -16,6 +16,7 @@ exports.routes = [
         component: postlist_component_1.PostlistComponent
     },
     { path: '', component: postlist_component_1.PostlistComponent },
+    { path: '#', component: postlist_component_1.PostlistComponent },
     { path: 'native', component: native_list_component_1.NativeListComponent },
     { path: 'native/:page', component: native_list_component_1.NativeListComponent },
     { path: 'sets', component: sets_list_component_1.SetsListComponent },

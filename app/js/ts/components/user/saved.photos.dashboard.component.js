@@ -31,6 +31,10 @@ var SavedPhotosDashboardComponent = (function () {
         this.SHOW_ALL_PICS_FULL = message_properties_1.MessageConfig.SHOW_ALL_PICS_FULL;
         this.loadMorePostPossible = true;
         this.isCollapsedModal = true;
+        this.contentExistence = true;
+        this.isContentExist = function (count) {
+            return count > 0 ? true : false;
+        };
     }
     SavedPhotosDashboardComponent.prototype.ngOnInit = function () {
         this.getSavedPhotos(SavedPhotosDashboardComponent.loadInitAmount);
@@ -39,33 +43,46 @@ var SavedPhotosDashboardComponent = (function () {
         var _this = this;
         this.userDashboardService.getSavedPhotos(0, size, this.storageService.getUserId()).subscribe(function (savedPhotos) {
             _this.singlePhotoListDTO = savedPhotos;
-            if (savedPhotos.length < SavedPhotosDashboardComponent.loadInitAmount) {
-                _this.loadMorePostPossible = false;
-            }
+            _this.contentExistence = _this.isContentExist(savedPhotos.length);
+            _this.isLoadMorePossible(savedPhotos.length, SavedPhotosDashboardComponent.loadInitAmount);
         });
     };
     SavedPhotosDashboardComponent.prototype.deleteSavedPhoto = function (savedPhoto_id) {
+        var _this = this;
         this.singlePhotoListDTO.splice(this.singlePhotoListDTO.findIndex(function (savedPhoto) {
             return savedPhoto.id == savedPhoto_id;
         }), 1);
-        this.userDashboardRestClient.deletePhotoById(this.storageService.getUserId(), savedPhoto_id).subscribe(function (res) { return console.log(res); });
+        this.userDashboardRestClient.deletePhotoById(this.storageService.getUserId(), savedPhoto_id).subscribe(function (res) {
+            _this.loadOne();
+            _this.contentExistence = _this.isContentExist(_this.singlePhotoListDTO.length);
+        });
     };
     SavedPhotosDashboardComponent.prototype.openLargeImage = function (photo_url, post_id) {
         this.POPUP_PHOTO = photo_url;
         this.POPPUP_POST_ID = post_id;
         this.isCollapsedModal = false;
     };
+    SavedPhotosDashboardComponent.prototype.loadOne = function () {
+        var _this = this;
+        this.userDashboardService.getSavedPhotos(this.singlePhotoListDTO.length + 1, SavedPhotosDashboardComponent.loadOneAmount, this.storageService.getUserId()).subscribe(function (savedPhotos) {
+            _this.singlePhotoListDTO = _this.singlePhotoListDTO.concat(savedPhotos);
+        });
+    };
     SavedPhotosDashboardComponent.prototype.loadMore = function () {
         var _this = this;
         this.userDashboardService.getSavedPhotos(this.singlePhotoListDTO.length, SavedPhotosDashboardComponent.loadMoreAmount, this.storageService.getUserId()).subscribe(function (savedPhotos) {
-            _this.singlePhotoListDTO = savedPhotos.concat(_this.singlePhotoListDTO);
-            if (savedPhotos.length < SavedPhotosDashboardComponent.loadMoreAmount) {
-                _this.loadMorePostPossible = false;
-            }
+            _this.singlePhotoListDTO = _this.singlePhotoListDTO.concat(savedPhotos);
+            _this.isLoadMorePossible(savedPhotos.length, SavedPhotosDashboardComponent.loadMoreAmount);
         });
+    };
+    SavedPhotosDashboardComponent.prototype.isLoadMorePossible = function (length, amount) {
+        if (length < amount) {
+            this.loadMorePostPossible = false;
+        }
     };
     SavedPhotosDashboardComponent.loadInitAmount = 6;
     SavedPhotosDashboardComponent.loadMoreAmount = 12;
+    SavedPhotosDashboardComponent.loadOneAmount = 1;
     SavedPhotosDashboardComponent = __decorate([
         core_1.Component({
             selector: 'saved-photos-dashboard',

@@ -1,4 +1,9 @@
-export class SetupConfig {
+import {DataConfig} from './data.config';
+
+export class SetupConfig{
+
+    public static DOMAIN:string = window.location.hostname;
+
 
     //Routing
     public static SINGLE_POST_ROUTE ="post";
@@ -9,31 +14,23 @@ export class SetupConfig {
     public static DASHBOARD_ROUTE = "dashboard";
     public static SEARCH_ROUTE = "search";
 
+    //Domains
+    public static DOMAIN_PROD_RU = "youngfolks.ru";
+    public static DOMAIN_PROD_ORG = "youngfolks.org";
+    public static DOMAIN_DEV_LOCALHOST = "localhost";
+
+    //TO SETUP
+
+    public static TRANSLIT:boolean = SetupConfig.setupTranslit();
+    public static ELASTIC_HOST:string = SetupConfig.setupElastic();
+    public static YF_HOST:string = SetupConfig.setupYFHost();
+    public static VK_AUTHORIZATION_LINK:string = SetupConfig.setupVKAutLink();
+
+    public static GOOGLE_AN_ID:string = SetupConfig.setupGoogleID();
+    public static GOOGLE_AN_MODE:string = SetupConfig.setupGoogleMode();
 
 
-    //Elastic prod
-    public static ELASTIC_HOST = 'http://95.183.12.178:9200/';
-    //Elastic dev
-    //public static ELASTIC_HOST = 'http://localhost:9200/';
-    //Elastic Raspberry Pi
-    //public static ELASTIC_HOST = 'http://raspberrypi.local:9200/';
 
-    //YF Services
-    // HOST dev
-    //public static YF_HOST = "http://localhost:8080";
-    // HOST Raspberry Pi
-    //public static YF_HOST = "http://raspberrypi.local:8080";
-    // HOST prod
-    public static YF_HOST = "http://95.183.12.178:8080";
-
-
-    //vk authorization
-    //dev
-    //public static VK_AUTHORIZATION_LINK = "https://oauth.vk.com/authorize?client_id=4601875&display=page&redirect_uri=http://localhost:3000/auth/vk/&scope=friends&response_type=token&v=5.53";
-    //Raspberry Pi
-    //public static VK_AUTHORIZATION_LINK = "https://oauth.vk.com/authorize?client_id=4601875&display=page&redirect_uri=http://raspberrypi.local:3000/auth/vk/&scope=friends&response_type=token&v=5.53";
-    //prod
-    public static VK_AUTHORIZATION_LINK = "https://oauth.vk.com/authorize?client_id=4601875&display=page&redirect_uri=http://youngfolks.ru/auth/vk/&scope=friends&response_type=token&v=5.53";
 
 
 
@@ -72,4 +69,75 @@ export class SetupConfig {
 
     //Response statuses
     public static RES_NO_CONTENT_204 = 204;
+
+
+
+
+    public static setupElastic(){
+        console.log(window.location.hostname);
+
+
+        if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU || SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG) {
+            return DataConfig.ELASTIC_HOST_PROD;
+        }
+        else if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_DEV_LOCALHOST) {
+            return DataConfig.ELASTIC_HOST_LOCALHOST;
+        }
+        else{
+            return DataConfig.ELASTIC_HOST_PI;
+        }
+    }
+
+
+    public static setupTranslit(){
+        if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static setupYFHost(){
+        if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU || SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG) {
+            return DataConfig.YF_HOST_PROD;
+        }
+        else if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_DEV_LOCALHOST) {
+            return DataConfig.YF_HOST_LOCALHOST;
+        }
+        else{
+            return DataConfig.YF_HOST_PI;
+        }
+    }
+
+    public static setupVKAutLink(){
+        if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU) {
+            return DataConfig.VK_AUTHORIZATION_LINK_PROD_RU;
+        }
+        else if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG){
+            return DataConfig.VK_AUTHORIZATION_LINK_PROD_ORG;
+        }
+        else if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_DEV_LOCALHOST) {
+            return DataConfig.VK_AUTHORIZATION_LINK_LOCALHOST;
+        }
+        else{
+            return DataConfig.VK_AUTHORIZATION_LINK_PI;
+        }
+    }
+    public static setupGoogleID(){
+        if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU) {
+            return DataConfig.GOOGLE_AN_ID_RU;
+        }
+        else{
+            return DataConfig.GOOGLE_AN_ID_ORG;
+        }
+        }
+    public static setupGoogleMode(){
+        if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_DEV_LOCALHOST) {
+            return DataConfig.GOOGLE_AN_MODE_DEV;
+        } else {
+            return DataConfig.GOOGLE_AN_MODE_PROD;
+        }
+    }
+    
 }

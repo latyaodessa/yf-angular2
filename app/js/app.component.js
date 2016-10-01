@@ -27,11 +27,18 @@ var setup_config_1 = require('./ts/config/setup.config');
 var storage_service_1 = require('./ts/services/authorization/storage.service');
 var user_dashboard_component_1 = require('./ts/components/user/user.dashboard.component');
 var AppComponent = (function () {
-    function AppComponent(router, storageService) {
+    function AppComponent(router, storageService, setupConfig) {
         this.router = router;
         this.storageService = storageService;
+        this.setupConfig = setupConfig;
         this.searchControl = new forms_1.FormControl();
         this.isCollapsed = true;
+        ga('create', setup_config_1.SetupConfig.GOOGLE_AN_ID, setup_config_1.SetupConfig.GOOGLE_AN_MODE);
+        this.router.events.subscribe(function (event) {
+            if (event instanceof router_1.NavigationEnd) {
+                ga('send', 'pageview', event.urlAfterRedirects);
+            }
+        });
         this.searchControl.valueChanges.subscribe(function (value) {
             // do something with value here
         });
@@ -85,12 +92,12 @@ var AppComponent = (function () {
             selector: 'yf',
             templateUrl: 'app/ts/templates/app.component.html',
             directives: [router_1.ROUTER_DIRECTIVES, collapse_1.CollapseDirective],
-            providers: [post_workflow_1.PostWorkflow, storage_service_1.StorageService],
+            providers: [post_workflow_1.PostWorkflow, storage_service_1.StorageService, setup_config_1.SetupConfig],
             precompile: [postlist_component_1.PostlistComponent, sets_list_component_1.SetsListComponent, native_list_component_1.NativeListComponent, post_details_component_1.PostDetailsComponent,
                 search_component_1.SearchComponent, silhouettes_list_component_1.SilhouettesListComponent, soical_authorization_component_1.SocialAuthorizationComponent, login_component_1.LoginComponent,
                 user_dashboard_component_1.UserDashboardComponent]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, storage_service_1.StorageService])
+        __metadata('design:paramtypes', [router_1.Router, storage_service_1.StorageService, setup_config_1.SetupConfig])
     ], AppComponent);
     return AppComponent;
 }());

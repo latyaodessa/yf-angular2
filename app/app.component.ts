@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import './rxjs-operators';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import {Router, ROUTER_DIRECTIVES, Event, NavigationEnd} from '@angular/router';
 import {PostlistComponent} from './ts/components/postlist.component';
 import {NativeListComponent} from './ts/components/lists/native-list.component'
 import {SearchComponent} from './ts/components/search.component'
@@ -17,14 +17,14 @@ import {SetupConfig} from './ts/config/setup.config';
 import {StorageService} from './ts/services/authorization/storage.service'
 import {VKStorageUserDTO} from './ts/objects/user/dtos/vk.storage.user.dto'
 import {UserDashboardComponent} from './ts/components/user/user.dashboard.component'
-
+declare let ga:Function;
 
 
 @Component({
     selector: 'yf',
     templateUrl: 'app/ts/templates/app.component.html',
     directives: [ ROUTER_DIRECTIVES, CollapseDirective],
-    providers: [PostWorkflow, StorageService],
+    providers: [PostWorkflow, StorageService, SetupConfig],
     precompile: [PostlistComponent, SetsListComponent, NativeListComponent, PostDetailsComponent,
                 SearchComponent, SilhouettesListComponent, SocialAuthorizationComponent, LoginComponent,
                 UserDashboardComponent]
@@ -42,7 +42,16 @@ export class AppComponent  implements OnInit{
     public vkStorageUserDTO:VKStorageUserDTO;
 
 
-    constructor(private router: Router, private storageService:StorageService){
+    constructor(private router: Router, private storageService:StorageService, private setupConfig:SetupConfig){
+
+        ga('create', SetupConfig.GOOGLE_AN_ID, SetupConfig.GOOGLE_AN_MODE);
+
+        this.router.events.subscribe(
+            (event:Event) => {
+                if (event instanceof NavigationEnd) {
+                    ga('send', 'pageview', event.urlAfterRedirects);
+                }
+            });
 
         this.searchControl.valueChanges.subscribe(value => {
             // do something with value here

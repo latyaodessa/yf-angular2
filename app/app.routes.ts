@@ -12,12 +12,13 @@ import {UserDashboardComponent} from './ts/components/user/user.dashboard.compon
 
 
 // Route Configuration
-export const routes: RouterConfig = [
+export const routes: RouterConfig[] = [
     {
         path: '',
         component: PostlistComponent
     },
     { path: '', component: PostlistComponent},
+    { path: '#', component: PostlistComponent},
     { path: 'native', component: NativeListComponent },
     { path: 'native/:page', component: NativeListComponent },
     { path: 'sets', component: SetsListComponent },

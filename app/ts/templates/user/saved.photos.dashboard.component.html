@@ -1,4 +1,11 @@
-<div class="container no-content-dashboard"  *ngIf="singlePhotoListDTO.length == 0">
+
+<div class="container no-content-dashboard"  *ngIf="singlePhotoListDTO.length == 0 && contentExistence">
+    <div class="block-signal">
+        <div class="signal"></div>
+    </div>
+</div>
+
+<div class="container no-content-dashboard"  *ngIf="!contentExistence">
     <h1>{{NO_SAVED_PHOTOS}}</h1>
 </div>
 

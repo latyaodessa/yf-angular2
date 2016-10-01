@@ -27,6 +27,7 @@ var SetsListComponent = (function () {
         this.show_all_pics = message_properties_1.MessageConfig.SHOW_ALL_PICS;
         this.single_route = setup_config_1.SetupConfig.SINGLE_POST_ROUTE;
         this.setTitle(message_properties_1.MessageConfig.SETS_LIST_TITLE);
+        this.postListDTO = [];
     }
     SetsListComponent.prototype.ngOnInit = function () {
         var _this = this;

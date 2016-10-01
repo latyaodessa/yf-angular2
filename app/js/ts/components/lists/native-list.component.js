@@ -27,6 +27,7 @@ var NativeListComponent = (function () {
         this.show_all_pics = message_properties_1.MessageConfig.SHOW_ALL_PICS;
         this.single_route = setup_config_1.SetupConfig.SINGLE_POST_ROUTE;
         this.setTitle(message_properties_1.MessageConfig.NATIVE_LIST_TITLE);
+        this.postListDTO = [];
     }
     NativeListComponent.prototype.ngOnInit = function () {
         var _this = this;

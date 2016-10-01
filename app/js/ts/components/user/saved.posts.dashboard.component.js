@@ -33,6 +33,10 @@ var SavedPostDashboardComponent = (function () {
         this.route = setup_config_1.SetupConfig.NATIVE_LIST_ROUTE;
         this.single_route = setup_config_1.SetupConfig.SINGLE_POST_ROUTE;
         this.loadMorePostPossible = true;
+        this.contentExistence = true;
+        this.isContentExist = function (count) {
+            return count > 0 ? true : false;
+        };
     }
     SavedPostDashboardComponent.prototype.ngOnInit = function () {
         this.getPosts(SavedPostDashboardComponent.loadInitAmount);
@@ -40,6 +44,7 @@ var SavedPostDashboardComponent = (function () {
     SavedPostDashboardComponent.prototype.getPosts = function (size) {
         var _this = this;
         this.userDashboardService.getSavedPosts(0, size, this.storageService.getUserId()).subscribe(function (savedPosts) {
+            _this.contentExistence = _this.isContentExist(savedPosts.length);
             _this.postService.getPostsByMultipleIds(savedPosts).subscribe(function (posts) {
                 if (posts.length < SavedPostDashboardComponent.loadInitAmount) {
                     _this.loadMorePostPossible = false;
@@ -59,26 +64,42 @@ var SavedPostDashboardComponent = (function () {
             return p.id == saved.post_id;
         });
     };
-    SavedPostDashboardComponent.prototype.loadMore = function () {
+    SavedPostDashboardComponent.prototype.loadOne = function () {
         var _this = this;
-        this.userDashboardService.getSavedPosts(this.postListDTO.length, SavedPostDashboardComponent.loadMoreAmount, this.storageService.getUserId()).subscribe(function (savedPosts) {
+        this.userDashboardService.getSavedPosts(this.postListDTO.length + 1, SavedPostDashboardComponent.loadOneAmount, this.storageService.getUserId()).subscribe(function (savedPosts) {
             _this.postService.getPostsByMultipleIds(savedPosts).subscribe(function (posts) {
-                if (posts.length < SavedPostDashboardComponent.loadMoreAmount) {
-                    _this.loadMorePostPossible = false;
-                }
                 //this.postListDTO = this.postService.postToPostListDTO(posts);
                 _this.sortPostsByDate(savedPosts, _this.postService.postToPostListDTO(posts));
             });
         });
     };
+    SavedPostDashboardComponent.prototype.loadMore = function () {
+        var _this = this;
+        this.userDashboardService.getSavedPosts(this.postListDTO.length, SavedPostDashboardComponent.loadMoreAmount, this.storageService.getUserId()).subscribe(function (savedPosts) {
+            _this.postService.getPostsByMultipleIds(savedPosts).subscribe(function (posts) {
+                _this.isLoadMorePossible(posts.length, SavedPostDashboardComponent.loadMoreAmount);
+                _this.sortPostsByDate(savedPosts, _this.postService.postToPostListDTO(posts));
+            });
+        });
+    };
     SavedPostDashboardComponent.prototype.deleteSavedPost = function (postid) {
+        var _this = this;
         this.postListDTO.splice(this.postListDTO.findIndex(function (post) {
             return post.id == postid;
         }), 1);
-        this.userDashboardRestClient.deletePostById(this.storageService.getUserId(), postid).subscribe(function (res) { return console.log(res); });
+        this.userDashboardRestClient.deletePostById(this.storageService.getUserId(), postid).subscribe(function (res) {
+            _this.loadOne();
+            _this.contentExistence = _this.isContentExist(_this.postListDTO.length);
+        });
+    };
+    SavedPostDashboardComponent.prototype.isLoadMorePossible = function (length, amount) {
+        if (length < amount) {
+            this.loadMorePostPossible = false;
+        }
     };
     SavedPostDashboardComponent.loadInitAmount = 6;
     SavedPostDashboardComponent.loadMoreAmount = 12;
+    SavedPostDashboardComponent.loadOneAmount = 1;
     SavedPostDashboardComponent = __decorate([
         core_1.Component({
             selector: 'saved-posts-dashboard',

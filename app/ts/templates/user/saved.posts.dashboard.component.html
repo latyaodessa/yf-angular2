@@ -1,6 +1,15 @@
-<div class="container no-content-dashboard"  *ngIf="postListDTO.length == 0">
+
+<div class="container no-content-dashboard"  *ngIf="postListDTO.length == 0 && contentExistence">
+    <div class="block-signal">
+        <div class="signal"></div>
+    </div>
+</div>
+
+<div class="container no-content-dashboard"  *ngIf="!contentExistence">
     <h1>{{NO_SAVED_POSTS}}</h1>
 </div>
+
+
 <div class="container dashboard-right-container" *ngIf="postListDTO.length > 0">
     <h1 class="header">{{title}}</h1>
     <div class="row">

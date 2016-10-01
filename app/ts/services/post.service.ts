@@ -26,13 +26,6 @@ export class PostService {
 
     }
 
-    findByText(from:number, size:number, textQuery:string):Observable<Post[]> {
-        return this.http.get(this.elasticClient.findByText(from, size, textQuery))
-            .map(this.yfPostHandler.extractData)
-            .catch(this.yfPostHandler.handleError);
-
-    }
-
     getYFNativeNew(from:number, size:number):Observable<Post[]> {
         return this.http.get(this.elasticClient.getNewYFNative(from, size))
             .map(this.yfPostHandler.extractData)

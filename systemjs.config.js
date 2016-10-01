@@ -15,7 +15,7 @@
     var packages = {
         'app':                        { main: 'js/main.js',  defaultExtension: 'js' },
         'rxjs':                       { defaultExtension: 'js' },
-        'angular2-in-memory-web-api': { main: 'js/index.js', defaultExtension: 'js' },
+        'angular2-in-memory-web-api': { main: 'js/index.js', defaultExtension: 'js' }
     };
     var ngPackageNames = [
         'common',

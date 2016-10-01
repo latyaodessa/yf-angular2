@@ -1,7 +1,70 @@
 "use strict";
+var data_config_1 = require('./data.config');
 var SetupConfig = (function () {
     function SetupConfig() {
     }
+    SetupConfig.setupElastic = function () {
+        console.log(window.location.hostname);
+        if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU || SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG) {
+            return data_config_1.DataConfig.ELASTIC_HOST_PROD;
+        }
+        else if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_DEV_LOCALHOST) {
+            return data_config_1.DataConfig.ELASTIC_HOST_LOCALHOST;
+        }
+        else {
+            return data_config_1.DataConfig.ELASTIC_HOST_PI;
+        }
+    };
+    SetupConfig.setupTranslit = function () {
+        if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    SetupConfig.setupYFHost = function () {
+        if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU || SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG) {
+            return data_config_1.DataConfig.YF_HOST_PROD;
+        }
+        else if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_DEV_LOCALHOST) {
+            return data_config_1.DataConfig.YF_HOST_LOCALHOST;
+        }
+        else {
+            return data_config_1.DataConfig.YF_HOST_PI;
+        }
+    };
+    SetupConfig.setupVKAutLink = function () {
+        if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU) {
+            return data_config_1.DataConfig.VK_AUTHORIZATION_LINK_PROD_RU;
+        }
+        else if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG) {
+            return data_config_1.DataConfig.VK_AUTHORIZATION_LINK_PROD_ORG;
+        }
+        else if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_DEV_LOCALHOST) {
+            return data_config_1.DataConfig.VK_AUTHORIZATION_LINK_LOCALHOST;
+        }
+        else {
+            return data_config_1.DataConfig.VK_AUTHORIZATION_LINK_PI;
+        }
+    };
+    SetupConfig.setupGoogleID = function () {
+        if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU) {
+            return data_config_1.DataConfig.GOOGLE_AN_ID_RU;
+        }
+        else {
+            return data_config_1.DataConfig.GOOGLE_AN_ID_ORG;
+        }
+    };
+    SetupConfig.setupGoogleMode = function () {
+        if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_DEV_LOCALHOST) {
+            return data_config_1.DataConfig.GOOGLE_AN_MODE_DEV;
+        }
+        else {
+            return data_config_1.DataConfig.GOOGLE_AN_MODE_PROD;
+        }
+    };
+    SetupConfig.DOMAIN = window.location.hostname;
     //Routing
     SetupConfig.SINGLE_POST_ROUTE = "post";
     SetupConfig.NATIVE_LIST_ROUTE = "native";
@@ -10,26 +73,17 @@ var SetupConfig = (function () {
     SetupConfig.LOGIN_ROUTE = "login";
     SetupConfig.DASHBOARD_ROUTE = "dashboard";
     SetupConfig.SEARCH_ROUTE = "search";
-    //Elastic prod
-    SetupConfig.ELASTIC_HOST = 'http://95.183.12.178:9200/';
-    //Elastic dev
-    //public static ELASTIC_HOST = 'http://localhost:9200/';
-    //Elastic Raspberry Pi
-    //public static ELASTIC_HOST = 'http://raspberrypi.local:9200/';
-    //YF Services
-    // HOST dev
-    //public static YF_HOST = "http://localhost:8080";
-    // HOST Raspberry Pi
-    //public static YF_HOST = "http://raspberrypi.local:8080";
-    // HOST prod
-    SetupConfig.YF_HOST = "http://95.183.12.178:8080";
-    //vk authorization
-    //dev
-    //public static VK_AUTHORIZATION_LINK = "https://oauth.vk.com/authorize?client_id=4601875&display=page&redirect_uri=http://localhost:3000/auth/vk/&scope=friends&response_type=token&v=5.53";
-    //Raspberry Pi
-    //public static VK_AUTHORIZATION_LINK = "https://oauth.vk.com/authorize?client_id=4601875&display=page&redirect_uri=http://raspberrypi.local:3000/auth/vk/&scope=friends&response_type=token&v=5.53";
-    //prod
-    SetupConfig.VK_AUTHORIZATION_LINK = "https://oauth.vk.com/authorize?client_id=4601875&display=page&redirect_uri=http://youngfolks.ru/auth/vk/&scope=friends&response_type=token&v=5.53";
+    //Domains
+    SetupConfig.DOMAIN_PROD_RU = "youngfolks.ru";
+    SetupConfig.DOMAIN_PROD_ORG = "youngfolks.org";
+    SetupConfig.DOMAIN_DEV_LOCALHOST = "localhost";
+    //TO SETUP
+    SetupConfig.TRANSLIT = SetupConfig.setupTranslit();
+    SetupConfig.ELASTIC_HOST = SetupConfig.setupElastic();
+    SetupConfig.YF_HOST = SetupConfig.setupYFHost();
+    SetupConfig.VK_AUTHORIZATION_LINK = SetupConfig.setupVKAutLink();
+    SetupConfig.GOOGLE_AN_ID = SetupConfig.setupGoogleID();
+    SetupConfig.GOOGLE_AN_MODE = SetupConfig.setupGoogleMode();
     SetupConfig.YF_MODULE = "yf-services";
     SetupConfig.REST_BASIS = "rest";
     SetupConfig.REST_PATH_USER = "user";

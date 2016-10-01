@@ -1,23 +1,37 @@
+
+
 <div class="container">
     <div class="row">
-        <form id="search-component" style="text-align: center">
-            <input type="text" #searchQuery placeholder={{SEARCH_INQUERY}} autofocus>
-            <input type="submit" (click)="search(searchQuery.value)" value={{SEARCH}}>
+        <form id="search-component" action=".">
+            <div class="form-group">
+            <input name="search"  class="form-control" placeholder={{SEARCH_INQUERY}} #term type="text" (keydown.enter)="findByText(term.value)" autofocus>
+                </div>
         </form>
+    </div>
+</div>
 
-        <!--<div class="center-block" *ngIf="!queryTitle">-->
+        <div class="container no-content-dashboard"  *ngIf="searchingProceed">
+            <div class="block-signal">
+                <div class="signal"></div>
+            </div>
+        </div>
 
-            <!--<img class="img-responsive center-block" src="/icons/512/photo-camera-with-heart.png">-->
-        <!--</div>-->
+<div class="container">
+    <div class="row">
 
-
-        <h1 *ngIf="queryTitle && postListDTO.length > 0" class="search-title">{{queryTitle}}</h1>
-        <div class="center-block" *ngIf="queryTitle && postListDTO.length == 0">
+        <div class="center-block" *ngIf="!contentExist && postListDTO.length == 0">
         <h1 class="search-title">{{NOTING_FOUND}}: {{queryTitle}}</h1>
             <img class="img-responsive center-block" src="/icons/512/sad-girl.png">
         </div>
+    </div>
+</div>
 
-    <div class="thumbnail col-xs-6 col-sm-4 col-md-3  hovereffect" *ngFor="let dto of postListDTO">
+
+<div class="container" *ngIf="contentExist && postListDTO.length > 0">
+    <div class="row">
+        <h1 class="search-title">{{queryTitle}}</h1>
+
+        <div class="thumbnail col-xs-6 col-sm-4 col-md-3  hovereffect" *ngFor="let dto of postListDTO">
        <img class="img-responsive shadow" src={{dto.thumbnail}}/>
         <div class="overlay">
             <div class="ul-main-list">

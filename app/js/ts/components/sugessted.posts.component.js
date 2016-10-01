@@ -17,12 +17,14 @@ var post_workflow_1 = require('./../services/workflow/post.workflow');
 var window_size_1 = require('./../services/core/window.size');
 var message_properties_1 = require('./../config/message.properties');
 var setup_config_1 = require('./../config/setup.config');
+var post_search_service_1 = require('./../services/post.search.service');
 var SuggestedPostsComponent = (function () {
-    function SuggestedPostsComponent(postService, route, postWorkflow, windowSize) {
+    function SuggestedPostsComponent(postService, route, postWorkflow, windowSize, postSearchService) {
         this.postService = postService;
         this.route = route;
         this.postWorkflow = postWorkflow;
         this.windowSize = windowSize;
+        this.postSearchService = postSearchService;
         this.SUGGESTED_POSTS_TITLE = message_properties_1.MessageConfig.SUGGESTED_POSTS_TITLE;
         this.show_all_pics = message_properties_1.MessageConfig.SHOW_ALL_PICS;
         this.single_route = setup_config_1.SetupConfig.SINGLE_POST_ROUTE;
@@ -47,7 +49,7 @@ var SuggestedPostsComponent = (function () {
             _this.subFindById = _this.postService.findYFPostById(params['id']).subscribe(function (post) {
                 _this.postDetailsDTO = _this.postService.regexPostText(post[0]);
                 var query = (_this.postDetailsDTO.md + " " + _this.postDetailsDTO.ph).split(" ").toString();
-                _this.subSuggestedPost = _this.postService.findByText(0, 20, query).subscribe(function (data) {
+                _this.subSuggestedPost = _this.postSearchService.findByText(0, 20, query).subscribe(function (data) {
                     _this.postListDTO = _this.postWorkflow.findSuggestedPosts(data, _this.postDetailsDTO.id, size);
                     if (_this.postListDTO.length < size) {
                         _this.subNewPosts = _this.postService.getYFSetsNativeNew(0, size - _this.postListDTO.length).subscribe(function (data) {
@@ -78,10 +80,10 @@ var SuggestedPostsComponent = (function () {
         core_1.Component({
             selector: 'suggested-posts',
             templateUrl: 'app/ts/templates/suggested.posts.component.html',
-            providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler, window_size_1.WindowSize],
+            providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler, window_size_1.WindowSize, post_search_service_1.PostSearchService],
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, post_workflow_1.PostWorkflow, window_size_1.WindowSize])
+        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, post_workflow_1.PostWorkflow, window_size_1.WindowSize, post_search_service_1.PostSearchService])
     ], SuggestedPostsComponent);
     return SuggestedPostsComponent;
 }());

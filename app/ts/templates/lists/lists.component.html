@@ -1,3 +1,9 @@
+<div class="container no-content-dashboard"  *ngIf="postListDTO.length == 0">
+    <div class="block-signal">
+        <div class="signal"></div>
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
             <div class="thumbnail col-xs-6 col-sm-4 col-md-3 hovereffect" *ngFor="let dto of postListDTO">

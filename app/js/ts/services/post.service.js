@@ -27,11 +27,6 @@ var PostService = (function () {
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };
-    PostService.prototype.findByText = function (from, size, textQuery) {
-        return this.http.get(this.elasticClient.findByText(from, size, textQuery))
-            .map(this.yfPostHandler.extractData)
-            .catch(this.yfPostHandler.handleError);
-    };
     PostService.prototype.getYFNativeNew = function (from, size) {
         return this.http.get(this.elasticClient.getNewYFNative(from, size))
             .map(this.yfPostHandler.extractData)

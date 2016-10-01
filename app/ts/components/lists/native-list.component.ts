@@ -31,6 +31,7 @@ export class NativeListComponent implements OnInit {
 
     constructor(private postService: PostService, private route: ActivatedRoute, private windowSize:WindowSize, private titleService: Title){
         this.setTitle(MessageConfig.NATIVE_LIST_TITLE)
+        this.postListDTO = [];
     }
 
     ngOnInit() {
@@ -65,7 +66,7 @@ export class NativeListComponent implements OnInit {
     }
 
         ngOnDestroy() {
-        this.subParams.unsubscribe();
+            this.subParams.unsubscribe();
         this.subNewPosts.unsubscribe();
 
     }

@@ -29,6 +29,8 @@ export class SetsListComponent implements OnInit {
 
     constructor(private postService: PostService, private route: ActivatedRoute, private windowSize:WindowSize, private titleService: Title){
         this.setTitle(MessageConfig.SETS_LIST_TITLE);
+        this.postListDTO = [];
+
     }
 
     ngOnInit() {

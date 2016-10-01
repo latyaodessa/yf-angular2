@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {PostService} from './../services/post.service';
 import {SuggestedPostsComponent} from './../components/sugessted.posts.component';
 import {ElasticClient} from './../services/http/elastic.client.service';
 import {YFPostHandler} from './../services/handlers/yf.post.handlers'
@@ -9,6 +8,8 @@ import {PostDetailsDTO} from './../objects/dtos/postDetailsDTO';
 import {PostListDTO} from './../objects/dtos/postListDTO';
 import {PostWorkflow} from './../services/workflow/post.workflow'
 import {MessageConfig} from './../config/message.properties'
+import {PostSearchService} from './../services/post.search.service';
+
 
 
 
@@ -16,12 +17,14 @@ import {MessageConfig} from './../config/message.properties'
 @Component({
     selector: 'search',
     templateUrl: 'app/ts/templates/search.component.html',
-    providers: [PostService, ElasticClient, YFPostHandler],
+    providers: [PostSearchService, ElasticClient, YFPostHandler],
     directives: [ROUTER_DIRECTIVES, SuggestedPostsComponent]
 })
 
 export class SearchComponent implements OnInit {
-    private postListDTO:PostListDTO[];
+    private postListDTO:PostListDTO[] = [];
+    private contentExist:boolean = true;
+    private searchingProceed:boolean = false;
     private queryTitle:string;
     private SEARCH_INQUERY = MessageConfig.SEARCH_INQUERY;
     private SEARCH = MessageConfig.SEARCH;
@@ -30,30 +33,26 @@ export class SearchComponent implements OnInit {
 
 
 
-    constructor(private router: Router, private postService: PostService, private route: ActivatedRoute, private postWorkflow:PostWorkflow){}
+
+    constructor(private router: Router, private route: ActivatedRoute, private postWorkflow:PostWorkflow, private postSearchService:PostSearchService){}
 
 
-    ngOnInit() {
-        this.postListDTO = [];
-        this.route.params.subscribe(params => {
-            this.queryTitle = params['query'];
-            if(this.queryTitle) {
-               this.postService.findByText(0, 20, this.queryTitle).subscribe(data => {
-                    this.postListDTO = this.postWorkflow.postToPostListDTO(data);
-                });
-            }else {
-                console.log(this.queryTitle);
-            }
+    ngOnInit() {}
 
-    });
-
-
-    }
-
-    search(query:string) {
-        if(query) {
-            this.router.navigate(['search', query.split(' ').join('+')]);
+    private findByText(term:string) {
+        if (term) {
+            this.queryTitle = term;
+            this.searchingProceed = true;
+            this.contentExist = true;
+            this.postSearchService.findByText(0, 20, term).subscribe(data => {
+                this.postListDTO = this.postWorkflow.postToPostListDTO(data);
+                this.searchingProceed = false;
+                if(data.length == 0){
+                    this.contentExist = false;
+                }
+            });
         }
     }
+
 
 }

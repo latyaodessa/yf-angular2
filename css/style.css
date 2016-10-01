@@ -438,16 +438,15 @@ position: absolute;
     top:10px;
 }
 
+#search-component {
+    text-align: center;
+}
 
 #search-component input[type="text"] {
-    /* border: medium none; */
-    width: 500px;
+    height: 50px;
     font-size: 30px;
     text-align: center;
     padding: 5px;
-}
-#search-component input[type="submit"] {
-   display: none;
 }
 
 /*Search*/
