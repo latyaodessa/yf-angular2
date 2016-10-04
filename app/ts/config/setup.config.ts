@@ -139,5 +139,5 @@ export class SetupConfig{
             return DataConfig.GOOGLE_AN_MODE_PROD;
         }
     }
-    
+
 }

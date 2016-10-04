@@ -3,20 +3,10 @@ import {Photo} from './../../objects/photo';
 import {PostDetailsDTO} from './../../objects/dtos/postDetailsDTO';
 import {PostListDTO} from './../../objects/dtos/postListDTO';
 import { Injectable}     from '@angular/core';
+import {SetupConfig} from './../../config/setup.config';
 
 @Injectable()
 export class PostWorkflow {
-    private regexTag = /^[^_]*@youngfolks/;
-    private newLine = '\n';
-    private regexIdbrackets = /\[id\d+\|/g;
-    private regexClubbrackets = /\[club\d+\|/g;
-    private backBracket = /\]/g;
-    private regexWebSite = /(faceb(.*?)+$)|(www\.(.*?)+$)|(http:.(.*?)+$)|(http:.(.*?)+$)|(instag.(.*?)+$)/g;
-    private phRegex = /(Ph:.*)|(Ph.*)/i;
-    private mdRegex = /(Md:.*)|(Md.*)/i;
-
-    constructor(){
-    }
 
     findPhotosForPostDetails(post:Post){
         let photos:string[] = [];
@@ -38,53 +28,40 @@ export class PostWorkflow {
         return null;
     }
 
-    regexPostText(post:Post){
-        let postDetailsDTO:PostDetailsDTO = new PostDetailsDTO();
-        postDetailsDTO.id = post.id;
-        let cleanText = this.getCleanText(post.text);
-        postDetailsDTO.text = cleanText;
-        postDetailsDTO.ph = this.getPh(cleanText);
-        postDetailsDTO.md = this.getMd(cleanText);
-
-        return postDetailsDTO;
-    }
-
-    getCleanText(text:string){
-        return text.replace(this.regexTag,"").replace(this.regexIdbrackets,"").replace(this.regexClubbrackets,"").replace(this.backBracket,"").replace(this.regexWebSite, "");
-
-    }
-
-    getPh(cleanText: string){
-        let phText  = this.phRegex.exec(cleanText.replace(":",""));
-        if(phText) {
-            return phText[0].replace(/ph/gi, "").replace(":", "").trim();
-        } else return null;
-    }
-    getMd(cleanText: string){
-        let mdText  = this.mdRegex.exec(cleanText.replace(":",""));
-        if(mdText) {
-            return mdText[0].replace(/md/gi, "").replace(":", "").trim();
-        } else return null;
-    }
 
     postToPostListDTO(posts:Post[]){
         let postListDto:PostListDTO[] = [];
         for(let post of posts){
-             let cleanText = this.getCleanText(post.text);
-             postListDto.push(new PostListDTO(post.id,this.getMd(cleanText),this.getPh(cleanText),this.findThumbnail(post)));
+            if(SetupConfig.TRANSLIT){
+                postListDto.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,this.findThumbnail(post)));
+            } else {
+                postListDto.push(new PostListDTO(post.id,post.md,post.ph,this.findThumbnail(post)));
+            }
         }
         return postListDto;
+    }
+    postToPostDetailsDTO(post:Post){
+        if(SetupConfig.TRANSLIT){
+            return new PostDetailsDTO(post.id, post.text, post.md_translit, post.ph_translit, null);
+        } else {
+            return new PostDetailsDTO(post.id, post.text, post.md, post.ph, null);
+        }
+
     }
 
     findSuggestedPosts(posts:Post[], currentPostId:number, size:number){
         let postListDTO:PostListDTO[] = [];
             for(let post of posts){
                 if(post.id != currentPostId && postListDTO.length<size){
-                    let cleanText = this.getCleanText(post.text);
-                    postListDTO.push(new PostListDTO(post.id, this.getMd(cleanText), this.getPh(cleanText), this.findThumbnail(post)));
+                    if(SetupConfig.TRANSLIT){
+                        postListDTO.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,this.findThumbnail(post)));
+                    } else {
+                        postListDTO.push(new PostListDTO(post.id,post.md,post.ph,this.findThumbnail(post)));
+                    }
                 }
             }
         return postListDTO;
     }
+
 
 }

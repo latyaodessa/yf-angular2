@@ -71,9 +71,6 @@ var PostService = (function () {
     PostService.prototype.findPhotosForPostDetails = function (post) {
         return this.postWorkflow.findPhotosForPostDetails(post);
     };
-    PostService.prototype.regexPostText = function (post) {
-        return this.postWorkflow.regexPostText(post);
-    };
     PostService.prototype.postToPostListDTO = function (posts) {
         return this.postWorkflow.postToPostListDTO(posts);
     };

@@ -28,8 +28,9 @@ var yf_user_handlers_1 = require('./../services/handlers/yf.user.handlers');
 var collapse_1 = require('ng2-bootstrap/components/collapse');
 var login_component_1 = require('./../components/core/login.component');
 var social_servcie_1 = require('./../services/core/social.servcie');
+var post_workflow_1 = require('./../services/workflow/post.workflow');
 var PostDetailsComponent = (function () {
-    function PostDetailsComponent(postService, route, titleService, userDashboardService, storageService, userDashboardRestClient, socialService) {
+    function PostDetailsComponent(postService, route, titleService, userDashboardService, storageService, userDashboardRestClient, socialService, postWorkflow) {
         this.postService = postService;
         this.route = route;
         this.titleService = titleService;
@@ -37,6 +38,7 @@ var PostDetailsComponent = (function () {
         this.storageService = storageService;
         this.userDashboardRestClient = userDashboardRestClient;
         this.socialService = socialService;
+        this.postWorkflow = postWorkflow;
         this.user_dashboard_route = setup_config_1.SetupConfig.DASHBOARD_ROUTE;
         this.isExist = false;
         this.isCollapsedModal = true;
@@ -47,7 +49,7 @@ var PostDetailsComponent = (function () {
         this.CLOSE_MODAL = message_properties_1.MessageConfig.CLOSE_MODAL;
         this.SHARE_BUTTON_TEXT = message_properties_1.MessageConfig.SHARE_BUTTON_TEXT;
         this.OPEN_POST_IN_VK = message_properties_1.MessageConfig.OPEN_POST_IN_VK;
-        this.postDetailsDTO = new postDetailsDTO_1.PostDetailsDTO();
+        this.postDetailsDTO = new postDetailsDTO_1.PostDetailsDTO(null, null, null, null, null);
         this.isCollapsedModal = true;
     }
     PostDetailsComponent.prototype.ngOnInit = function () {
@@ -56,7 +58,7 @@ var PostDetailsComponent = (function () {
             _this.postService.findYFPostById(params['id']).subscribe(function (post) {
                 if (post.length != 0) {
                     _this.isExist = true;
-                    _this.postDetailsDTO = _this.postService.regexPostText(post[0]);
+                    _this.postDetailsDTO = _this.postWorkflow.postToPostDetailsDTO(post[0]);
                     _this.postDetailsDTO.photos = _this.postService.findPhotosForPostDetails(post[0]);
                     _this.phForSuggested = _this.postDetailsDTO.ph;
                     _this.mdForSuggested = _this.postDetailsDTO.md;
@@ -140,10 +142,11 @@ var PostDetailsComponent = (function () {
             selector: 'post-details',
             templateUrl: 'app/ts/templates/post.details.component.html',
             providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler, platform_browser_1.Title, user_dashboard_service_1.UserDashboardService,
-                storage_service_1.StorageService, date_time_service_1.DateTimeService, user_dashboard_rest_client_1.UserDashboardRestClient, yf_user_handlers_1.YFUserHandler, social_servcie_1.SocialService],
+                storage_service_1.StorageService, date_time_service_1.DateTimeService, user_dashboard_rest_client_1.UserDashboardRestClient, yf_user_handlers_1.YFUserHandler, social_servcie_1.SocialService,
+                post_workflow_1.PostWorkflow],
             directives: [router_1.ROUTER_DIRECTIVES, sugessted_posts_component_1.SuggestedPostsComponent, login_component_1.LoginComponent, post_new_native_component_1.NewNativeComponent, post_new_sets_component_1.NewSetsComponent, collapse_1.CollapseDirective]
         }), 
-        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, platform_browser_1.Title, user_dashboard_service_1.UserDashboardService, storage_service_1.StorageService, user_dashboard_rest_client_1.UserDashboardRestClient, social_servcie_1.SocialService])
+        __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, platform_browser_1.Title, user_dashboard_service_1.UserDashboardService, storage_service_1.StorageService, user_dashboard_rest_client_1.UserDashboardRestClient, social_servcie_1.SocialService, post_workflow_1.PostWorkflow])
     ], PostDetailsComponent);
     return PostDetailsComponent;
 }());

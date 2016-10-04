@@ -11,16 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var postDetailsDTO_1 = require('./../../objects/dtos/postDetailsDTO');
 var postListDTO_1 = require('./../../objects/dtos/postListDTO');
 var core_1 = require('@angular/core');
+var setup_config_1 = require('./../../config/setup.config');
 var PostWorkflow = (function () {
     function PostWorkflow() {
-        this.regexTag = /^[^_]*@youngfolks/;
-        this.newLine = '\n';
-        this.regexIdbrackets = /\[id\d+\|/g;
-        this.regexClubbrackets = /\[club\d+\|/g;
-        this.backBracket = /\]/g;
-        this.regexWebSite = /(faceb(.*?)+$)|(www\.(.*?)+$)|(http:.(.*?)+$)|(http:.(.*?)+$)|(instag.(.*?)+$)/g;
-        this.phRegex = /(Ph:.*)|(Ph.*)/i;
-        this.mdRegex = /(Md:.*)|(Md.*)/i;
     }
     PostWorkflow.prototype.findPhotosForPostDetails = function (post) {
         var photos = [];
@@ -46,50 +39,38 @@ var PostWorkflow = (function () {
             return photo.photo_1280;
         return null;
     };
-    PostWorkflow.prototype.regexPostText = function (post) {
-        var postDetailsDTO = new postDetailsDTO_1.PostDetailsDTO();
-        postDetailsDTO.id = post.id;
-        var cleanText = this.getCleanText(post.text);
-        postDetailsDTO.text = cleanText;
-        postDetailsDTO.ph = this.getPh(cleanText);
-        postDetailsDTO.md = this.getMd(cleanText);
-        return postDetailsDTO;
-    };
-    PostWorkflow.prototype.getCleanText = function (text) {
-        return text.replace(this.regexTag, "").replace(this.regexIdbrackets, "").replace(this.regexClubbrackets, "").replace(this.backBracket, "").replace(this.regexWebSite, "");
-    };
-    PostWorkflow.prototype.getPh = function (cleanText) {
-        var phText = this.phRegex.exec(cleanText.replace(":", ""));
-        if (phText) {
-            return phText[0].replace(/ph/gi, "").replace(":", "").trim();
-        }
-        else
-            return null;
-    };
-    PostWorkflow.prototype.getMd = function (cleanText) {
-        var mdText = this.mdRegex.exec(cleanText.replace(":", ""));
-        if (mdText) {
-            return mdText[0].replace(/md/gi, "").replace(":", "").trim();
-        }
-        else
-            return null;
-    };
     PostWorkflow.prototype.postToPostListDTO = function (posts) {
         var postListDto = [];
         for (var _i = 0, posts_1 = posts; _i < posts_1.length; _i++) {
             var post = posts_1[_i];
-            var cleanText = this.getCleanText(post.text);
-            postListDto.push(new postListDTO_1.PostListDTO(post.id, this.getMd(cleanText), this.getPh(cleanText), this.findThumbnail(post)));
+            if (setup_config_1.SetupConfig.TRANSLIT) {
+                postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, this.findThumbnail(post)));
+            }
+            else {
+                postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, this.findThumbnail(post)));
+            }
         }
         return postListDto;
+    };
+    PostWorkflow.prototype.postToPostDetailsDTO = function (post) {
+        if (setup_config_1.SetupConfig.TRANSLIT) {
+            return new postDetailsDTO_1.PostDetailsDTO(post.id, post.text, post.md_translit, post.ph_translit, null);
+        }
+        else {
+            return new postDetailsDTO_1.PostDetailsDTO(post.id, post.text, post.md, post.ph, null);
+        }
     };
     PostWorkflow.prototype.findSuggestedPosts = function (posts, currentPostId, size) {
         var postListDTO = [];
         for (var _i = 0, posts_2 = posts; _i < posts_2.length; _i++) {
             var post = posts_2[_i];
             if (post.id != currentPostId && postListDTO.length < size) {
-                var cleanText = this.getCleanText(post.text);
-                postListDTO.push(new postListDTO_1.PostListDTO(post.id, this.getMd(cleanText), this.getPh(cleanText), this.findThumbnail(post)));
+                if (setup_config_1.SetupConfig.TRANSLIT) {
+                    postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, this.findThumbnail(post)));
+                }
+                else {
+                    postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, this.findThumbnail(post)));
+                }
             }
         }
         return postListDTO;

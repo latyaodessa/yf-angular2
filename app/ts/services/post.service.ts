@@ -78,10 +78,6 @@ export class PostService {
     findPhotosForPostDetails(post:Post){
         return this.postWorkflow.findPhotosForPostDetails(post);
     }
-    regexPostText(post:Post){
-        return this.postWorkflow.regexPostText(post);
-    }
-
     postToPostListDTO(posts:Post[]){
         return this.postWorkflow.postToPostListDTO(posts);
     }

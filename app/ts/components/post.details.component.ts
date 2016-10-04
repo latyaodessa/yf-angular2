@@ -19,7 +19,7 @@ import {YFUserHandler} from './../services/handlers/yf.user.handlers'
 import { CollapseDirective } from 'ng2-bootstrap/components/collapse';
 import {LoginComponent} from './../components/core/login.component';
 import {SocialService} from './../services/core/social.servcie'
-
+import {PostWorkflow} from './../services/workflow/post.workflow';
 
 
 
@@ -29,7 +29,8 @@ import {SocialService} from './../services/core/social.servcie'
     selector: 'post-details',
     templateUrl: 'app/ts/templates/post.details.component.html',
     providers: [PostService, ElasticClient, YFPostHandler, Title, UserDashboardService,
-                StorageService, DateTimeService,UserDashboardRestClient, YFUserHandler, SocialService],
+                StorageService, DateTimeService,UserDashboardRestClient, YFUserHandler, SocialService,
+                PostWorkflow],
     directives: [ROUTER_DIRECTIVES, SuggestedPostsComponent,LoginComponent, NewNativeComponent, NewSetsComponent, CollapseDirective]
 })
 
@@ -63,8 +64,9 @@ export class PostDetailsComponent implements OnInit {
 
     constructor(private postService: PostService, private route: ActivatedRoute, private titleService: Title,
                 private userDashboardService:UserDashboardService, private storageService:StorageService,
-                private userDashboardRestClient:UserDashboardRestClient, private socialService:SocialService) {
-        this.postDetailsDTO = new PostDetailsDTO();
+                private userDashboardRestClient:UserDashboardRestClient, private socialService:SocialService,
+                private postWorkflow:PostWorkflow) {
+        this.postDetailsDTO = new PostDetailsDTO(null, null,null,null,null);
         this.isCollapsedModal = true;
     }
 
@@ -74,7 +76,7 @@ export class PostDetailsComponent implements OnInit {
                 this.postService.findYFPostById(params['id']).subscribe(post => {
                     if(post.length != 0){
                         this.isExist = true;
-                        this.postDetailsDTO = this.postService.regexPostText(post[0]);
+                        this.postDetailsDTO = this.postWorkflow.postToPostDetailsDTO(post[0]);
                         this.postDetailsDTO.photos = this.postService.findPhotosForPostDetails(post[0]);
                         this.phForSuggested = this.postDetailsDTO.ph;
                         this.mdForSuggested = this.postDetailsDTO.md;

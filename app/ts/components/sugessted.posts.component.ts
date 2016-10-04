@@ -52,7 +52,7 @@ export class SuggestedPostsComponent implements OnInit {
     getPosts(size:number){
         this.subParams = this.route.params.subscribe(params => {
             this.subFindById =  this.postService.findYFPostById(params['id']).subscribe(post => {
-                    this.postDetailsDTO = this.postService.regexPostText(post[0]);
+                    this.postDetailsDTO = post[0];
                     let query = (this.postDetailsDTO.md + " " + this.postDetailsDTO.ph).split(" ").toString();
 
                     this.subSuggestedPost = this.postSearchService.findByText(0, 20, query).subscribe(data => {
