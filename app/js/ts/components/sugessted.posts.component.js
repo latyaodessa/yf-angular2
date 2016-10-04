@@ -47,10 +47,10 @@ var SuggestedPostsComponent = (function () {
         var _this = this;
         this.subParams = this.route.params.subscribe(function (params) {
             _this.subFindById = _this.postService.findYFPostById(params['id']).subscribe(function (post) {
-                _this.postDetailsDTO = post[0];
-                var query = (_this.postDetailsDTO.md + " " + _this.postDetailsDTO.ph).split(" ").toString();
+                var post_suggested = post[0];
+                var query = (post_suggested.md + " " + post_suggested.ph).split(" ").toString();
                 _this.subSuggestedPost = _this.postSearchService.findByText(0, 20, query).subscribe(function (data) {
-                    _this.postListDTO = _this.postWorkflow.findSuggestedPosts(data, _this.postDetailsDTO.id, size);
+                    _this.postListDTO = _this.postWorkflow.findSuggestedPosts(data, post_suggested.id, size);
                     if (_this.postListDTO.length < size) {
                         _this.subNewPosts = _this.postService.getYFSetsNativeNew(0, size - _this.postListDTO.length).subscribe(function (data) {
                             _this.postListDTO = _this.postListDTO.concat(_this.postService.postToPostListDTO(data));

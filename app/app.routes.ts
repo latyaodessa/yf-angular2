@@ -12,7 +12,7 @@ import {UserDashboardComponent} from './ts/components/user/user.dashboard.compon
 
 
 // Route Configuration
-export const routes: RouterConfig[] = [
+export const routes = [
     {
         path: '',
         component: PostlistComponent

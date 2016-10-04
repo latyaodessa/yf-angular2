@@ -10,6 +10,8 @@ import {WindowSize} from './../services/core/window.size';
 import {MessageConfig} from './../config/message.properties';
 import {SetupConfig} from './../config/setup.config';
 import {PostSearchService} from './../services/post.search.service';
+import {Post} from './../objects/post';
+
 
 
 
@@ -52,11 +54,11 @@ export class SuggestedPostsComponent implements OnInit {
     getPosts(size:number){
         this.subParams = this.route.params.subscribe(params => {
             this.subFindById =  this.postService.findYFPostById(params['id']).subscribe(post => {
-                    this.postDetailsDTO = post[0];
-                    let query = (this.postDetailsDTO.md + " " + this.postDetailsDTO.ph).split(" ").toString();
+                    let post_suggested:Post= post[0];
+                    let query = (post_suggested.md + " " + post_suggested.ph).split(" ").toString();
 
                     this.subSuggestedPost = this.postSearchService.findByText(0, 20, query).subscribe(data => {
-                        this.postListDTO = this.postWorkflow.findSuggestedPosts(data, this.postDetailsDTO.id, size);
+                        this.postListDTO = this.postWorkflow.findSuggestedPosts(data, post_suggested.id, size);
                         if (this.postListDTO.length < size) {
                             this.subNewPosts = this.postService.getYFSetsNativeNew(0, size - this.postListDTO.length).subscribe(data => {
                                 this.postListDTO = this.postListDTO.concat(this.postService.postToPostListDTO(data));
