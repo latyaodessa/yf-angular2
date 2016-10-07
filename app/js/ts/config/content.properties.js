@@ -52,12 +52,12 @@ var ContentProperties = (function () {
     //Modal
     ContentProperties.CLOSE_MODAL_RU = "закрыть";
     ContentProperties.MODAL_TITLE_PHOTOSET_RU = "Сохранить фотосет в профайл";
-    ContentProperties.MODAL_TITLE_SINGLE_PHOTO_RU = "Сохранить фотографию в профайл";
-    ContentProperties.MODAL_TEXT_NOT_LOGGED_IN_RU = "Чтобы добавить фотосет или фото в профайл необходимо авторизоваться";
+    ContentProperties.MODAL_TITLE_SINGLE_PHOTO_RU = "Сохранить изображение в профайл";
+    ContentProperties.MODAL_TEXT_NOT_LOGGED_IN_RU = "Чтобы добавить фотосет или изображение в профайл необходимо авторизоваться";
     //Overlay post
     ContentProperties.SHOW_ALL_PICS_RU = "Все фотографии";
     ContentProperties.SHOW_ALL_PICS_FULL_RU = "Все фотографии этого фотосета";
-    ContentProperties.OPEN_SINGLE_POST_RU = "Увеличить фотографию";
+    ContentProperties.OPEN_SINGLE_POST_RU = "Увеличить изображение";
     //Page Dtagails
     ContentProperties.DETAILS_SAVE_POST_IN_DASHBOARD_RU = "Сохранить фотосет";
     ContentProperties.DETAILS_POST_ALREADY_SAVED_RU = "Фотосет уже сохранен";
@@ -95,27 +95,27 @@ var ContentProperties = (function () {
     //Content
     ContentProperties.NEW_NATIVE_TITLE_ENG = "New photos of russian models";
     ContentProperties.NEW_SETS_TITLE_ENG = "New pictures of foreign models";
-    ContentProperties.SUGGESTED_POSTS_TITLE_ENG = "Related Photosessions";
-    ContentProperties.SAVED_POSTS_TITLE_ENG = "Saved Photosessions";
-    ContentProperties.SAVED_PHOTOS_TITLE_ENG = "Saved photos";
-    ContentProperties.NO_SAVED_PHOTOS_ENG = "You haven't saved any photo yet";
-    ContentProperties.NO_SAVED_POSTS_ENG = "You haven't saved any photosession yet";
+    ContentProperties.SUGGESTED_POSTS_TITLE_ENG = "Related Photoshoots";
+    ContentProperties.SAVED_POSTS_TITLE_ENG = "Saved Photoshoots";
+    ContentProperties.SAVED_PHOTOS_TITLE_ENG = "Saved pictures";
+    ContentProperties.NO_SAVED_PHOTOS_ENG = "You haven't saved any pictures yet";
+    ContentProperties.NO_SAVED_POSTS_ENG = "You haven't saved any photoshoots yet";
     ContentProperties.WEEKLY_TOP_SETS_ENG = "Weekly top of foreign models";
     ContentProperties.WEEKLY_TOP_NATIVE_ENG = "Weekly top of russian models";
     //Modal
     ContentProperties.CLOSE_MODAL_ENG = "close";
-    ContentProperties.MODAL_TITLE_PHOTOSET_ENG = "Save photosession in dashboard";
-    ContentProperties.MODAL_TITLE_SINGLE_PHOTO_ENG = "Save photo in dashboard";
-    ContentProperties.MODAL_TEXT_NOT_LOGGED_IN_ENG = "To save photo or photosession you need to login";
+    ContentProperties.MODAL_TITLE_PHOTOSET_ENG = "Save photoshoot in dashboard";
+    ContentProperties.MODAL_TITLE_SINGLE_PHOTO_ENG = "Save picture in dashboard";
+    ContentProperties.MODAL_TEXT_NOT_LOGGED_IN_ENG = "To save picture or photoshoot you need to login";
     //Overlay post
-    ContentProperties.SHOW_ALL_PICS_ENG = "All photos";
-    ContentProperties.SHOW_ALL_PICS_FULL_ENG = "All photos of this photosession";
-    ContentProperties.OPEN_SINGLE_POST_ENG = "Click photo to enlarge";
+    ContentProperties.SHOW_ALL_PICS_ENG = "All pictures";
+    ContentProperties.SHOW_ALL_PICS_FULL_ENG = "All photos of this photoshoot";
+    ContentProperties.OPEN_SINGLE_POST_ENG = "Click on picture to enlarge";
     //Page Dtagails
-    ContentProperties.DETAILS_SAVE_POST_IN_DASHBOARD_ENG = "Saved photosession";
-    ContentProperties.DETAILS_POST_ALREADY_SAVED_ENG = "This photosession already saved";
-    ContentProperties.DETAILS_POST_SUCCESSFULLY_SAVED_ENG = "Photosession is saved";
-    ContentProperties.OPEN_POST_IN_VK_ENG = "Open photosession in VK";
+    ContentProperties.DETAILS_SAVE_POST_IN_DASHBOARD_ENG = "Saved photoshoot";
+    ContentProperties.DETAILS_POST_ALREADY_SAVED_ENG = "This photoshoot already saved";
+    ContentProperties.DETAILS_POST_SUCCESSFULLY_SAVED_ENG = "Photoshoot is saved";
+    ContentProperties.OPEN_POST_IN_VK_ENG = "Open photoshoot in VK";
     //Social
     ContentProperties.DESCRIPTION_ADDITON_ENG = "Young Folks Models and photographers from all over the world";
     ContentProperties.SHARE_BUTTON_TEXT_ENG = "Share";
