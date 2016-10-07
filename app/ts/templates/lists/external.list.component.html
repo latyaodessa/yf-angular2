@@ -1,0 +1,43 @@
+<div class="container no-content-dashboard"  *ngIf="postListDTO.length == 0">
+    <div class="block-signal">
+        <div class="signal"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="thumbnail col-xs-6 col-sm-4 col-md-3 hovereffect" *ngFor="let dto of postListDTO">
+            <img class="img-responsive shadow" src={{dto.thumbnail}}/>
+            <a [routerLink]="['/'+single_route, dto.id]">
+                <div class="overlay">
+                    <div class="ul-main-list">
+                        <ul class="art-white"  *ngIf="dto.text">
+                            <li>{{dto.text}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row pagination-row">
+        <nav>
+            <ul class="pagination">
+
+
+
+                <li>
+                    <a *ngIf="page > 1" routerLink="/{{tag}}/{{page-1}}" class="page-link" (click)="scrollToTop()">
+                        <span><img src="/icons/32/left.png"></span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/{{tag}}/{{page+1}}" class="page-link" (click)="scrollToTop()">
+                        <span aria-hidden="true"><img src="/icons/32/right.png"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

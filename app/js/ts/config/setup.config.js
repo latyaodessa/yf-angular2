@@ -68,11 +68,13 @@ var SetupConfig = (function () {
     //Routing
     SetupConfig.SINGLE_POST_ROUTE = "post";
     SetupConfig.NATIVE_LIST_ROUTE = "native";
+    SetupConfig.ART_LIST_ROUTE = "art";
     SetupConfig.SETS_LIST_ROUTE = "sets";
     SetupConfig.SILHOUETTES_LIST_ROUTE = "silhouettes";
     SetupConfig.LOGIN_ROUTE = "login";
     SetupConfig.DASHBOARD_ROUTE = "dashboard";
     SetupConfig.SEARCH_ROUTE = "search";
+    SetupConfig.ART_ROUTE = "art";
     //Domains
     SetupConfig.DOMAIN_PROD_RU = "youngfolks.ru";
     SetupConfig.DOMAIN_PROD_ORG = "youngfolks.org";

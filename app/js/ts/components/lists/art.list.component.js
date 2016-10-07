@@ -17,19 +17,20 @@ var window_size_1 = require('./../../services/core/window.size');
 var platform_browser_1 = require('@angular/platform-browser');
 var message_properties_1 = require('./../../config/message.properties');
 var setup_config_1 = require('./../../config/setup.config');
-var NativeListComponent = (function () {
-    function NativeListComponent(postService, route, windowSize, titleService) {
+var ArtListComponent = (function () {
+    function ArtListComponent(postService, route, windowSize, titleService) {
         this.postService = postService;
         this.route = route;
         this.windowSize = windowSize;
         this.titleService = titleService;
-        this.tag = setup_config_1.SetupConfig.NATIVE_LIST_ROUTE;
+        this.fromExternal = 0;
+        this.tag = setup_config_1.SetupConfig.ART_LIST_ROUTE;
         this.show_all_pics = message_properties_1.MessageConfig.SHOW_ALL_PICS;
         this.single_route = setup_config_1.SetupConfig.SINGLE_POST_ROUTE;
-        this.setTitle(message_properties_1.MessageConfig.ART_LIST_TITLE);
+        this.setTitle(message_properties_1.MessageConfig.NATIVE_LIST_TITLE);
         this.postListDTO = [];
     }
-    NativeListComponent.prototype.ngOnInit = function () {
+    ArtListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.windowSize.width$.subscribe(function (width) {
             if (width < 768) {
@@ -46,7 +47,7 @@ var NativeListComponent = (function () {
             }
         });
     };
-    NativeListComponent.prototype.getPosts = function (size) {
+    ArtListComponent.prototype.getPosts = function (size) {
         var _this = this;
         this.subParams = this.route.params.subscribe(function (params) {
             if (params['page']) {
@@ -56,32 +57,55 @@ var NativeListComponent = (function () {
                 _this.page = 1;
             }
             var from = (_this.page - 1) * size;
-            _this.subNewPosts = _this.postService.getYFNativeNew(from, size).subscribe(function (data) {
+            _this.subNewPosts = _this.postService.getYFArtNew(from, size).subscribe(function (data) {
                 _this.postListDTO = _this.postService.postToPostListDTO(data);
                 _this.postsLength = _this.postListDTO.length;
+                _this.isPostsEnoughOrLoadMore(size, _this.postListDTO.length);
             });
         });
     };
-    NativeListComponent.prototype.ngOnDestroy = function () {
+    ArtListComponent.prototype.isPostsEnoughOrLoadMore = function (size, isSize) {
+        //if(size == 20 && isSize < size){
+        //    this.fromExternal+=size - isSize;
+        //    this.loadMoreExternal(this.fromExternal, size - isSize);
+        //}
+        //if(size == 15 && isSize < size){
+        //    this.fromExternal+=size - isSize;
+        //    this.loadMoreExternal(this.fromExternal, size - isSize);
+        //}
+        if (isSize == 0) {
+            this.loadMoreExternal((this.page - 1) * size, size);
+        }
+    };
+    ArtListComponent.prototype.loadMoreExternal = function (from, size) {
+        var _this = this;
+        console.log(size);
+        //from = ( this.page-1) * size;
+        this.subNewPosts = this.postService.getYFArtExternal(from, size).subscribe(function (data) {
+            _this.postListDTO = _this.postListDTO.concat(_this.postService.postToPostListDTO(data));
+            _this.postsLength = _this.postListDTO.length;
+        });
+    };
+    ArtListComponent.prototype.ngOnDestroy = function () {
         this.subParams.unsubscribe();
         this.subNewPosts.unsubscribe();
     };
-    NativeListComponent.prototype.setTitle = function (title) {
+    ArtListComponent.prototype.setTitle = function (title) {
         this.titleService.setTitle(title);
     };
-    NativeListComponent.prototype.scrollToTop = function () {
+    ArtListComponent.prototype.scrollToTop = function () {
         window.scrollTo(0, 0);
     };
-    NativeListComponent = __decorate([
+    ArtListComponent = __decorate([
         core_1.Component({
-            selector: 'native-list',
-            templateUrl: 'app/ts/templates/lists/lists.component.html',
+            selector: 'art-list',
+            templateUrl: 'app/ts/templates/lists/external.list.component.html',
             providers: [post_service_1.PostService, elastic_client_service_1.ElasticClient, yf_post_handlers_1.YFPostHandler, window_size_1.WindowSize, platform_browser_1.Title],
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [post_service_1.PostService, router_1.ActivatedRoute, window_size_1.WindowSize, platform_browser_1.Title])
-    ], NativeListComponent);
-    return NativeListComponent;
+    ], ArtListComponent);
+    return ArtListComponent;
 }());
-exports.NativeListComponent = NativeListComponent;
-//# sourceMappingURL=native-list.component.js.map
+exports.ArtListComponent = ArtListComponent;
+//# sourceMappingURL=art.list.component.js.map

@@ -23,12 +23,22 @@ var PostService = (function () {
         this.options = new http_1.RequestOptions({ headers: this.headers });
     }
     PostService.prototype.findYFPostById = function (id) {
-        return this.http.get(this.elasticClient.findNativeById(id))
+        return this.http.get(this.elasticClient.findPostById(id))
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };
     PostService.prototype.getYFNativeNew = function (from, size) {
         return this.http.get(this.elasticClient.getNewYFNative(from, size))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+    };
+    PostService.prototype.getYFArtNew = function (from, size) {
+        return this.http.get(this.elasticClient.getNewYFArt(from, size))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+    };
+    PostService.prototype.getYFArtExternal = function (from, size) {
+        return this.http.get(this.elasticClient.getArtExternal(from, size))
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };
@@ -91,7 +101,7 @@ var PostService = (function () {
         var body;
         var ids = this.getAllPostIdsFromSavedPost(savedPosts);
         body = JSON.stringify({ query: { constant_score: { filter: { terms: { id: ids } } } } }, null, ' ');
-        return this.http.post(elastic_client_service_1.ElasticClient.NATIVE_SETS_INDEX, body, this.options)
+        return this.http.post(elastic_client_service_1.ElasticClient.SEARCH_ALL_INDEX, body, this.options)
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
     };

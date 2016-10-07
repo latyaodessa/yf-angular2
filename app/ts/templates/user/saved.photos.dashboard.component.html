@@ -24,10 +24,10 @@
                         <ul class="md-white" *ngIf="dto.md">
                             <li>{{dto.md}}</li>
                         </ul>
+                        <ul class="art-white" *ngIf="!dto.md && !dto.ph">
+                            <li>{{dto.text}}</li>
+                        </ul>
                     </div>
-                    <!--<p>-->
-                        <!--<a (click) = "openLargeImage(dto.photo_url, dto.post_id)">{{OPEN_SINGLE_POST}}</a>-->
-                    <!--</p>-->
             </div>
     </div>
 </div>

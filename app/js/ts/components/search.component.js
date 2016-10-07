@@ -16,6 +16,7 @@ var router_1 = require('@angular/router');
 var post_workflow_1 = require('./../services/workflow/post.workflow');
 var message_properties_1 = require('./../config/message.properties');
 var post_search_service_1 = require('./../services/post.search.service');
+var setup_config_1 = require('./../config/setup.config');
 var SearchComponent = (function () {
     function SearchComponent(router, route, postWorkflow, postSearchService) {
         this.router = router;
@@ -28,6 +29,7 @@ var SearchComponent = (function () {
         this.SEARCH_INQUERY = message_properties_1.MessageConfig.SEARCH_INQUERY;
         this.SEARCH = message_properties_1.MessageConfig.SEARCH;
         this.NOTING_FOUND = message_properties_1.MessageConfig.NOTING_FOUND;
+        this.single_route = setup_config_1.SetupConfig.SINGLE_POST_ROUTE;
     }
     SearchComponent.prototype.ngOnInit = function () { };
     SearchComponent.prototype.findByText = function (term) {

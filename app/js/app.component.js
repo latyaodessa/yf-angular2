@@ -13,6 +13,7 @@ require('./rxjs-operators');
 var router_1 = require('@angular/router');
 var postlist_component_1 = require('./ts/components/postlist.component');
 var native_list_component_1 = require('./ts/components/lists/native-list.component');
+var art_list_component_1 = require('./ts/components/lists/art.list.component');
 var search_component_1 = require('./ts/components/search.component');
 var sets_list_component_1 = require('./ts/components/lists/sets-list.component');
 var soical_authorization_component_1 = require('./ts/components/core/soical.authorization.component');
@@ -26,6 +27,7 @@ var message_properties_1 = require('./ts/config/message.properties');
 var setup_config_1 = require('./ts/config/setup.config');
 var storage_service_1 = require('./ts/services/authorization/storage.service');
 var user_dashboard_component_1 = require('./ts/components/user/user.dashboard.component');
+var info_page_component_1 = require('./ts/components/pages/info.page.component');
 var AppComponent = (function () {
     function AppComponent(router, storageService, setupConfig) {
         this.router = router;
@@ -62,6 +64,7 @@ var AppComponent = (function () {
         this.SETS = message_properties_1.MessageConfig.SETS;
         this.SILHOUETTES = message_properties_1.MessageConfig.SILHOUETTES;
         this.YF_SLOGAN = message_properties_1.MessageConfig.YF_SLOGAN;
+        this.ART = message_properties_1.MessageConfig.ART;
     };
     AppComponent.prototype.initSetupProperties = function () {
         this.sets_route = setup_config_1.SetupConfig.SETS_LIST_ROUTE;
@@ -70,6 +73,7 @@ var AppComponent = (function () {
         this.login_route = setup_config_1.SetupConfig.LOGIN_ROUTE;
         this.search_route = setup_config_1.SetupConfig.SEARCH_ROUTE;
         this.dashboard_route = setup_config_1.SetupConfig.DASHBOARD_ROUTE;
+        this.art_route = setup_config_1.SetupConfig.ART_ROUTE;
     };
     AppComponent.prototype.checkCurrentLogin = function () {
         this.storageService.checkIsUserLoggedIn();
@@ -95,7 +99,7 @@ var AppComponent = (function () {
             providers: [post_workflow_1.PostWorkflow, storage_service_1.StorageService, setup_config_1.SetupConfig],
             precompile: [postlist_component_1.PostlistComponent, sets_list_component_1.SetsListComponent, native_list_component_1.NativeListComponent, post_details_component_1.PostDetailsComponent,
                 search_component_1.SearchComponent, silhouettes_list_component_1.SilhouettesListComponent, soical_authorization_component_1.SocialAuthorizationComponent, login_component_1.LoginComponent,
-                user_dashboard_component_1.UserDashboardComponent]
+                user_dashboard_component_1.UserDashboardComponent, art_list_component_1.ArtListComponent, info_page_component_1.InfoPage]
         }), 
         __metadata('design:paramtypes', [router_1.Router, storage_service_1.StorageService, setup_config_1.SetupConfig])
     ], AppComponent);

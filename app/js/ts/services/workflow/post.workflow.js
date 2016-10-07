@@ -43,21 +43,26 @@ var PostWorkflow = (function () {
         var postListDto = [];
         for (var _i = 0, posts_1 = posts; _i < posts_1.length; _i++) {
             var post = posts_1[_i];
+            var text = this.cleanTag(post.text);
             if (setup_config_1.SetupConfig.TRANSLIT) {
-                postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, this.findThumbnail(post)));
+                postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, text, this.findThumbnail(post)));
             }
             else {
-                postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, this.findThumbnail(post)));
+                postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, text, this.findThumbnail(post)));
             }
         }
         return postListDto;
     };
+    PostWorkflow.prototype.cleanTag = function (text) {
+        return text.replace(PostWorkflow.REGEX_CLEAN_TAG, "");
+    };
     PostWorkflow.prototype.postToPostDetailsDTO = function (post) {
+        var text = this.cleanTag(post.text);
         if (setup_config_1.SetupConfig.TRANSLIT) {
-            return new postDetailsDTO_1.PostDetailsDTO(post.id, post.text, post.md_translit, post.ph_translit, null);
+            return new postDetailsDTO_1.PostDetailsDTO(post.id, text, post.md_translit, post.ph_translit, null);
         }
         else {
-            return new postDetailsDTO_1.PostDetailsDTO(post.id, post.text, post.md, post.ph, null);
+            return new postDetailsDTO_1.PostDetailsDTO(post.id, text, post.md, post.ph, null);
         }
     };
     PostWorkflow.prototype.findSuggestedPosts = function (posts, currentPostId, size) {
@@ -65,16 +70,18 @@ var PostWorkflow = (function () {
         for (var _i = 0, posts_2 = posts; _i < posts_2.length; _i++) {
             var post = posts_2[_i];
             if (post.id != currentPostId && postListDTO.length < size) {
+                var text = this.cleanTag(post.text);
                 if (setup_config_1.SetupConfig.TRANSLIT) {
-                    postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, this.findThumbnail(post)));
+                    postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, text, this.findThumbnail(post)));
                 }
                 else {
-                    postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, this.findThumbnail(post)));
+                    postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, text, this.findThumbnail(post)));
                 }
             }
         }
         return postListDTO;
     };
+    PostWorkflow.REGEX_CLEAN_TAG = /#.*@youngfolks/i;
     PostWorkflow = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

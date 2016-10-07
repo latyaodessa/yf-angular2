@@ -32,20 +32,22 @@
         <h1 class="search-title">{{queryTitle}}</h1>
 
         <div class="thumbnail col-xs-6 col-sm-4 col-md-3  hovereffect" *ngFor="let dto of postListDTO">
-       <img class="img-responsive shadow" src={{dto.thumbnail}}/>
-        <div class="overlay">
-            <div class="ul-main-list">
-                <ul class="ph-white"  *ngIf="dto.ph">
-                    <li>{{dto.ph}}</li>
-                </ul>
-                <ul class="md-white" *ngIf="dto.md">
-                    <li>{{dto.md}}</li>
-                </ul>
-            </div>
-            <p>
-                <a [routerLink]="['/post', dto.id]">Все фотографии</a>
-            </p>
-        </div>
+            <img class="img-responsive shadow" src={{dto.thumbnail}}/>
+            <a [routerLink]="['/' + single_route, dto.id]">
+                <div class="overlay">
+                    <div class="ul-main-list">
+                        <ul class="ph-white"  *ngIf="dto.ph">
+                            <li>{{dto.ph}}</li>
+                        </ul>
+                        <ul class="md-white" *ngIf="dto.md">
+                            <li>{{dto.md}}</li>
+                        </ul>
+                        <ul class="art-white" *ngIf="!dto.md && !dto.ph">
+                            <li>{{dto.text}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
     </div>
 
 

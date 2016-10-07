@@ -12,25 +12,26 @@ import {SetupConfig} from './../../config/setup.config';
 
 
 @Component({
-    selector: 'native-list',
-    templateUrl: 'app/ts/templates/lists/lists.component.html',
+    selector: 'art-list',
+    templateUrl: 'app/ts/templates/lists/external.list.component.html',
     providers: [PostService, ElasticClient, YFPostHandler, WindowSize, Title],
     directives: [ ROUTER_DIRECTIVES]
 })
 
-export class NativeListComponent implements OnInit {
+export class ArtListComponent implements OnInit {
     private postListDTO:PostListDTO[];
     private postsLength: number;
     private subParams:any;
     private subNewPosts:any;
     private page:number;
     public size:number;
-    public tag: string = SetupConfig.NATIVE_LIST_ROUTE;
+    private fromExternal:number = 0;
+    public tag: string = SetupConfig.ART_LIST_ROUTE;
     public show_all_pics = MessageConfig.SHOW_ALL_PICS;
     public single_route = SetupConfig.SINGLE_POST_ROUTE;
 
     constructor(private postService: PostService, private route: ActivatedRoute, private windowSize:WindowSize, private titleService: Title){
-        this.setTitle(MessageConfig.ART_LIST_TITLE)
+        this.setTitle(MessageConfig.NATIVE_LIST_TITLE)
         this.postListDTO = [];
     }
 
@@ -57,16 +58,47 @@ export class NativeListComponent implements OnInit {
                 this.page = 1;
             }
             let from = ( this.page-1) * size;
-            this.subNewPosts = this.postService.getYFNativeNew(from, size).subscribe(data => {
+            this.subNewPosts = this.postService.getYFArtNew(from, size).subscribe(data => {
                 this.postListDTO = this.postService.postToPostListDTO(data);
                 this.postsLength = this.postListDTO.length;
+                this.isPostsEnoughOrLoadMore(size, this.postListDTO.length);
+
             });
 
         });
     }
 
-        ngOnDestroy() {
-            this.subParams.unsubscribe();
+    private isPostsEnoughOrLoadMore(size:number, isSize:number){
+        //if(size == 20 && isSize < size){
+        //    this.fromExternal+=size - isSize;
+        //    this.loadMoreExternal(this.fromExternal, size - isSize);
+        //}
+        //if(size == 15 && isSize < size){
+        //    this.fromExternal+=size - isSize;
+        //    this.loadMoreExternal(this.fromExternal, size - isSize);
+        //}
+        if(isSize == 0){
+
+               this.loadMoreExternal( ( this.page-1) * size, size);
+        }
+    }
+
+    private loadMoreExternal(from:number, size:number){
+        console.log(size);
+
+                //from = ( this.page-1) * size;
+
+            this.subNewPosts = this.postService.getYFArtExternal(from, size).subscribe(data => {
+
+                this.postListDTO = this.postListDTO.concat(this.postService.postToPostListDTO(data));
+                this.postsLength = this.postListDTO.length;
+
+            });
+
+    }
+
+    ngOnDestroy() {
+        this.subParams.unsubscribe();
         this.subNewPosts.unsubscribe();
 
     }

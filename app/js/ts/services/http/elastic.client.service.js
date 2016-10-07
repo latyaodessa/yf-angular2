@@ -16,13 +16,15 @@ var ElasticClient = (function () {
         this.getSize = function (size) { return '&size=' + size; };
         this.getFrom = function (from) { return '&from=' + from; };
         this.getNewYFNative = function (from, size) { return ElasticClient.NATIVE_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
+        this.getNewYFArt = function (from, size) { return ElasticClient.ART_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
+        this.getArtExternal = function (from, size) { return ElasticClient.EXTERNAL_ART_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
         this.getNewYFSets = function (from, size) { return ElasticClient.SETS_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
         this.getYFSilhouettesNew = function (from, size) { return ElasticClient.SILHOUETTES_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
-        this.getYFSetsNativeNew = function (from, size) { return ElasticClient.NATIVE_SETS_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
+        this.getYFSetsNativeNew = function (from, size) { return ElasticClient.SEARCH_ALL_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_ID; };
         this.getYFNativeTop = function (from, size) { return ElasticClient.NATIVE_TOP_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_LIKES; };
         this.getYFSetsTop = function (from, size) { return ElasticClient.SETS_TOP_INDEX + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_LIKES; };
-        this.findNativeById = function (id) { return ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_ID + id; };
-        this.findByText = function (from, size, textQuery) { return ElasticClient.NATIVE_SETS_INDEX + ElasticClient.SEARCH_BY_TEXT + textQuery; };
+        this.findPostById = function (id) { return ElasticClient.SEARCH_ALL_INDEX + ElasticClient.SEARCH_BY_ID + id; };
+        this.findByText = function (from, size, textQuery) { return ElasticClient.SEARCH_ALL_INDEX + ElasticClient.SEARCH_BY_TEXT + textQuery; };
         //User Dashboard
         this.getSavedUserPosts = function (from, size, userId) { return ElasticClient.USER_SAVED_POSTS_INDEX + ElasticClient.SEARCH_BY_USER_ID + userId + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_DATE; };
         this.getSavedUserPhotos = function (from, size, userId) { return ElasticClient.USER_SAVED_PHOTOS_INDEX + ElasticClient.SEARCH_BY_USER_ID + userId + _this.getFrom(from) + _this.getSize(size) + ElasticClient.DESC_BY_DATE; };
@@ -30,6 +32,8 @@ var ElasticClient = (function () {
     //public static HOST:string = 'http://raspberrypi.local:9200/';
     ElasticClient.HOST = setup_config_1.SetupConfig.ELASTIC_HOST;
     ElasticClient.NATIVE_INDEX = ElasticClient.HOST + 'yf-photo-native/_search?';
+    ElasticClient.EXTERNAL_ART_INDEX = ElasticClient.HOST + 'external-art/_search?';
+    ElasticClient.ART_INDEX = ElasticClient.HOST + 'yf-photo-art/_search?';
     ElasticClient.SETS_INDEX = ElasticClient.HOST + 'yf-photo-sets/_search?';
     ElasticClient.SILHOUETTES_INDEX = ElasticClient.HOST + 'yf-photo-silhouettes/_search?';
     //Dashboard
@@ -37,7 +41,7 @@ var ElasticClient = (function () {
     ElasticClient.USER_SAVED_PHOTOS_INDEX = ElasticClient.HOST + 'user-saved-photo/_search?';
     ElasticClient.NATIVE_TOP_INDEX = ElasticClient.HOST + 'yf-native-top/_search?';
     ElasticClient.SETS_TOP_INDEX = ElasticClient.HOST + 'yf-sets-top/_search?';
-    ElasticClient.NATIVE_SETS_INDEX = ElasticClient.HOST + 'yf-photo-native,yf-photo-sets/_search?';
+    ElasticClient.SEARCH_ALL_INDEX = ElasticClient.HOST + '/_search?';
     ElasticClient.SEARCH_BY_ID = 'q=_id:';
     ElasticClient.SEARCH_BY_TEXT = '&q=text:';
     ElasticClient.SEARCH_BY_USER_ID = '&q=user_id:';

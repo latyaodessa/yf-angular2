@@ -8,11 +8,14 @@ export class SetupConfig{
     //Routing
     public static SINGLE_POST_ROUTE ="post";
     public static NATIVE_LIST_ROUTE = "native";
+    public static ART_LIST_ROUTE = "art";
     public static SETS_LIST_ROUTE = "sets";
     public static SILHOUETTES_LIST_ROUTE = "silhouettes";
     public static LOGIN_ROUTE = "login";
     public static DASHBOARD_ROUTE = "dashboard";
     public static SEARCH_ROUTE = "search";
+    public static ART_ROUTE = "art";
+
 
     //Domains
     public static DOMAIN_PROD_RU = "youngfolks.ru";

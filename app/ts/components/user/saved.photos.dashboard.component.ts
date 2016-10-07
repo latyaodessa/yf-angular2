@@ -50,6 +50,8 @@ export class SavedPhotosDashboardComponent implements OnInit {
     private getSavedPhotos(size:number){
         this.userDashboardService.getSavedPhotos(0, size, this.storageService.getUserId()).subscribe(savedPhotos => {
             this.singlePhotoListDTO = savedPhotos;
+            console.log(  this.singlePhotoListDTO);
+
             this.contentExistence = this.isContentExist(savedPhotos.length);
 
             this.isLoadMorePossible(savedPhotos.length ,SavedPhotosDashboardComponent.loadInitAmount );

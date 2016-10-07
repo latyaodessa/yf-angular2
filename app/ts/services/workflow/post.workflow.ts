@@ -8,6 +8,8 @@ import {SetupConfig} from './../../config/setup.config';
 @Injectable()
 export class PostWorkflow {
 
+    public static REGEX_CLEAN_TAG = /#.*@youngfolks/i;
+
     findPhotosForPostDetails(post:Post){
         let photos:string[] = [];
         post.postPhoto.forEach(function(photo){
@@ -32,19 +34,28 @@ export class PostWorkflow {
     postToPostListDTO(posts:Post[]){
         let postListDto:PostListDTO[] = [];
         for(let post of posts){
+
+            let text:string = this.cleanTag(post.text);
+
             if(SetupConfig.TRANSLIT){
-                postListDto.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,this.findThumbnail(post)));
+                postListDto.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,text, this.findThumbnail(post)));
             } else {
-                postListDto.push(new PostListDTO(post.id,post.md,post.ph,this.findThumbnail(post)));
+                postListDto.push(new PostListDTO(post.id,post.md,post.ph,text, this.findThumbnail(post)));
             }
         }
         return postListDto;
     }
+
+    cleanTag(text:string){
+        return text.replace(PostWorkflow.REGEX_CLEAN_TAG, "");
+    }
     postToPostDetailsDTO(post:Post){
+        let text:string = this.cleanTag(post.text);
+
         if(SetupConfig.TRANSLIT){
-            return new PostDetailsDTO(post.id, post.text, post.md_translit, post.ph_translit, null);
+            return new PostDetailsDTO(post.id, text, post.md_translit, post.ph_translit, null);
         } else {
-            return new PostDetailsDTO(post.id, post.text, post.md, post.ph, null);
+            return new PostDetailsDTO(post.id, text, post.md, post.ph, null);
         }
 
     }
@@ -53,10 +64,12 @@ export class PostWorkflow {
         let postListDTO:PostListDTO[] = [];
             for(let post of posts){
                 if(post.id != currentPostId && postListDTO.length<size){
+                    let text:string = this.cleanTag(post.text);
+
                     if(SetupConfig.TRANSLIT){
-                        postListDTO.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,this.findThumbnail(post)));
+                        postListDTO.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,text, this.findThumbnail(post)));
                     } else {
-                        postListDTO.push(new PostListDTO(post.id,post.md,post.ph,this.findThumbnail(post)));
+                        postListDTO.push(new PostListDTO(post.id,post.md,post.ph,text,this.findThumbnail(post)));
                     }
                 }
             }

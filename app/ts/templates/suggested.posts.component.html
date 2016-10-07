@@ -12,6 +12,9 @@
                 <ul class="md-white" *ngIf="dto.md">
                     <li>{{dto.md}}</li>
                 </ul>
+                <ul class="art-white" *ngIf="!dto.md && !dto.ph">
+                    <li>{{dto.text}}</li>
+                </ul>
             </div>
         </div>
             </a>

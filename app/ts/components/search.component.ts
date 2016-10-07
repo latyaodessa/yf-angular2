@@ -9,6 +9,8 @@ import {PostListDTO} from './../objects/dtos/postListDTO';
 import {PostWorkflow} from './../services/workflow/post.workflow'
 import {MessageConfig} from './../config/message.properties'
 import {PostSearchService} from './../services/post.search.service';
+import {SetupConfig} from './../config/setup.config';
+
 
 
 
@@ -29,6 +31,8 @@ export class SearchComponent implements OnInit {
     private SEARCH_INQUERY = MessageConfig.SEARCH_INQUERY;
     private SEARCH = MessageConfig.SEARCH;
     private NOTING_FOUND = MessageConfig.NOTING_FOUND;
+    public single_route = SetupConfig.SINGLE_POST_ROUTE;
+
 
 
 

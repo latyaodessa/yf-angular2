@@ -20,7 +20,7 @@ export class PostService {
 
 
     findYFPostById(id:any):Observable<Post[]> {
-        return this.http.get(this.elasticClient.findNativeById(id))
+        return this.http.get(this.elasticClient.findPostById(id))
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
 
@@ -32,6 +32,22 @@ export class PostService {
             .catch(this.yfPostHandler.handleError);
 
     }
+
+    getYFArtNew(from:number, size:number):Observable<Post[]> {
+        return this.http.get(this.elasticClient.getNewYFArt(from, size))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+
+    }
+
+    getYFArtExternal(from:number, size:number):Observable<Post[]> {
+        return this.http.get(this.elasticClient.getArtExternal(from, size))
+            .map(this.yfPostHandler.extractData)
+            .catch(this.yfPostHandler.handleError);
+
+    }
+
+
     getYFNativeTop(from:number, size:number):Observable<Post[]> {
         return this.http.get(this.elasticClient.getYFNativeTop(from, size))
             .map(this.yfPostHandler.extractData)
@@ -103,7 +119,7 @@ export class PostService {
         body = JSON.stringify({ query: {constant_score : {filter : {terms :{id : ids} }}} }, null, ' ');
 
 
-        return this.http.post(ElasticClient.NATIVE_SETS_INDEX, body, this.options)
+        return this.http.post(ElasticClient.SEARCH_ALL_INDEX, body, this.options)
             .map(this.yfPostHandler.extractData)
             .catch(this.yfPostHandler.handleError);
         }

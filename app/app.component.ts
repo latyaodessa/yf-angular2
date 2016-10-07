@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import './rxjs-operators';
 import {Router, ROUTER_DIRECTIVES, Event, NavigationEnd} from '@angular/router';
 import {PostlistComponent} from './ts/components/postlist.component';
-import {NativeListComponent} from './ts/components/lists/native-list.component'
+import {NativeListComponent} from './ts/components/lists/native-list.component';
+import {ArtListComponent} from './ts/components/lists/art.list.component';
 import {SearchComponent} from './ts/components/search.component'
 import {SetsListComponent} from './ts/components/lists/sets-list.component'
 import {SocialAuthorizationComponent} from './ts/components/core/soical.authorization.component';
@@ -17,6 +18,7 @@ import {SetupConfig} from './ts/config/setup.config';
 import {StorageService} from './ts/services/authorization/storage.service'
 import {VKStorageUserDTO} from './ts/objects/user/dtos/vk.storage.user.dto'
 import {UserDashboardComponent} from './ts/components/user/user.dashboard.component'
+import {InfoPage} from './ts/components/pages/info.page.component'
 declare let ga:Function;
 
 
@@ -27,14 +29,14 @@ declare let ga:Function;
     providers: [PostWorkflow, StorageService, SetupConfig],
     precompile: [PostlistComponent, SetsListComponent, NativeListComponent, PostDetailsComponent,
                 SearchComponent, SilhouettesListComponent, SocialAuthorizationComponent, LoginComponent,
-                UserDashboardComponent]
+                UserDashboardComponent, ArtListComponent, InfoPage]
     })
 export class AppComponent  implements OnInit{
     MAIN_PAGE:string;ENTER:string; EXIT:string; NATIVE:string;
-    SETS:string;SILHOUETTES:string; YF_SLOGAN:string;
+    SETS:string;SILHOUETTES:string; YF_SLOGAN:string; ART:string;
 
     sets_route:string;native_route:string;dashboard_route:string;
-    silhouettes_route:string;login_route:string; search_route:string;
+    silhouettes_route:string;login_route:string; search_route:string; art_route:string;
 
     searchControl = new FormControl();
 
@@ -82,6 +84,7 @@ export class AppComponent  implements OnInit{
             this.SETS = MessageConfig.SETS;
             this.SILHOUETTES = MessageConfig.SILHOUETTES;
             this.YF_SLOGAN = MessageConfig.YF_SLOGAN;
+            this.ART = MessageConfig.ART;
     }
          initSetupProperties(){
             this.sets_route = SetupConfig.SETS_LIST_ROUTE;
@@ -90,6 +93,7 @@ export class AppComponent  implements OnInit{
             this.login_route = SetupConfig.LOGIN_ROUTE;
              this.search_route = SetupConfig.SEARCH_ROUTE;
              this.dashboard_route = SetupConfig.DASHBOARD_ROUTE;
+             this.art_route = SetupConfig.ART_ROUTE;
          }
 
     checkCurrentLogin(){
