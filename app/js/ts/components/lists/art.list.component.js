@@ -78,9 +78,8 @@ var ArtListComponent = (function () {
         }
     };
     ArtListComponent.prototype.loadMoreExternal = function (from, size) {
-        var _this = this;
-        console.log(size);
         //from = ( this.page-1) * size;
+        var _this = this;
         this.subNewPosts = this.postService.getYFArtExternal(from, size).subscribe(function (data) {
             _this.postListDTO = _this.postListDTO.concat(_this.postService.postToPostListDTO(data));
             _this.postsLength = _this.postListDTO.length;

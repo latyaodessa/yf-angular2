@@ -74,13 +74,15 @@ var PostWorkflow = (function () {
         var postListDTO = [];
         for (var _i = 0, posts_2 = posts; _i < posts_2.length; _i++) {
             var post = posts_2[_i];
-            if (post.id != currentPostId && postListDTO.length < size) {
-                var text = this.cleanTag(post);
-                if (setup_config_1.SetupConfig.TRANSLIT) {
-                    postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, text, this.findThumbnail(post)));
-                }
-                else {
-                    postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, text, this.findThumbnail(post)));
+            if (post.postPhoto) {
+                if (post.id != currentPostId && postListDTO.length < size) {
+                    var text = this.cleanTag(post);
+                    if (setup_config_1.SetupConfig.TRANSLIT) {
+                        postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, text, this.findThumbnail(post)));
+                    }
+                    else {
+                        postListDTO.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, text, this.findThumbnail(post)));
+                    }
                 }
             }
         }

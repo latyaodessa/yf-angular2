@@ -77,7 +77,7 @@ export class SetupConfig{
 
 
     public static setupElastic(){
-        console.log(window.location.hostname);
+        //console.log(window.location.hostname);
 
 
         if(SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU || SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG) {

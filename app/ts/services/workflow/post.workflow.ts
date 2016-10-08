@@ -68,13 +68,16 @@ export class PostWorkflow {
     findSuggestedPosts(posts:Post[], currentPostId:number, size:number){
         let postListDTO:PostListDTO[] = [];
             for(let post of posts){
-                if(post.id != currentPostId && postListDTO.length<size){
-                    let text:string = this.cleanTag(post);
+                if(post.postPhoto) {
 
-                    if(SetupConfig.TRANSLIT){
-                        postListDTO.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,text, this.findThumbnail(post)));
-                    } else {
-                        postListDTO.push(new PostListDTO(post.id,post.md,post.ph,text,this.findThumbnail(post)));
+                    if (post.id != currentPostId && postListDTO.length < size) {
+                        let text:string = this.cleanTag(post);
+
+                        if (SetupConfig.TRANSLIT) {
+                            postListDTO.push(new PostListDTO(post.id, post.md_translit, post.ph_translit, text, this.findThumbnail(post)));
+                        } else {
+                            postListDTO.push(new PostListDTO(post.id, post.md, post.ph, text, this.findThumbnail(post)));
+                        }
                     }
                 }
             }

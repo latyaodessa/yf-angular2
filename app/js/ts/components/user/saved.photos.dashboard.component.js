@@ -43,7 +43,6 @@ var SavedPhotosDashboardComponent = (function () {
         var _this = this;
         this.userDashboardService.getSavedPhotos(0, size, this.storageService.getUserId()).subscribe(function (savedPhotos) {
             _this.singlePhotoListDTO = savedPhotos;
-            console.log(_this.singlePhotoListDTO);
             _this.contentExistence = _this.isContentExist(savedPhotos.length);
             _this.isLoadMorePossible(savedPhotos.length, SavedPhotosDashboardComponent.loadInitAmount);
         });

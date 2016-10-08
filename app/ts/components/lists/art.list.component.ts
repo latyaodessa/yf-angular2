@@ -84,8 +84,6 @@ export class ArtListComponent implements OnInit {
     }
 
     private loadMoreExternal(from:number, size:number){
-        console.log(size);
-
                 //from = ( this.page-1) * size;
 
             this.subNewPosts = this.postService.getYFArtExternal(from, size).subscribe(data => {

@@ -4,7 +4,7 @@ var SetupConfig = (function () {
     function SetupConfig() {
     }
     SetupConfig.setupElastic = function () {
-        console.log(window.location.hostname);
+        //console.log(window.location.hostname);
         if (SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_RU || SetupConfig.DOMAIN == SetupConfig.DOMAIN_PROD_ORG) {
             return data_config_1.DataConfig.ELASTIC_HOST_PROD;
         }
