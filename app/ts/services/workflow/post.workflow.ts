@@ -69,7 +69,7 @@ export class PostWorkflow {
         let postListDTO:PostListDTO[] = [];
             for(let post of posts){
                 if(post.id != currentPostId && postListDTO.length<size){
-                    let text:string = this.cleanTag(post.text);
+                    let text:string = this.cleanTag(post);
 
                     if(SetupConfig.TRANSLIT){
                         postListDTO.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,text, this.findThumbnail(post)));
