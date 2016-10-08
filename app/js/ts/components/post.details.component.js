@@ -126,7 +126,7 @@ var PostDetailsComponent = (function () {
             this.loginNeeded = true;
             return;
         }
-        this.userDashboardRestClient.savePhotoToUserDashboard(this.userDashboardService.generatePhotoSaveDTOForUser(this.storageService.getUserId(), photo, this.postDetailsDTO.ph, this.postDetailsDTO.md, this.postDetailsDTO.id))
+        this.userDashboardRestClient.savePhotoToUserDashboard(this.userDashboardService.generatePhotoSaveDTOForUser(this.storageService.getUserId(), photo, this.postDetailsDTO.ph, this.postDetailsDTO.md, this.postDetailsDTO.id, this.postDetailsDTO.text))
             .subscribe(function (result) {
             _this.single_photo_text_img_url = photo;
             if (result) {

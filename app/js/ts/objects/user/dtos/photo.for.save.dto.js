@@ -1,6 +1,6 @@
 "use strict";
 var PhotoForSave = (function () {
-    function PhotoForSave(photo_url, user_id, date, note, ph, md, post_id) {
+    function PhotoForSave(photo_url, user_id, date, note, ph, md, post_id, text) {
         this.photo_url = photo_url;
         this.user_id = user_id;
         this.date = date;
@@ -8,6 +8,7 @@ var PhotoForSave = (function () {
         this.ph = ph;
         this.md = md;
         this.post_id = post_id;
+        this.text = text;
     }
     return PhotoForSave;
 }());

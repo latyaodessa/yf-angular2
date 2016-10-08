@@ -31,7 +31,7 @@ export class UserDashboardService{
 
     }
 
-    generatePhotoSaveDTOForUser= (user_id:number, photo_url:string, ph:string, md:string,post_id:number) => new PhotoForSave(photo_url, user_id, "", "", ph, md, post_id);
+    generatePhotoSaveDTOForUser= (user_id:number, photo_url:string, ph:string, md:string,post_id:number, text:string) => new PhotoForSave(photo_url, user_id, "", "", ph, md, post_id, text);
 
     getSavedPosts(from:number, size:number, userId:number):Observable<Post[]> {
         return this.http.get(this.elasticClient.getSavedUserPosts(from, size, userId))

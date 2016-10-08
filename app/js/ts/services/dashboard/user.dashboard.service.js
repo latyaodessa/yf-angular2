@@ -31,7 +31,7 @@ var UserDashboardService = (function () {
             _this.postForSave = new post_for_save_dto_1.PostForSave(post_id, user_id, _this.dateTimeService.getCurrentDateTime(), "");
             return _this.userDashboardRestClient.savePostToUserDashboard(_this.postForSave).subscribe(function (savedPost) { return savedPost; });
         };
-        this.generatePhotoSaveDTOForUser = function (user_id, photo_url, ph, md, post_id) { return new photo_for_save_dto_1.PhotoForSave(photo_url, user_id, "", "", ph, md, post_id); };
+        this.generatePhotoSaveDTOForUser = function (user_id, photo_url, ph, md, post_id, text) { return new photo_for_save_dto_1.PhotoForSave(photo_url, user_id, "", "", ph, md, post_id, text); };
     }
     UserDashboardService.prototype.getSavedPosts = function (from, size, userId) {
         return this.http.get(this.elasticClient.getSavedUserPosts(from, size, userId))

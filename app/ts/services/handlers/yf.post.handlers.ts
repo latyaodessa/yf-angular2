@@ -23,7 +23,6 @@ export class YFPostHandler implements HandlerInterface{
 
     extractSinglePhotosData(res:Response){
         this.singlePhotoListDTO = [];
-
         res.json().hits.hits.forEach((entry) => {
             this.singlePhotoListDTO.push(entry._source);
         });
