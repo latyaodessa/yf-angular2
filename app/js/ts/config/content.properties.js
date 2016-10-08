@@ -63,6 +63,8 @@ var ContentProperties = (function () {
     ContentProperties.DETAILS_POST_ALREADY_SAVED_RU = "Фотосет уже сохранен";
     ContentProperties.DETAILS_POST_SUCCESSFULLY_SAVED_RU = "Фотосет сохранен";
     ContentProperties.OPEN_POST_IN_VK_RU = "Открыть фотосет в VK";
+    ContentProperties.DETAILS_SAVED_PHOTO_IN_DASHBOARDS_RU = "Фотография успешно сохранена";
+    ContentProperties.DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS_RU = "Фотография уже сохранена в ваш профайл";
     //Social
     ContentProperties.DESCRIPTION_ADDITON_RU = "Young Folks Модели и фотографы со всего мира";
     ContentProperties.SHARE_BUTTON_TEXT_RU = "Поделиться";
@@ -95,27 +97,29 @@ var ContentProperties = (function () {
     //Content
     ContentProperties.NEW_NATIVE_TITLE_ENG = "New photos of russian models";
     ContentProperties.NEW_SETS_TITLE_ENG = "New pictures of foreign models";
-    ContentProperties.SUGGESTED_POSTS_TITLE_ENG = "Related Photoshoots";
-    ContentProperties.SAVED_POSTS_TITLE_ENG = "Saved Photoshoots";
+    ContentProperties.SUGGESTED_POSTS_TITLE_ENG = "Related works";
+    ContentProperties.SAVED_POSTS_TITLE_ENG = "Saved photo shoots";
     ContentProperties.SAVED_PHOTOS_TITLE_ENG = "Saved pictures";
     ContentProperties.NO_SAVED_PHOTOS_ENG = "You haven't saved any pictures yet";
-    ContentProperties.NO_SAVED_POSTS_ENG = "You haven't saved any photoshoots yet";
+    ContentProperties.NO_SAVED_POSTS_ENG = "You haven't saved any photo shoots yet";
     ContentProperties.WEEKLY_TOP_SETS_ENG = "Weekly top of foreign models";
     ContentProperties.WEEKLY_TOP_NATIVE_ENG = "Weekly top of russian models";
     //Modal
     ContentProperties.CLOSE_MODAL_ENG = "close";
-    ContentProperties.MODAL_TITLE_PHOTOSET_ENG = "Save photoshoot in dashboard";
+    ContentProperties.MODAL_TITLE_PHOTOSET_ENG = "Save photo shoot in dashboard";
     ContentProperties.MODAL_TITLE_SINGLE_PHOTO_ENG = "Save picture in dashboard";
-    ContentProperties.MODAL_TEXT_NOT_LOGGED_IN_ENG = "To save picture or photoshoot you need to login";
+    ContentProperties.MODAL_TEXT_NOT_LOGGED_IN_ENG = "To save picture or photo shoot you need to login";
     //Overlay post
     ContentProperties.SHOW_ALL_PICS_ENG = "All pictures";
-    ContentProperties.SHOW_ALL_PICS_FULL_ENG = "All photos of this photoshoot";
+    ContentProperties.SHOW_ALL_PICS_FULL_ENG = "All photos of this photo shoot";
     ContentProperties.OPEN_SINGLE_POST_ENG = "Click on picture to enlarge";
     //Page Dtagails
-    ContentProperties.DETAILS_SAVE_POST_IN_DASHBOARD_ENG = "Saved photoshoot";
-    ContentProperties.DETAILS_POST_ALREADY_SAVED_ENG = "This photoshoot already saved";
-    ContentProperties.DETAILS_POST_SUCCESSFULLY_SAVED_ENG = "Photoshoot is saved";
-    ContentProperties.OPEN_POST_IN_VK_ENG = "Open photoshoot in VK";
+    ContentProperties.DETAILS_SAVE_POST_IN_DASHBOARD_ENG = "Saved photo shoot";
+    ContentProperties.DETAILS_POST_ALREADY_SAVED_ENG = "This photo shoot already saved";
+    ContentProperties.DETAILS_POST_SUCCESSFULLY_SAVED_ENG = "Photo shoot is saved";
+    ContentProperties.OPEN_POST_IN_VK_ENG = "Open photo shoot in VK";
+    ContentProperties.DETAILS_SAVED_PHOTO_IN_DASHBOARDS_ENG = "Picture is saved in your dashboard";
+    ContentProperties.DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS_ENG = "Picture already saved in your dashboard";
     //Social
     ContentProperties.DESCRIPTION_ADDITON_ENG = "Young Folks Models and photographers from all over the world";
     ContentProperties.SHARE_BUTTON_TEXT_ENG = "Share";

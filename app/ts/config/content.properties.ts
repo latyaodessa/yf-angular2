@@ -76,7 +76,9 @@ export class ContentProperties {
     public static DETAILS_SAVE_POST_IN_DASHBOARD_RU = "Сохранить фотосет";
     public static DETAILS_POST_ALREADY_SAVED_RU = "Фотосет уже сохранен";
     public static DETAILS_POST_SUCCESSFULLY_SAVED_RU = "Фотосет сохранен";
-    public static OPEN_POST_IN_VK_RU = "Открыть фотосет в VK"
+    public static OPEN_POST_IN_VK_RU = "Открыть фотосет в VK";
+    public static DETAILS_SAVED_PHOTO_IN_DASHBOARDS_RU = "Фотография успешно сохранена";
+    public static DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS_RU = "Фотография уже сохранена в ваш профайл";
 
     //Social
     public static DESCRIPTION_ADDITON_RU = "Young Folks Модели и фотографы со всего мира";
@@ -120,31 +122,33 @@ export class ContentProperties {
     //Content
     public static NEW_NATIVE_TITLE_ENG = "New photos of russian models";
     public static NEW_SETS_TITLE_ENG = "New pictures of foreign models";
-    public static SUGGESTED_POSTS_TITLE_ENG = "Related Photoshoots";
-    public static SAVED_POSTS_TITLE_ENG = "Saved Photoshoots";
+    public static SUGGESTED_POSTS_TITLE_ENG = "Related works";
+    public static SAVED_POSTS_TITLE_ENG = "Saved photo shoots";
     public static SAVED_PHOTOS_TITLE_ENG = "Saved pictures";
     public static NO_SAVED_PHOTOS_ENG = "You haven't saved any pictures yet";
-    public static NO_SAVED_POSTS_ENG = "You haven't saved any photoshoots yet";
+    public static NO_SAVED_POSTS_ENG = "You haven't saved any photo shoots yet";
 
     public static WEEKLY_TOP_SETS_ENG = "Weekly top of foreign models";
     public static WEEKLY_TOP_NATIVE_ENG = "Weekly top of russian models";
 
     //Modal
     public static CLOSE_MODAL_ENG = "close";
-    public static MODAL_TITLE_PHOTOSET_ENG = "Save photoshoot in dashboard";
+    public static MODAL_TITLE_PHOTOSET_ENG = "Save photo shoot in dashboard";
     public static MODAL_TITLE_SINGLE_PHOTO_ENG = "Save picture in dashboard";
-    public static MODAL_TEXT_NOT_LOGGED_IN_ENG = "To save picture or photoshoot you need to login";
+    public static MODAL_TEXT_NOT_LOGGED_IN_ENG = "To save picture or photo shoot you need to login";
 
     //Overlay post
     public static SHOW_ALL_PICS_ENG = "All pictures";
-    public static SHOW_ALL_PICS_FULL_ENG = "All photos of this photoshoot";
+    public static SHOW_ALL_PICS_FULL_ENG = "All photos of this photo shoot";
     public static OPEN_SINGLE_POST_ENG = "Click on picture to enlarge";
 
     //Page Dtagails
-    public static DETAILS_SAVE_POST_IN_DASHBOARD_ENG = "Saved photoshoot";
-    public static DETAILS_POST_ALREADY_SAVED_ENG = "This photoshoot already saved";
-    public static DETAILS_POST_SUCCESSFULLY_SAVED_ENG = "Photoshoot is saved";
-    public static OPEN_POST_IN_VK_ENG = "Open photoshoot in VK"
+    public static DETAILS_SAVE_POST_IN_DASHBOARD_ENG = "Saved photo shoot";
+    public static DETAILS_POST_ALREADY_SAVED_ENG = "This photo shoot already saved";
+    public static DETAILS_POST_SUCCESSFULLY_SAVED_ENG = "Photo shoot is saved";
+    public static OPEN_POST_IN_VK_ENG = "Open photo shoot in VK";
+    public static DETAILS_SAVED_PHOTO_IN_DASHBOARDS_ENG = "Picture is saved in your dashboard";
+    public static DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS_ENG = "Picture already saved in your dashboard";
 
     //Social
     public static DESCRIPTION_ADDITON_ENG = "Young Folks Models and photographers from all over the world";

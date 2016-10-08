@@ -46,7 +46,7 @@
         <div class="align-center-block">
         <div class="details-list" *ngFor="let photo of postDetailsDTO.photos" >
             <div class="save-photo-box-text" *ngIf="single_post_text && photo == single_photo_text_img_url">
-                <h2 class="text-over large-img-text-over"><span>{{single_post_text}}</span></h2>
+                <h2 class="text-over large-img-text-over" [routerLink]="['/', user_dashboard_route]"><span>{{single_post_text}}</span></h2>
             </div>
             <div class="save-photo-box" (click) = "saveSinglePhoto(photo)">
                 <span data-tootik="Save picture" data-tootik-conf="down shadow"><img src="./../icons/64/add_photo.png"/></span>

@@ -155,9 +155,9 @@ export class PostDetailsComponent implements OnInit {
                 .subscribe(result =>{
                     this.single_photo_text_img_url = photo;
                     if(result){
-                        this.single_post_text = "Фотография успешно добавлена";
+                        this.single_post_text = MessageConfig.DETAILS_SAVED_PHOTO_IN_DASHBOARDS;
                     } else {
-                        this.single_post_text = "Фотография уже есть в вашем профайле";
+                        this.single_post_text = MessageConfig.DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS;
 
                     }
                 }

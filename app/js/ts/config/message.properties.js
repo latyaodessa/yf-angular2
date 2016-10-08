@@ -124,6 +124,12 @@ var MessageConfig = (function () {
     MessageConfig.getOPEN_POST_IN_VK = function () {
         return setup_config_1.SetupConfig.TRANSLIT ? content_properties_1.ContentProperties.OPEN_POST_IN_VK_ENG : content_properties_1.ContentProperties.OPEN_POST_IN_VK_RU;
     };
+    MessageConfig.getDETAILS_SAVED_PHOTO_IN_DASHBOARDS = function () {
+        return setup_config_1.SetupConfig.TRANSLIT ? content_properties_1.ContentProperties.DETAILS_SAVED_PHOTO_IN_DASHBOARDS_ENG : content_properties_1.ContentProperties.DETAILS_SAVED_PHOTO_IN_DASHBOARDS_RU;
+    };
+    MessageConfig.getDETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS = function () {
+        return setup_config_1.SetupConfig.TRANSLIT ? content_properties_1.ContentProperties.DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS_ENG : content_properties_1.ContentProperties.DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS_RU;
+    };
     MessageConfig.getDESCRIPTION_ADDITON = function () {
         return setup_config_1.SetupConfig.TRANSLIT ? content_properties_1.ContentProperties.DESCRIPTION_ADDITON_ENG : content_properties_1.ContentProperties.DESCRIPTION_ADDITON_RU;
     };
@@ -179,6 +185,8 @@ var MessageConfig = (function () {
     MessageConfig.DETAILS_POST_ALREADY_SAVED = MessageConfig.getDETAILS_POST_ALREADY_SAVED();
     MessageConfig.DETAILS_POST_SUCCESSFULLY_SAVED = MessageConfig.getDETAILS_POST_SUCCESSFULLY_SAVED();
     MessageConfig.OPEN_POST_IN_VK = MessageConfig.getOPEN_POST_IN_VK();
+    MessageConfig.DETAILS_SAVED_PHOTO_IN_DASHBOARDS = MessageConfig.getDETAILS_SAVED_PHOTO_IN_DASHBOARDS();
+    MessageConfig.DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS = MessageConfig.getDETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS();
     //Social
     MessageConfig.DESCRIPTION_ADDITON = MessageConfig.getDESCRIPTION_ADDITON();
     MessageConfig.SHARE_BUTTON_TEXT = MessageConfig.getSHARE_BUTTON_TEXT();

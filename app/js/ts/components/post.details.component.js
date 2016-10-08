@@ -130,10 +130,10 @@ var PostDetailsComponent = (function () {
             .subscribe(function (result) {
             _this.single_photo_text_img_url = photo;
             if (result) {
-                _this.single_post_text = "Фотография успешно добавлена";
+                _this.single_post_text = message_properties_1.MessageConfig.DETAILS_SAVED_PHOTO_IN_DASHBOARDS;
             }
             else {
-                _this.single_post_text = "Фотография уже есть в вашем профайле";
+                _this.single_post_text = message_properties_1.MessageConfig.DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS;
             }
         });
     };

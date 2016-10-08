@@ -63,6 +63,8 @@ export class MessageConfig {
     public static DETAILS_POST_ALREADY_SAVED = MessageConfig.getDETAILS_POST_ALREADY_SAVED();
     public static DETAILS_POST_SUCCESSFULLY_SAVED = MessageConfig.getDETAILS_POST_SUCCESSFULLY_SAVED();
     public static OPEN_POST_IN_VK = MessageConfig.getOPEN_POST_IN_VK();
+    public static DETAILS_SAVED_PHOTO_IN_DASHBOARDS = MessageConfig.getDETAILS_SAVED_PHOTO_IN_DASHBOARDS();
+    public static DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS = MessageConfig.getDETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS();
 
     //Social
     public static DESCRIPTION_ADDITON = MessageConfig.getDESCRIPTION_ADDITON();
@@ -187,6 +189,12 @@ export class MessageConfig {
     }
     public static getOPEN_POST_IN_VK(){
         return  SetupConfig.TRANSLIT ? ContentProperties.OPEN_POST_IN_VK_ENG : ContentProperties.OPEN_POST_IN_VK_RU;
+    }
+    public static getDETAILS_SAVED_PHOTO_IN_DASHBOARDS(){
+        return  SetupConfig.TRANSLIT ? ContentProperties.DETAILS_SAVED_PHOTO_IN_DASHBOARDS_ENG : ContentProperties.DETAILS_SAVED_PHOTO_IN_DASHBOARDS_RU;
+    }
+    public static getDETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS(){
+        return  SetupConfig.TRANSLIT ? ContentProperties.DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS_ENG : ContentProperties.DETAILS_ALREADY_SAVED_PHOTO_IN_DASHBOARDS_RU;
     }
     public static getDESCRIPTION_ADDITON(){
         return  SetupConfig.TRANSLIT ? ContentProperties.DESCRIPTION_ADDITON_ENG : ContentProperties.DESCRIPTION_ADDITON_RU;
