@@ -62,7 +62,7 @@ var PostDetailsComponent = (function () {
                     _this.postDetailsDTO.photos = _this.postService.findPhotosForPostDetails(post[0]);
                     _this.phForSuggested = _this.postDetailsDTO.ph;
                     _this.mdForSuggested = _this.postDetailsDTO.md;
-                    _this.setTitle(_this.phForSuggested, _this.mdForSuggested);
+                    _this.setTitle(_this.postDetailsDTO.ph, _this.postDetailsDTO.md, _this.postDetailsDTO.text);
                     _this.isPostAlreadySavedToUser();
                 }
             });
@@ -88,7 +88,7 @@ var PostDetailsComponent = (function () {
             });
         }
     };
-    PostDetailsComponent.prototype.setTitle = function (ph, md) {
+    PostDetailsComponent.prototype.setTitle = function (ph, md, text) {
         if (ph && md) {
             this.titleService.setTitle(message_properties_1.MessageConfig.MD_DETAILS_TITLE + " " + md + " | " + message_properties_1.MessageConfig.PH_DETAILS_TITLE + " " + ph);
         }
@@ -97,6 +97,9 @@ var PostDetailsComponent = (function () {
         }
         else if (ph) {
             this.titleService.setTitle(message_properties_1.MessageConfig.PH_DETAILS_TITLE + " " + ph);
+        }
+        else {
+            this.titleService.setTitle(text);
         }
     };
     PostDetailsComponent.prototype.savePostToDashboard = function () {

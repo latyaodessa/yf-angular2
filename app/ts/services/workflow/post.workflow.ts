@@ -34,23 +34,28 @@ export class PostWorkflow {
     postToPostListDTO(posts:Post[]){
         let postListDto:PostListDTO[] = [];
         for(let post of posts){
+            if(post.postPhoto){
+                let text:string = this.cleanTag(post);
 
-            let text:string = this.cleanTag(post.text);
-
-            if(SetupConfig.TRANSLIT){
-                postListDto.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,text, this.findThumbnail(post)));
-            } else {
-                postListDto.push(new PostListDTO(post.id,post.md,post.ph,text, this.findThumbnail(post)));
+                if(SetupConfig.TRANSLIT){
+                    postListDto.push(new PostListDTO(post.id,post.md_translit,post.ph_translit,text, this.findThumbnail(post)));
+                } else {
+                    postListDto.push(new PostListDTO(post.id,post.md,post.ph,text, this.findThumbnail(post)));
+                }
             }
+
         }
         return postListDto;
     }
 
-    cleanTag(text:string){
-        return text.replace(PostWorkflow.REGEX_CLEAN_TAG, "");
+    cleanTag(post:Post){
+        if(post.text && (!post.md || !post.ph)){
+            return post.text.replace(PostWorkflow.REGEX_CLEAN_TAG, "");
+        }
+        return post.text;
     }
     postToPostDetailsDTO(post:Post){
-        let text:string = this.cleanTag(post.text);
+        let text:string = this.cleanTag(post);
 
         if(SetupConfig.TRANSLIT){
             return new PostDetailsDTO(post.id, text, post.md_translit, post.ph_translit, null);

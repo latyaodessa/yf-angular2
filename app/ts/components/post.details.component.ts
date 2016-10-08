@@ -80,7 +80,7 @@ export class PostDetailsComponent implements OnInit {
                         this.postDetailsDTO.photos = this.postService.findPhotosForPostDetails(post[0]);
                         this.phForSuggested = this.postDetailsDTO.ph;
                         this.mdForSuggested = this.postDetailsDTO.md;
-                        this.setTitle(this.phForSuggested, this.mdForSuggested);
+                        this.setTitle(this.postDetailsDTO.ph, this.postDetailsDTO.md, this.postDetailsDTO.text);
                         this.isPostAlreadySavedToUser();
                     }
                 });
@@ -111,13 +111,15 @@ export class PostDetailsComponent implements OnInit {
         }
     }
 
-    public setTitle(ph:string, md:string) {
+    public setTitle(ph:string, md:string, text:string) {
         if(ph && md) {
             this.titleService.setTitle(MessageConfig.MD_DETAILS_TITLE + " " + md + " | " + MessageConfig.PH_DETAILS_TITLE + " " +ph);
         } else if(md){
             this.titleService.setTitle(MessageConfig.MD_DETAILS_TITLE + " " +  md);
         } else if(ph){
             this.titleService.setTitle(MessageConfig.PH_DETAILS_TITLE + " " + ph);
+        } else {
+            this.titleService.setTitle(text);
         }
     }
 

@@ -34,11 +34,11 @@
             </ul>
         </div>
     </div>
-    <a class="vk-post-open" href="https://vk.com/wall-26020797_{{postDetailsDTO.id}}" target="_blank" *ngIf="postDetailsDTO.ph || postDetailsDTO.md"><span data-tootik="Открыть фотосет в VK" data-tootik-conf="left shadow"><img src="./../icons/32/vk-black.png"></span></a>
+    <a class="vk-post-open" href="https://vk.com/wall-26020797_{{postDetailsDTO.id}}" target="_blank" *ngIf="postDetailsDTO.ph || postDetailsDTO.md"><span data-tootik="Open photoshoot in VK" data-tootik-conf="left shadow"><img src="./../icons/32/vk-black.png"></span></a>
     <ul class="share-buttons">
-        <li (click) ="shareButton('vk')"><span data-tootik="Поделиться фотосетом в VK" data-tootik-conf="shadow"><img src="./../icons/social/vk.png"></span></li>
-        <li (click) ="shareButton('fb')"><span data-tootik="Поделиться фотосетом в Facebook" data-tootik-conf="shadow"><img src="./../icons/social/Facebook.png"></span></li>
-        <li (click) ="shareButton('tumblr')"><span data-tootik="Поделиться фотосетом в Tumblr" data-tootik-conf="shadow"><a target="_blank" ><img src="./../icons/social/Tumblr.png"></a></span></li>
+        <li (click) ="shareButton('vk')"><span data-tootik="Share in VK" data-tootik-conf="shadow"><img src="./../icons/social/vk.png"></span></li>
+        <li (click) ="shareButton('fb')"><span data-tootik="Share in Facebook" data-tootik-conf="shadow"><img src="./../icons/social/Facebook.png"></span></li>
+        <li (click) ="shareButton('tumblr')"><span data-tootik="Share in Tumblr" data-tootik-conf="shadow"><a target="_blank" ><img src="./../icons/social/Tumblr.png"></a></span></li>
     </ul>
 </div>
 <div class="container" *ngIf="isExist">
@@ -49,17 +49,17 @@
                 <h2 class="text-over large-img-text-over"><span>{{single_post_text}}</span></h2>
             </div>
             <div class="save-photo-box" (click) = "saveSinglePhoto(photo)">
-                <span data-tootik="Сохранить фотографию" data-tootik-conf="down shadow"><img src="./../icons/64/add_photo.png"/></span>
+                <span data-tootik="Save picture" data-tootik-conf="down shadow"><img src="./../icons/64/add_photo.png"/></span>
             </div>
             <img class="main-photo img-responsive shadow" src={{photo}}/>
         </div>
         </div>
     </div>
-    <a class="vk-post-open" href="https://vk.com/youngfolks?w=wall-26020797_{{postDetailsDTO.id}}" target="_blank" *ngIf="postDetailsDTO.ph || postDetailsDTO.md"><img src="./../icons/32/vk-black.png"></a>
+    <a class="vk-post-open" href="https://vk.com/youngfolks?w=wall-26020797_{{postDetailsDTO.id}}" target="_blank" *ngIf="postDetailsDTO.ph || postDetailsDTO.md"><span data-tootik="Open photoshoot in VK" data-tootik-conf="left shadow"><img src="./../icons/32/vk-black.png"></span></a>
     <ul class="share-buttons">
-        <li (click) ="shareButton('vk')"><span data-tootik="Поделиться фотосетом в VK" data-tootik-conf="bottom shadow"><img src="./../icons/social/vk.png"></span></li>
-        <li (click) ="shareButton('fb')"><span data-tootik="Поделиться фотосетом в Facebook" data-tootik-conf="bottom shadow"><img src="./../icons/social/Facebook.png"></span></li>
-        <li (click) ="shareButton('tumblr')"><span data-tootik="Поделиться фотосетом в Tumblr" data-tootik-conf="bottom shadow"><a target="_blank" ><img src="./../icons/social/Tumblr.png"></a></span></li>
+        <li (click) ="shareButton('vk')"><span data-tootik="Share in VK" data-tootik-conf="bottom shadow"><img src="./../icons/social/vk.png"></span></li>
+        <li (click) ="shareButton('fb')"><span data-tootik="Share in Facebook" data-tootik-conf="bottom shadow"><img src="./../icons/social/Facebook.png"></span></li>
+        <li (click) ="shareButton('tumblr')"><span data-tootik="Share in Tumblr" data-tootik-conf="bottom shadow"><a target="_blank" ><img src="./../icons/social/Tumblr.png"></a></span></li>
     </ul>
 </div>
 <suggested-posts *ngIf="isExist"></suggested-posts>

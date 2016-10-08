@@ -43,21 +43,26 @@ var PostWorkflow = (function () {
         var postListDto = [];
         for (var _i = 0, posts_1 = posts; _i < posts_1.length; _i++) {
             var post = posts_1[_i];
-            var text = this.cleanTag(post.text);
-            if (setup_config_1.SetupConfig.TRANSLIT) {
-                postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, text, this.findThumbnail(post)));
-            }
-            else {
-                postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, text, this.findThumbnail(post)));
+            if (post.postPhoto) {
+                var text = this.cleanTag(post);
+                if (setup_config_1.SetupConfig.TRANSLIT) {
+                    postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md_translit, post.ph_translit, text, this.findThumbnail(post)));
+                }
+                else {
+                    postListDto.push(new postListDTO_1.PostListDTO(post.id, post.md, post.ph, text, this.findThumbnail(post)));
+                }
             }
         }
         return postListDto;
     };
-    PostWorkflow.prototype.cleanTag = function (text) {
-        return text.replace(PostWorkflow.REGEX_CLEAN_TAG, "");
+    PostWorkflow.prototype.cleanTag = function (post) {
+        if (post.text && (!post.md || !post.ph)) {
+            return post.text.replace(PostWorkflow.REGEX_CLEAN_TAG, "");
+        }
+        return post.text;
     };
     PostWorkflow.prototype.postToPostDetailsDTO = function (post) {
-        var text = this.cleanTag(post.text);
+        var text = this.cleanTag(post);
         if (setup_config_1.SetupConfig.TRANSLIT) {
             return new postDetailsDTO_1.PostDetailsDTO(post.id, text, post.md_translit, post.ph_translit, null);
         }
